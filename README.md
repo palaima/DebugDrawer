@@ -9,21 +9,27 @@ Faster development with Debug Drawer
 Currently exists 6 modules:
 
 `DeviceModule` - common information about your device
+
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/device.png)
 
 `BuildModule` - app build information
+
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/build.png)
 
 `SettingsModule` - open Developer, Battery, Default settings, open app info and possibility to uninstall app directly from itself
+
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/settings.png)
 
 `NetworkModule` - enable/disable Wifi, Mobile or Bluetooth
+
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/network.png)
 
 `OkHttpModule` - common information about http client (requires extra dependency)
+
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/okhttp.png)
 
 `PicassoModule` - image downloading and caching statistics (requires extra dependency)
+
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/picasso.png)
 
 ## Getting Started
