@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:columnCount="2"
+    tools:ignore="UselessParent">
+    <TextView
+        android:layout_columnSpan="2"
+        android:layout_width="0dp"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="Build Information"
+        style="@style/Widget.DebugDrawer.Header"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Version"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_build_code"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Name"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_build_name"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Package"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_build_package"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+</GridLayout>

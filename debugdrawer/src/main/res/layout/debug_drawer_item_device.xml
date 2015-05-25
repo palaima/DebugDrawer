@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:columnCount="2"
+    tools:ignore="UselessParent">
+    <TextView
+        android:layout_columnSpan="2"
+        android:layout_width="0dp"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="Device Information"
+        style="@style/Widget.DebugDrawer.Header"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Make"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_device_make"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Model"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_device_model"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Resolution"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_device_resolution"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Density"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_device_density"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Release"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_device_release"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        android:text="sdgsdgf"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="API"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <TextView
+        android:id="@+id/debug_device_api"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/Widget.DebugDrawer.RowValue"
+        />
+
+</GridLayout>
