@@ -2,7 +2,7 @@
 
 Faster development with Debug Drawer
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/all.png)
+![](https://github.com/palaima/DebugDrawer/raw/master/images/all.png = 250x)
 
 ## Features
 
