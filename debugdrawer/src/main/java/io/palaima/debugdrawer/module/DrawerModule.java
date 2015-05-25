@@ -22,8 +22,15 @@ import android.view.ViewGroup;
 
 public interface DrawerModule {
 
+    /**
+     * Creates module view
+     */
     View onCreateView(LayoutInflater inflater, ViewGroup parent);
 
+    /**
+     * Override this method if you need to refresh
+     * some information  when drawer is opened
+     */
     void onRefreshView();
 
     /**

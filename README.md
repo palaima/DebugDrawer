@@ -1,5 +1,143 @@
 # Android Debug Drawer
 
+Faster development with Debug Drawer
+
+## Features
+
+Currently exists 6 modules:
+`DeviceModule` - common information about your device
+`BuildModule` - app build information
+`SettingsModule` - open Developer, Battery, Default settings, open app info and possibility to uninstall app directly from itself
+`NetworkModule` - enable/disable Wifi, Mobile or Bluetooth
+`OkHttpModule` - common information about http client (requires extra dependency)
+`PicassoModule` - image downloading and caching statistics (requires extra dependency)
+
+## Getting Started
+
+Add Gradle dependency:
+
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer:0.1.0'
+}
+```
+
+If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.1.0'
+}
+```
+
+Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.1.0'
+}
+```
+
+
+* Or
+[Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/smoothbluetooth/0.1.0/smoothbluetooth-0.1.0.aar)
+
+You can try the SNAPSHOT version:
+
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer:0.2.0-SNAPSHOT'
+}
+```
+Make sure to add the snapshot repository:
+
+```gradle
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+```
+
+## Putting All Together
+
+### 1. Initialization in Activity
+
+```java
+private DebugDrawer mDebugDrawer;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (BuildConfig.DEBUG) {
+        mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                new OkHttpModule(mOkHttpClient),
+                new PicassoModule(mPicasso),
+                new DeviceModule(this),
+                new BuildModule(this),
+                new NetworkModule(this),
+                new SettingsModule(this)
+        ).build();
+    }
+}
+```
+
+### 2. onStart/onStop
+If you use NetworkModule or your own which is hooked with BroadcastReceivers you must call onStart/onStop in your activity
+
+```java
+@Override
+protected void onStart() {
+    super.onStart();
+    if (mDebugDrawer != null) {
+        mDebugDrawer.onStart();
+    }
+}
+```
+
+```java
+@Override
+protected void onStop() {
+    super.onStop();
+    if (mDebugDrawer != null) {
+        mDebugDrawer.onStop();
+    }
+}
+```
+
+## Creating You Own Module
+Module must implement `DrawerModule` interface
+
+
+```java
+public interface DrawerModule {
+
+    /**
+     * Creates module view
+     */
+    View onCreateView(LayoutInflater inflater, ViewGroup parent);
+
+    /**
+     * Override this method if you need to refresh
+     * some information  when drawer is opened
+     */
+    void onRefreshView();
+
+    /**
+     * Override this method if you need to start
+     * some processes that would be killed when
+     * onStop() is called
+     * E.g. register receivers
+     */
+    void onStart();
+
+    /**
+     * Override this method if you need to do
+     * some clean up when activity goes to foreground.
+     * E.g. unregister receivers
+     */
+    void onStop();
+}
+```
+
 ## Sample
 
 You can clone the project and compile it yourself (it includes a sample).

@@ -182,10 +182,8 @@ public class NetworkController {
     /**
      * Receiver that handles wifi, mobile networks and
      * Bluetooth connectivity change intents and sends
-     * a NetworkChangeEvent using EventBus
+     * a NetworkChangeEvent using listener
      * <p/>
-     * Created by balysv on 10/01/14.
-     * www.lemonlabs.co
      */
     public class NetworkReceiver extends BroadcastReceiver {
 

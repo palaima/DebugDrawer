@@ -28,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 
 import java.util.ArrayList;
@@ -123,8 +122,6 @@ public class DebugDrawer {
         private DrawerLayout mDrawerLayout;
 
         private ScrollView mSliderLayout;
-
-        private ListView mListView;
 
         private int mDrawerGravity = Gravity.END;
 
@@ -300,7 +297,6 @@ public class DebugDrawer {
 
                 @Override
                 public void onDrawerOpened(View drawerView) {
-                    //TODO refresh items
                     if (mOnDrawerListener != null) {
                         mOnDrawerListener.onDrawerOpened(drawerView);
                     }
