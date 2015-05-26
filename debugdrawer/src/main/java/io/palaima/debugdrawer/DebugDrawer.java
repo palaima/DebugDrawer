@@ -27,6 +27,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -35,6 +36,7 @@ import java.util.Collections;
 
 import io.palaima.debugdrawer.module.DrawerModule;
 import io.palaima.debugdrawer.util.UIUtils;
+import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
 
 public class DebugDrawer {
 
@@ -141,6 +143,8 @@ public class DebugDrawer {
         private int mSliderBackgroundDrawableRes = -1;
 
         private LinearLayout mContainer;
+
+        private ScrimInsetsFrameLayout mDrawerContentRoot;
 
         /**
          * Pass the activity you use the drawer in ;)
@@ -278,8 +282,34 @@ public class DebugDrawer {
                         "You have to set your layout for this activity with setContentView() first.");
             }
 
+
             mDrawerLayout = (DrawerLayout) mActivity.getLayoutInflater()
-                    .inflate(R.layout.debug_drawer2, mRootView, false);
+                    .inflate(R.layout.debug_drawer, mRootView, false);
+
+            //get the content view
+            View contentView = mRootView.getChildAt(0);
+            boolean alreadyInflated = contentView instanceof DrawerLayout;
+
+            //get the drawer root
+            mDrawerContentRoot = (ScrimInsetsFrameLayout) mDrawerLayout.getChildAt(0);
+
+            //only add the new layout if it wasn't done before
+            if (!alreadyInflated) {
+                // remove the contentView
+                mRootView.removeView(contentView);
+            } else {
+                //if it was already inflated we have to clean up again
+                mRootView.removeAllViews();
+            }
+
+            //create the layoutParams to use for the contentView
+            FrameLayout.LayoutParams layoutParamsContentView = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+            );
+
+            //add the contentView to the drawer content frameLayout
+            mDrawerContentRoot.addView(contentView, layoutParamsContentView);
 
             //add the drawerLayout to the root
             mRootView.addView(mDrawerLayout, new ViewGroup.LayoutParams(
@@ -323,7 +353,7 @@ public class DebugDrawer {
 
 
             mSliderLayout = (ScrollView) mActivity.getLayoutInflater().inflate(
-                    R.layout.debug_drawer_slider2, mDrawerLayout, false);
+                    R.layout.debug_drawer_slider, mDrawerLayout, false);
             mContainer = (LinearLayout) mSliderLayout.findViewById(R.id.container);
 
             // get the layout params
@@ -359,7 +389,7 @@ public class DebugDrawer {
                 }
             }
 
-            mDrawerLayout.addView(mSliderLayout, 0);
+            mDrawerLayout.addView(mSliderLayout, 1);
 
             //create the result object
             DebugDrawer result = new DebugDrawer(this);

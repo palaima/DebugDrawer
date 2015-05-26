@@ -46,7 +46,7 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_item_settings, parent, false);
+        View view = inflater.inflate(R.layout.debug_drawer_module_settings, parent, false);
 
         mRootView = view;
         mDeveloper = (ImageView) view.findViewById(R.id.debug_settings_developer);

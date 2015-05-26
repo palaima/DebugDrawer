@@ -49,7 +49,7 @@ public class NetworkModule implements DrawerModule {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_item_network, parent, false);
+        View view = inflater.inflate(R.layout.debug_drawer_module_network, parent, false);
         mRootView = view;
         mWifi = (Switch) view.findViewById(R.id.debug_network_wifi);
         mMobile = (Switch) view.findViewById(R.id.debug_network_mobile);

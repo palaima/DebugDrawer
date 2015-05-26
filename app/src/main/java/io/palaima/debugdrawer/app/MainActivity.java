@@ -12,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.DebugDrawer;
@@ -59,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
                     new SettingsModule(this)
             ).build();
         }
+
+        List<String> images = new ArrayList<>();
+        for (int i = 1; i < 30; i++) {
+            images.add("http://lorempixel.com/400/200/sports/" + i);
+        }
+
+        ListView listView = (ListView) findViewById(R.id.image_list);
+        listView.setAdapter(new ImageAdapter(this, images, mPicasso));
     }
 
     @Override
