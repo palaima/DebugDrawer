@@ -1,5 +1,7 @@
 # Android Debug Drawer
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Debug%20Drawer-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1892)
+
 Faster development with Debug Drawer
 
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/all.png)
