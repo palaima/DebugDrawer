@@ -16,6 +16,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        // This seems to be firing due to okio referencing java.nio.File
+        // which is harmless for us. Not sure how to disable this in
+        // more targeted fashion...
+        warning 'InvalidPackage'
+    }
 }
 
 dependencies {

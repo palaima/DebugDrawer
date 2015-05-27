@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/releases"
+    }
+    mavenCentral()
+}
+
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -17,14 +25,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
+    lintOptions {
+        // This seems to be firing due to okio referencing java.nio.File
+        // which is harmless for us. Not sure how to disable this in
+        // more targeted fashion...
+        warning 'InvalidPackage'
+    }
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
+    /*compile 'io.palaima.debugdrawer:debugdrawer:0.1.1'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.1.1'
+    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.1.1'*/
     compile project(':debugdrawer')
     compile project(':debugdrawer-picasso')
     compile project(':debugdrawer-okhttp')
 }
+

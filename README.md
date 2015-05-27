@@ -32,33 +32,43 @@ Currently exists 6 modules:
 
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/picasso.png)
 
+## TODO Features
+
+`LocationModule`, `UserInterfaceModule`, `LogsModule`
+
 ## Getting Started
 
 Add Gradle dependency:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.1.0'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.1.1'
 }
 ```
 
 If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.1.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.1.1'
 }
 ```
 
 Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.1.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.1.1'
 }
 ```
 
 
 * Or
-[Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/smoothbluetooth/0.1.0/smoothbluetooth-0.1.0.aar)
+[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.1.1/debugdrawer-0.1.1.aar)
+
+* Or
+[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.1.1/debugdrawer-picasso-0.1.1.aar)
+
+* Or
+[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.1.1/debugdrawer-okhttp-0.1.1.aar)
 
 You can try the SNAPSHOT version:
 
@@ -175,7 +185,12 @@ Developed By
 Credits
 ------------
 
-//TODO
+Jake Wharton - [U2020](https://github.com/JakeWharton/u2020)
+
+Mike Penz - [MaterialDrawer](https://github.com/mikepenz/MaterialDrawer)
+
+LemonLabs - [SlidingDebugMenu](https://github.com/lemonlabs/slidingdebugmenu)
+
 License
 --------
 
