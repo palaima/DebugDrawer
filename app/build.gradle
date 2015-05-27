@@ -44,5 +44,6 @@ dependencies {
     compile project(':debugdrawer')
     compile project(':debugdrawer-picasso')
     compile project(':debugdrawer-okhttp')
+    compile project(':debugdrawer-scalpel')
 }
 

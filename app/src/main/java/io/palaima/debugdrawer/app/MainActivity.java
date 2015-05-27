@@ -1,10 +1,5 @@
 package io.palaima.debugdrawer.app;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
-
 import android.app.Application;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +8,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +27,7 @@ import io.palaima.debugdrawer.module.NetworkModule;
 import io.palaima.debugdrawer.module.SettingsModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
+import io.palaima.debugdrawer.scalpel.ScalpelModule;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (BuildConfig.DEBUG) {
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                    new ScalpelModule(this),
                     new OkHttpModule(mOkHttpClient),
                     new PicassoModule(mPicasso),
                     new DeviceModule(this),

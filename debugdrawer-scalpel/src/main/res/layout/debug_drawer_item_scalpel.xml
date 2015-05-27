@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:columnCount="2"
+    tools:ignore="UselessParent">
+    <TextView
+        android:layout_columnSpan="2"
+        android:layout_width="0dp"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="Scalpel"
+        style="@style/Widget.DebugDrawer.Header"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Enable Scalpel"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <Switch
+        android:id="@+id/debug_enable_scalpel"
+        android:layout_gravity="start|center_vertical"
+        style="@style/Widget.DebugDrawer.RowWidget"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Disable Graphics"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <Switch
+        android:id="@+id/debug_disable_graphics"
+        android:layout_gravity="start|center_vertical"
+        style="@style/Widget.DebugDrawer.RowWidget"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Show Ids"
+        style="@style/Widget.DebugDrawer.RowTitle"
+        />
+    <Switch
+        android:id="@+id/debug_show_ids"
+        android:layout_gravity="start|center_vertical"
+        style="@style/Widget.DebugDrawer.RowWidget"
+        />
+
+
+</GridLayout>
