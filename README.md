@@ -177,7 +177,17 @@ You can clone the project and compile it yourself (it includes a sample).
 
 ## Contributing
 Want to contribute? You are welcome!
-Note that all pull request should go to `dev` branch.
+
+### Pull Requests
+1. Fork the repo and create your branch from `dev`.
+2. If you've changed APIs, update the documentation.
+3. Make sure your code lints.
+4. Change README.md if necessary
+
+### Coding Style
+* Use the `m` member variable prefix for private fields
+* Opening braces to appear on the same line as code
+* All variables must be `CamelCase`
 
 Developed By
 ------------
@@ -187,11 +197,11 @@ Developed By
 Credits
 ------------
 
-Jake Wharton - [U2020](https://github.com/JakeWharton/u2020)
+* Jake Wharton - [U2020](https://github.com/JakeWharton/u2020)
 
-Mike Penz - [MaterialDrawer](https://github.com/mikepenz/MaterialDrawer)
+* Mike Penz - [MaterialDrawer](https://github.com/mikepenz/MaterialDrawer)
 
-LemonLabs - [SlidingDebugMenu](https://github.com/lemonlabs/slidingdebugmenu)
+* LemonLabs - [SlidingDebugMenu](https://github.com/lemonlabs/slidingdebugmenu)
 
 License
 --------

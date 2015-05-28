@@ -9,6 +9,7 @@ import android.app.Application;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,8 @@ import io.palaima.debugdrawer.picasso.PicassoModule;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toolbar mToolbar;
+
     private DebugDrawer mDebugDrawer;
 
     private Picasso mPicasso;
@@ -52,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
 
+        setupToolBar();
+        //change status bar color programmatically
+/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark_material_light));
+        }*/
         if (BuildConfig.DEBUG) {
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
                     new OkHttpModule(mOkHttpClient),
@@ -108,6 +117,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected Toolbar setupToolBar() {
+        mToolbar = (Toolbar) findViewById(R.id.mainToolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        return mToolbar;
     }
 
     private static final int DISK_CACHE_SIZE = 50*1024*1024; // 50 MB
