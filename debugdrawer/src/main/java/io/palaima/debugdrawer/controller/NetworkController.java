@@ -135,7 +135,7 @@ public class NetworkController {
      * True if bluetooth is enabled
      */
     public boolean isBluetoothEnabled() {
-        return mBluetoothAdapter.isEnabled();
+        return mBluetoothAdapter != null && mBluetoothAdapter.isEnabled();
     }
 
     /**
