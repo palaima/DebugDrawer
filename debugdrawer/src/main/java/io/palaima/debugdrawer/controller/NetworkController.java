@@ -153,7 +153,7 @@ public class NetworkController {
      * @return
      */
     public boolean setBluetoothEnabled(boolean enabled) {
-        return !isBluetoothAvailable() && (enabled ? mBluetoothAdapter.enable()
+        return isBluetoothAvailable() && (enabled ? mBluetoothAdapter.enable()
                 : mBluetoothAdapter.disable());
     }
 
