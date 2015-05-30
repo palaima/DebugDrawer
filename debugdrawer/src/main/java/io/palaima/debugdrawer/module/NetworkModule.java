@@ -82,14 +82,19 @@ public class NetworkModule implements DrawerModule {
             }
         });
 
-        mBluetooth.setChecked(mNetworkController.isBluetoothEnabled());
-        mBluetooth.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-                        mNetworkController.setBluetoothEnabled(isChecked);
-                    }
-                });
+        if (mNetworkController.isBluetoothAvailable()) {
+            mBluetooth.setChecked(mNetworkController.isBluetoothEnabled());
+            mBluetooth.setOnCheckedChangeListener(
+                    new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                            mNetworkController.setBluetoothEnabled(isChecked);
+                        }
+                    });
+        } else {
+            mBluetooth.setEnabled(false);
+        }
+
 
         return view;
     }

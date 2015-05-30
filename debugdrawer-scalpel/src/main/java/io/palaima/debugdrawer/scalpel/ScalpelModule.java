@@ -22,7 +22,7 @@ public class ScalpelModule implements DrawerModule {
 
     public ScalpelModule(Activity activity) {
         mContext = activity;
-        this.mRootView = (ViewGroup) activity.findViewById(android.R.id.content);
+        mRootView = (ViewGroup) activity.findViewById(android.R.id.content);
     }
 
     @Override
@@ -42,22 +42,22 @@ public class ScalpelModule implements DrawerModule {
         scalpelFrameLayout.addView(contentRelativeView);
 
         View view = inflater.inflate(R.layout.debug_drawer_item_scalpel, parent, false);
-        Switch debug_enable_scalpel = (Switch) view.findViewById(R.id.debug_enable_scalpel);
-        debug_enable_scalpel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch debugEnableScalpel = (Switch) view.findViewById(R.id.debug_enable_scalpel);
+        debugEnableScalpel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setLayerInteractionEnabled(isChecked);
             }
         });
-        Switch debug_disable_graphics = (Switch) view.findViewById(R.id.debug_disable_graphics);
-        debug_disable_graphics.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch debugDisableGraphics = (Switch) view.findViewById(R.id.debug_disable_graphics);
+        debugDisableGraphics.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setDrawViews(!isChecked);
             }
         });
-        Switch debug_show_ids = (Switch) view.findViewById(R.id.debug_show_ids);
-        debug_show_ids.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch debugShowIds = (Switch) view.findViewById(R.id.debug_show_ids);
+        debugShowIds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setDrawIds(isChecked);

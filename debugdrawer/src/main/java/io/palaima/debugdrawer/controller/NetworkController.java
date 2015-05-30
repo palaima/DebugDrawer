@@ -132,10 +132,17 @@ public class NetworkController {
     }
 
     /**
-     * True if bluetooth is enabled
+     * @return True if bluetooth adapter is not null
+     */
+    public boolean isBluetoothAvailable() {
+        return mBluetoothAdapter != null;
+    }
+
+    /**
+     * @return True if bluetooth is enabled
      */
     public boolean isBluetoothEnabled() {
-        return mBluetoothAdapter != null && mBluetoothAdapter.isEnabled();
+        return isBluetoothAvailable() && mBluetoothAdapter.isEnabled();
     }
 
     /**
@@ -146,7 +153,8 @@ public class NetworkController {
      * @return
      */
     public boolean setBluetoothEnabled(boolean enabled) {
-        return enabled ? mBluetoothAdapter.enable() : mBluetoothAdapter.disable();
+        return !isBluetoothAvailable() && (enabled ? mBluetoothAdapter.enable()
+                : mBluetoothAdapter.disable());
     }
 
 
