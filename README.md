@@ -8,7 +8,7 @@ Faster development with Debug Drawer
 
 ## Features
 
-Currently exists 6 modules:
+Currently exists 7 modules:
 
 `DeviceModule` - common information about your device
 
@@ -34,9 +34,14 @@ Currently exists 6 modules:
 
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/picasso.png)
 
+`ScalpelModule` - tool to uncover the layers under your app (requires extra dependency)
+Thanks [ebabel](https://github.com/ebabel) for contributing.
+
+![](https://github.com/palaima/DebugDrawer/raw/master/images/scalpel.png)
+
 ## TODO Features
 
-`LocationModule`, `UserInterfaceModule`, `LogsModule`
+`LocationModule`, `LogsModule`
 
 ## Getting Started
 
@@ -44,39 +49,48 @@ Add Gradle dependency:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.1.1'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.2.0'
 }
 ```
 
 If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.1.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.2.0'
 }
 ```
 
 Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.1.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.2.0'
 }
 ```
 
+`ScalpelModule`
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.2.0'
+}
+```
 
 * Or
-[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.1.1/debugdrawer-0.1.1.aar)
+[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.2.0/debugdrawer-0.2.0.aar)
 
 * Or
-[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.1.1/debugdrawer-picasso-0.1.1.aar)
+[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.2.0/debugdrawer-picasso-0.2.0.aar)
 
 * Or
-[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.1.1/debugdrawer-okhttp-0.1.1.aar)
+[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.2.0/debugdrawer-okhttp-0.2.0.aar)
+
+* Or
+[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.2.0/debugdrawer-scalpel-0.2.0.aar)
 
 You can try the SNAPSHOT version:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.2.0-SNAPSHOT'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.3.0-SNAPSHOT'
 }
 ```
 Make sure to add the snapshot repository:
@@ -101,6 +115,7 @@ protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (BuildConfig.DEBUG) {
         mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                new ScalpelModule(this),
                 new OkHttpModule(mOkHttpClient),
                 new PicassoModule(mPicasso),
                 new DeviceModule(this),
@@ -179,10 +194,10 @@ You can clone the project and compile it yourself (it includes a sample).
 Want to contribute? You are welcome!
 
 ### Pull Requests
-1. Fork the repo and create your branch from `dev`.
-2. If you've changed APIs, update the documentation.
-3. Make sure your code lints.
-4. Change README.md if necessary
+* Fork the repo and create your branch from `dev`.
+* If you've changed APIs, update the documentation.
+* Make sure your code lints.
+* Change README.md if necessary
 
 ### Coding Style
 * Use the `m` member variable prefix for private fields
