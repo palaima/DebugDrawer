@@ -1,10 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="io.palaima.debugdrawer.okhttp">
+<manifest package="io.palaima.debugdrawer.okhttp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application android:allowBackup="true"
-                 android:label="@string/app_name"
-        >
-
-    </application>
+    <application android:allowBackup="true"/>
 
 </manifest>
