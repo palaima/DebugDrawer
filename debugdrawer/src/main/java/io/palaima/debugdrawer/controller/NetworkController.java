@@ -24,6 +24,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.support.annotation.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -193,29 +194,29 @@ public class NetworkController {
      * a NetworkChangeEvent using listener
      * <p/>
      */
-    public class NetworkReceiver extends BroadcastReceiver {
-
-
+    public static class NetworkReceiver extends BroadcastReceiver {
+        @Nullable
         private final Listener mListener;
 
-        public NetworkReceiver(Listener listener) {
+        public NetworkReceiver(@Nullable Listener listener) {
             mListener = listener;
         }
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-            final int bluetoothState = BluetoothAdapter.getDefaultAdapter().getState();
-
             if (mListener != null) {
-                mListener.post(new NetworkChangeEvent(
+                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                BluetoothAdapter bluetoothInfo = BluetoothAdapter.getDefaultAdapter();
+
+                final NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent(
                         (wifiInfo != null) ? wifiInfo.getState() : NetworkInfo.State.UNKNOWN,
                         (mobileInfo != null) ? mobileInfo.getState() : NetworkInfo.State.UNKNOWN,
-                        getBluetoothState(bluetoothState)));
+                        (bluetoothInfo != null) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
+
+                mListener.post(networkChangeEvent);
             }
 
         }
@@ -242,8 +243,7 @@ public class NetworkController {
         }
     }
 
-    public class NetworkChangeEvent {
-
+    public static class NetworkChangeEvent {
         public final NetworkInfo.State wifiState;
         public final NetworkInfo.State mobileState;
         public final BluetoothState bluetoothState;
