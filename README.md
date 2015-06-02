@@ -49,42 +49,42 @@ Add Gradle dependency:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.2.0'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.2.1'
 }
 ```
 
 If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.2.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.2.1'
 }
 ```
 
 Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.2.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.2.1'
 }
 ```
 
 `ScalpelModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.2.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.2.1'
 }
 ```
 
 * Or
-[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.2.0/debugdrawer-0.2.0.aar)
+[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.2.1/debugdrawer-0.2.1.aar)
 
 * Or
-[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.2.0/debugdrawer-picasso-0.2.0.aar)
+[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.2.1/debugdrawer-picasso-0.2.1.aar)
 
 * Or
-[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.2.0/debugdrawer-okhttp-0.2.0.aar)
+[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.2.1/debugdrawer-okhttp-0.2.1.aar)
 
 * Or
-[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.2.0/debugdrawer-scalpel-0.2.0.aar)
+[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.2.1/debugdrawer-scalpel-0.2.1.aar)
 
 You can try the SNAPSHOT version:
 
