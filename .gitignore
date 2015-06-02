@@ -41,3 +41,6 @@ signing.properties
 build/
 
 *.jks
+
+# Mac OS
+.DS_STORE
