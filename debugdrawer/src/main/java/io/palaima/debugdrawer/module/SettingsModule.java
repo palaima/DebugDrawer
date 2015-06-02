@@ -38,6 +38,7 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
     private ImageView mSettings;
     private ImageView mInfo;
     private ImageView mUninstall;
+    private ImageView mLocation;
 
     public SettingsModule(Context context) {
         mContext = context;
@@ -54,13 +55,14 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
         mSettings = (ImageView) view.findViewById(R.id.debug_settings_settings);
         mInfo = (ImageView) view.findViewById(R.id.debug_settings_info);
         mUninstall = (ImageView) view.findViewById(R.id.debug_settings_delete);
+        mLocation = (ImageView) view.findViewById(R.id.debug_location_settings);
 
         mDeveloper.setOnClickListener(this);
         mBattery.setOnClickListener(this);
         mSettings.setOnClickListener(this);
         mInfo.setOnClickListener(this);
         mUninstall.setOnClickListener(this);
-
+        mLocation.setOnClickListener(this);
         return view;
     }
 
@@ -107,6 +109,8 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
             Uri packageURI = Uri.parse("package:" + mContext.getPackageName());
             Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
             mContext.startActivity(uninstallIntent);
+        } else if (id == R.id.debug_location_settings) {
+            mContext.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
     }
 }

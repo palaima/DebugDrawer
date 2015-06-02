@@ -22,7 +22,7 @@
         />
     <Switch
         android:id="@+id/debug_network_wifi"
-        android:layout_gravity="center"
+        android:layout_gravity="start|center_vertical"
         style="@style/Widget.DebugDrawer.RowWidget"
         />
 
@@ -33,7 +33,7 @@
         />
     <Switch
         android:id="@+id/debug_network_mobile"
-        android:layout_gravity="center"
+        android:layout_gravity="start|center_vertical"
         style="@style/Widget.DebugDrawer.RowWidget"
         />
 
@@ -44,7 +44,7 @@
         />
     <Switch
         android:id="@+id/debug_network_bluetooth"
-        android:layout_gravity="center"
+        android:layout_gravity="start|center_vertical"
         style="@style/Widget.DebugDrawer.RowWidget"
         />
 
