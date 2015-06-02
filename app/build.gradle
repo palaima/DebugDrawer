@@ -39,10 +39,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.google.android.gms:play-services-location:7.3.0'
-    /*compile 'io.palaima.debugdrawer:debugdrawer:0.2.1'
-    compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.2.1'
-    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.2.1'
-    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.2.1'*/
+    /*compile 'io.palaima.debugdrawer:debugdrawer:0.3.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.3.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.3.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.3.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-location:0.3.0'*/
     compile project(':debugdrawer')
     compile project(':debugdrawer-picasso')
     compile project(':debugdrawer-okhttp')

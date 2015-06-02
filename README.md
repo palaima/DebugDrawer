@@ -39,9 +39,13 @@ Thanks [ebabel](https://github.com/ebabel) for contributing.
 
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/scalpel.png)
 
-## TODO Features
+`LocationModule` - common location information (requires extra dependency)
 
-`LocationModule`, `LogsModule`
+![](https://github.com/palaima/DebugDrawer/raw/master/images/location.png)
+
+## TODO Modules
+`LogsModule`
+You are always welcome to suggest modules!
 
 ## Getting Started
 
@@ -49,48 +53,58 @@ Add Gradle dependency:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.2.1'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.3.0'
 }
 ```
 
 If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.2.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.3.0'
 }
 ```
 
 Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.2.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.3.0'
 }
 ```
 
 `ScalpelModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.2.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.3.0'
+}
+```
+
+`LocationModule`
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-location:0.3.0'
 }
 ```
 
 * Or
-[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.2.1/debugdrawer-0.2.1.aar)
+[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.3.0/debugdrawer-0.3.0.aar)
 
 * Or
-[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.2.1/debugdrawer-picasso-0.2.1.aar)
+[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.3.0/debugdrawer-picasso-0.3.0.aar)
 
 * Or
-[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.2.1/debugdrawer-okhttp-0.2.1.aar)
+[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.3.0debugdrawer-okhttp-0.3.0.aar)
 
 * Or
-[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.2.1/debugdrawer-scalpel-0.2.1.aar)
+[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.3.0/debugdrawer-scalpel-0.3.0.aar)
+
+* Or
+[DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.3.0/debugdrawer-location-0.3.0.aar)
 
 You can try the SNAPSHOT version:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.3.0-SNAPSHOT'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.4.0-SNAPSHOT'
 }
 ```
 Make sure to add the snapshot repository:
@@ -115,6 +129,7 @@ protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (BuildConfig.DEBUG) {
         mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                new LocationModule(this),
                 new ScalpelModule(this),
                 new OkHttpModule(mOkHttpClient),
                 new PicassoModule(mPicasso),
@@ -128,7 +143,7 @@ protected void onCreate(Bundle savedInstanceState) {
 ```
 
 ### 2. onStart/onStop
-If you use NetworkModule or your own which is hooked with BroadcastReceivers you must call onStart/onStop in your activity
+If you use `NetworkModule`/`LocationModule` or your own which is hooked with BroadcastReceivers you must call onStart/onStop in your activity
 
 ```java
 @Override
