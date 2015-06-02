@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.DebugDrawer;
+import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.module.BuildModule;
 import io.palaima.debugdrawer.module.DeviceModule;
 import io.palaima.debugdrawer.module.NetworkModule;
@@ -29,7 +30,6 @@ import io.palaima.debugdrawer.module.SettingsModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }*/
         if (BuildConfig.DEBUG) {
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                    new LocationModule(this),
                     new ScalpelModule(this),
                     new OkHttpModule(mOkHttpClient),
                     new PicassoModule(mPicasso),

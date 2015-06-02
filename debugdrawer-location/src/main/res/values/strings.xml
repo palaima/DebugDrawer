@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="debug_drawer_location_google_play_unavailable">Google Play Service Unavailable</string>
+    <string name="debug_drawer_location_empty">-</string>
+    <string name="debug_drawer_location_no_provider">None</string>
+    <string name="debug_drawer_location_not_found">No location set</string>
+    <string name="debug_drawer_location_map_not_found">Could not find app that opens a map</string>
+</resources>
