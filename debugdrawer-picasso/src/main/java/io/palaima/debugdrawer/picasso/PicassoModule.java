@@ -16,8 +16,6 @@ public class PicassoModule implements DrawerModule {
 
     private final Picasso mPicasso;
 
-    private View mRootView;
-
     private Switch mIndicator;
 
     private TextView mCache;
@@ -40,7 +38,6 @@ public class PicassoModule implements DrawerModule {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
 
         View view = inflater.inflate(R.layout.debug_drawer_item_picasso, parent, false);
-        mRootView = view;
         mIndicator = (Switch) view.findViewById(R.id.debug_picasso_indicators);
         mCache = (TextView) view.findViewById(R.id.debug_picasso_cache_size);
         mCacheHits = (TextView) view.findViewById(R.id.debug_picasso_cache_hit);

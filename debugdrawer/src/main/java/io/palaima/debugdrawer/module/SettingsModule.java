@@ -33,7 +33,6 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
 
     private final Context mContext;
 
-    private View mRootView;
     private ImageView mDeveloper;
     private ImageView mBattery;
     private ImageView mSettings;
@@ -47,16 +46,15 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_module_settings, parent, false);
+        view.setClickable(false);
+        view.setEnabled(false);
 
-        mRootView = view;
         mDeveloper = (ImageView) view.findViewById(R.id.debug_settings_developer);
         mBattery = (ImageView) view.findViewById(R.id.debug_settings_batery);
         mSettings = (ImageView) view.findViewById(R.id.debug_settings_settings);
         mInfo = (ImageView) view.findViewById(R.id.debug_settings_info);
         mUninstall = (ImageView) view.findViewById(R.id.debug_settings_delete);
 
-        mRootView.setClickable(false);
-        mRootView.setEnabled(false);
         mDeveloper.setOnClickListener(this);
         mBattery.setOnClickListener(this);
         mSettings.setOnClickListener(this);

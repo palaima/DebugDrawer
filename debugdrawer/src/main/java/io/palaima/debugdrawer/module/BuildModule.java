@@ -31,7 +31,6 @@ public class BuildModule implements DrawerModule {
 
     private final Context mContext;
 
-    private View mRootView;
     private TextView mCode;
     private TextView mName;
     private TextView mPackage;
@@ -43,13 +42,12 @@ public class BuildModule implements DrawerModule {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_module_build, parent, false);
-        mRootView = view;
+        view.setClickable(false);
+        view.setEnabled(false);
+
         mCode = (TextView) view.findViewById(R.id.debug_build_code);
         mName = (TextView) view.findViewById(R.id.debug_build_name);
         mPackage = (TextView) view.findViewById(R.id.debug_build_package);
-
-        mRootView.setClickable(false);
-        mRootView.setEnabled(false);
 
         refresh();
 

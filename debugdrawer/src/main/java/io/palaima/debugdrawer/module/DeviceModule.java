@@ -35,7 +35,6 @@ public class DeviceModule implements DrawerModule {
     private String mDeviceRelease;
     private String mDeviceApi;
 
-    private View mRootView;
     private TextView mDeviceMakeView;
     private TextView mDeviceModelView;
     private TextView mDeviceResolutionView;
@@ -82,8 +81,9 @@ public class DeviceModule implements DrawerModule {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_module_device, parent, false);
+        view.setClickable(false);
+        view.setEnabled(false);
 
-        mRootView = view;
         mDeviceMakeView = (TextView) view.findViewById(R.id.debug_device_make);
         mDeviceModelView = (TextView) view.findViewById(R.id.debug_device_model);
         mDeviceResolutionView = (TextView) view.findViewById(R.id.debug_device_resolution);
@@ -91,8 +91,6 @@ public class DeviceModule implements DrawerModule {
         mDeviceReleaseView = (TextView) view.findViewById(R.id.debug_device_release);
         mDeviceApiView = (TextView) view.findViewById(R.id.debug_device_api);
 
-        mRootView.setClickable(false);
-        mRootView.setEnabled(false);
         mDeviceModelView.setText(mDeviceModel);
         mDeviceMakeView.setText(mDeviceMake);
         mDeviceResolutionView.setText(mDeviceResolution);
