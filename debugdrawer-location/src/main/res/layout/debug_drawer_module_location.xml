@@ -85,7 +85,6 @@
         android:layout_width="0dp"
         android:layout_gravity="start|center|fill_horizontal"
         style="@style/Widget.DebugDrawer.RowValue"
-        android:src="@drawable/ic_map_white_24dp"
         />
 
 </GridLayout>
