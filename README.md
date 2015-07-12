@@ -8,7 +8,7 @@ Faster development with Debug Drawer
 
 ## Features
 
-Currently exists 7 modules:
+Currently exists 8 modules:
 
 `DeviceModule` - common information about your device
 
@@ -53,52 +53,52 @@ Add Gradle dependency:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.3.0'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.3.1'
 }
 ```
 
 If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.3.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.3.1'
 }
 ```
 
 Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.3.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.3.1'
 }
 ```
 
 `ScalpelModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.3.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.3.1'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.3.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-location:0.3.1'
 }
 ```
 
 * Or
-[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.3.0/debugdrawer-0.3.0.aar)
+[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.3.1/debugdrawer-0.3.1.aar)
 
 * Or
-[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.3.0/debugdrawer-picasso-0.3.0.aar)
+[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.3.1/debugdrawer-picasso-0.3.1.aar)
 
 * Or
-[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.3.0debugdrawer-okhttp-0.3.0.aar)
+[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.3.1/debugdrawer-okhttp-0.3.1.aar)
 
 * Or
-[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.3.0/debugdrawer-scalpel-0.3.0.aar)
+[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.3.1/debugdrawer-scalpel-0.3.1.aar)
 
 * Or
-[DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.3.0/debugdrawer-location-0.3.0.aar)
+[DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.3.1/debugdrawer-location-0.3.1.aar)
 
 You can try the SNAPSHOT version:
 

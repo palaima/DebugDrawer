@@ -25,15 +25,13 @@ import com.google.android.gms.location.LocationServices;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 
 public class LocationController implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private LocationListener mLocationListener;
+    private transient LocationListener mLocationListener;
 
     private static LocationController instance;
-
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -59,7 +57,6 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.d("LocationModule", "onConnected ");
         mConnected = true;
         if (!mIsStarted) {
             startLocationUpdates();
@@ -68,13 +65,11 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.d("LocationModule", "onConnectionSuspended ");
         mConnected = false;
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("LocationModule", "onConnectionFailed ");
         mConnected = false;
     }
 
@@ -95,13 +90,6 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
                 .addApi(LocationServices.API)
                 .build();
     }
-
-/*    protected void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(TimeUnit.SECONDS.toMillis(10));
-        mLocationRequest.setFastestInterval(TimeUnit.SECONDS.toMillis(5));
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }*/
 
     public void setLocationRequest(LocationRequest locationRequest) {
         mLocationRequest = locationRequest;

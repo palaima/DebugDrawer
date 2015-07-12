@@ -26,7 +26,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,7 @@ import io.palaima.debugdrawer.module.DrawerModule;
 
 public class LocationModule implements DrawerModule {
 
-    private final Context mContext;
+    private transient final Context mContext;
 
     private LocationController mLocationController;
 
@@ -81,11 +80,11 @@ public class LocationModule implements DrawerModule {
     }
 
     public LocationModule(Context context, LocationRequest locationRequest) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         boolean available = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
+                .isGooglePlayServicesAvailable(mContext) == ConnectionResult.SUCCESS;
         if (available) {
-            mLocationController = LocationController.newInstance(context);
+            mLocationController = LocationController.newInstance(mContext);
             if (locationRequest != null) {
                 mLocationController.setLocationRequest(locationRequest);
             }
@@ -110,7 +109,6 @@ public class LocationModule implements DrawerModule {
             mLocationController.setLocationListener(new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    Log.d("LocationModule", "onLocationChanged ");
                     updateLocation(location);
                 }
             });
@@ -130,7 +128,6 @@ public class LocationModule implements DrawerModule {
     }
 
     private void updateLastLocation() {
-        Log.d("LocationModule", "updateLastLocation ");
         Location lastLocation = mLocationController.getLastLocation();
         updateLocation(lastLocation);
     }

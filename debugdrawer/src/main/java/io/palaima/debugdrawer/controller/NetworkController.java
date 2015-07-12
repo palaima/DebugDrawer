@@ -66,8 +66,8 @@ public class NetworkController {
      */
     private NetworkController(Context context) {
         mContext = context.getApplicationContext();
-        mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        mConnectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
