@@ -35,15 +35,15 @@ android {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
-    compile 'com.google.android.gms:play-services-location:7.3.0'
-    /*compile 'io.palaima.debugdrawer:debugdrawer:0.3.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.3.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.3.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.3.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-location:0.3.0'*/
+    compile 'com.google.android.gms:play-services-location:7.5.0'
+   /* compile 'io.palaima.debugdrawer:debugdrawer:0.3.1'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.3.1'
+    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.3.1'
+    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.3.1'
+    compile 'io.palaima.debugdrawer:debugdrawer-location:0.3.1'*/
     compile project(':debugdrawer')
     compile project(':debugdrawer-picasso')
     compile project(':debugdrawer-okhttp')
