@@ -1,8 +1,9 @@
 package io.palaima.debugdrawer.app;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * @author Niklas Baudy (https://github.com/vanniktech)
