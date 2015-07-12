@@ -51,7 +51,7 @@ public class PicassoModule implements DrawerModule {
 
 
         mPicasso.setIndicatorsEnabled(mPicasso.areIndicatorsEnabled());
-        mIndicator.setChecked(false);
+        mIndicator.setChecked(mPicasso.areIndicatorsEnabled());
         mIndicator.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override
