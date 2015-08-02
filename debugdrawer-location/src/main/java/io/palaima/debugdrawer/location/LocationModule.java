@@ -170,7 +170,9 @@ public class LocationModule implements DrawerModule {
         try {
             if (mLocation != null) {
                 String uri = "geo:" + mLocation.getLatitude() + "," + mLocation.getLongitude();
-                context.startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             } else {
                 Toast.makeText(context, R.string.debug_drawer_location_not_found, Toast.LENGTH_SHORT).show();
             }
