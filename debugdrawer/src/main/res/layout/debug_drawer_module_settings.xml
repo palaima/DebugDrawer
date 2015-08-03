@@ -17,6 +17,7 @@
         />
 
     <TextView
+        android:id="@+id/debug_settings_developer_title"
         android:layout_gravity="start|center_vertical"
         android:text="Developer"
         style="@style/Widget.DebugDrawer.RowTitle"
@@ -30,6 +31,7 @@
         />
 
     <TextView
+        android:id="@+id/debug_settings_batery_title"
         android:layout_gravity="start|center_vertical"
         android:text="Battery"
         style="@style/Widget.DebugDrawer.RowTitle"
@@ -43,6 +45,7 @@
         />
 
     <TextView
+        android:id="@+id/debug_location_settings_title"
         android:layout_gravity="start|center_vertical"
         android:text="Location"
         style="@style/Widget.DebugDrawer.RowTitle"
@@ -56,6 +59,7 @@
         />
 
     <TextView
+        android:id="@+id/debug_settings_settings_title"
         android:layout_gravity="start|center_vertical"
         android:text="Settings"
         style="@style/Widget.DebugDrawer.RowTitle"
@@ -69,6 +73,7 @@
         />
 
     <TextView
+        android:id="@+id/debug_settings_info_title"
         android:layout_gravity="start|center_vertical"
         android:text="App info"
         style="@style/Widget.DebugDrawer.RowTitle"
@@ -82,6 +87,7 @@
         />
 
     <TextView
+        android:id="@+id/debug_settings_delete_title"
         android:layout_gravity="start|center_vertical"
         android:text="Uninstall"
         style="@style/Widget.DebugDrawer.RowTitle"
