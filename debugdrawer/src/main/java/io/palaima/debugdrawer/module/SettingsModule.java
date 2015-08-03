@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2014 LemonLabs
  * Copyright (C) 2015 Mantas Palaima
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
