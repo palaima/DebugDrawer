@@ -56,6 +56,8 @@ public class LogAdapter extends BaseAdapter {
 
     public void addLog(LogEntry logEntry) {
         mLogEntries.add(logEntry);
+
+        notifyDataSetChanged();
     }
 
     static class ViewHolder {
