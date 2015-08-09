@@ -1,10 +1,5 @@
 package io.palaima.debugdrawer.app;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
-
 import android.app.Application;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,15 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 import io.palaima.debugdrawer.DebugDrawer;
 import io.palaima.debugdrawer.location.LocationModule;
+import io.palaima.debugdrawer.log.LogModule;
 import io.palaima.debugdrawer.module.BuildModule;
 import io.palaima.debugdrawer.module.DeviceModule;
 import io.palaima.debugdrawer.module.NetworkModule;
@@ -30,6 +23,13 @@ import io.palaima.debugdrawer.module.SettingsModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
+import timber.log.Timber;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
                     new LocationModule(this),
                     new ScalpelModule(this),
+                    new LogModule(),
                     new OkHttpModule(mOkHttpClient),
                     new PicassoModule(mPicasso),
                     new DeviceModule(this),
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
             ).build();
         }
 
+        showDummyLog();
+
         List<String> images = new ArrayList<>();
         for (int i = 1; i < 30; i++) {
             images.add("http://lorempixel.com/400/200/sports/" + i);
@@ -82,6 +85,15 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.image_list);
         listView.setAdapter(new ImageAdapter(this, images, mPicasso));
+    }
+
+    private void showDummyLog() {
+        Timber.d("Debug");
+        Timber.e("Error");
+        Timber.w("Warning");
+        Timber.i("Info");
+        Timber.v("Verbose");
+        Timber.wtf("WTF");
     }
 
     @Override
