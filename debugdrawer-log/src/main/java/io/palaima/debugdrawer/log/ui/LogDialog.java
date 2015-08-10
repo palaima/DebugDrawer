@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import java.io.File;
 public class LogDialog extends AlertDialog {
 
     private final LogAdapter mAdapter;
+
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     public LogDialog(Context context) {
         super(context);
@@ -54,6 +58,16 @@ public class LogDialog extends AlertDialog {
         lumberYard.setOnLogListener(new LumberYard.OnLogListener() {
             @Override
             public void onLog(LogEntry logEntry) {
+
+                addLogEntry(logEntry);
+            }
+        });
+    }
+
+    private void addLogEntry(final LogEntry logEntry) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
                 mAdapter.addLog(logEntry);
             }
         });
