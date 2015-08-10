@@ -77,7 +77,7 @@ public class LogAdapter extends BaseAdapter {
         void fillData(LogEntry entry) {
             mRootView.setBackgroundResource(backgroundForLevel(entry.getLevel()));
             mLogLevelTextView.setText(entry.displayLevel());
-            mLogTagTextView.setText(entry.getTag());
+            mLogTagTextView.setText(String.format("%s %s", entry.getTimeStamp(), entry.getTag()));
             mLogMessageTextView.setText(entry.getMessage());
         }
     }

@@ -3,14 +3,16 @@ package io.palaima.debugdrawer.log.model;
 import android.util.Log;
 
 public class LogEntry {
-    public final int mLevel;
-    public final String mTag;
-    public final String mMessage;
+    private final int mLevel;
+    private final String mTag;
+    private final String mMessage;
+    private final String mTimeStamp;
 
-    public LogEntry(int level, String tag, String message) {
-        this.mLevel = level;
-        this.mTag = tag;
-        this.mMessage = message;
+    public LogEntry(int level, String tag, String message, String timeStamp) {
+        mLevel = level;
+        mTag = tag;
+        mMessage = message;
+        mTimeStamp = timeStamp;
     }
 
     public int getLevel() {
@@ -25,8 +27,12 @@ public class LogEntry {
         return mMessage;
     }
 
+    public String getTimeStamp() {
+        return mTimeStamp;
+    }
+
     public String prettyPrint() {
-        return String.format("%22s %s %s", mTag, displayLevel(), mMessage);
+        return String.format("%18s %18s %s %s", mTimeStamp, mTag, displayLevel(), mMessage);
     }
 
     public String displayLevel() {

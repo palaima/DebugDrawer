@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
     <TextView
             android:id="@+id/text_log_level"
             android:layout_width="20dp"
@@ -16,6 +17,7 @@
             android:textStyle="bold"
             tools:text="Log level"
             />
+
     <TextView
             android:id="@+id/text_log_tag"
             android:layout_width="0dp"
@@ -33,6 +35,7 @@
             android:textSize="10sp"
             tools:text="Log tag"
             />
+
     <TextView
             android:id="@+id/text_log_message"
             android:layout_width="match_parent"
