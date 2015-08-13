@@ -1,0 +1,148 @@
+package io.palaima.debugdrawer.log.data;
+
+import android.content.Context;
+import io.palaima.debugdrawer.log.model.LogEntry;
+import timber.log.Timber;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+public class LumberYard {
+    private static final int BUFFER_SIZE = 200;
+
+    private static final DateFormat FILENAME_DATE = new SimpleDateFormat("yyyy-MM-dd hhmm a", Locale.US);
+    private static final DateFormat LOG_DATE_PATTERN = new SimpleDateFormat("MM-dd hh:mm:ss.S", Locale.US);
+
+    private static final String LOG_FILE_END = ".log";
+
+    private static LumberYard sInstance;
+
+    private final Context mContext;
+
+    private final Deque<LogEntry> entries = new ArrayDeque<>(BUFFER_SIZE + 1);
+
+    private OnLogListener mOnLogListener;
+
+    public LumberYard(Context context) {
+        mContext = context.getApplicationContext();
+    }
+
+    public static LumberYard getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new LumberYard(context);
+        }
+
+        return sInstance;
+    }
+
+    public Timber.Tree tree() {
+        return new Timber.DebugTree() {
+            @Override
+            protected void log(int priority, String tag, String message, Throwable t) {
+                addEntry(new LogEntry(priority, tag, message, LOG_DATE_PATTERN.format(Calendar.getInstance().getTime())));
+            }
+        };
+    }
+
+    public void setOnLogListener(OnLogListener onLogListener) {
+        mOnLogListener = onLogListener;
+    }
+
+    private synchronized void addEntry(LogEntry entry) {
+        entries.addLast(entry);
+
+        if (entries.size() > BUFFER_SIZE) {
+            entries.removeFirst();
+        }
+
+        onLog(entry);
+    }
+
+    public List<LogEntry> bufferedLogs() {
+        return new ArrayList<>(entries);
+    }
+
+    /**
+     * Save the current logs to disk.
+     */
+    public void save(OnSaveLogListener listener) {
+        File dir = getLogDir();
+
+        if (dir == null) {
+            listener.onError("Can't save logs. External storage is not mounted. " +
+                    "Check android.permission.WRITE_EXTERNAL_STORAGE permission");
+            return;
+        }
+
+        FileWriter fileWriter = null;
+
+        try {
+            File output = new File(dir, getLogFileName());
+            fileWriter = new FileWriter(output, true);
+
+            List<LogEntry> entries = bufferedLogs();
+            for (LogEntry entry : entries) {
+                fileWriter.write(entry.prettyPrint() + "\n");
+            }
+
+            listener.onSave(output);
+
+        } catch (IOException e) {
+            listener.onError(e.getMessage());
+            e.printStackTrace();
+
+        } finally {
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    listener.onError(e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void cleanUp() {
+        File dir = getLogDir();
+        if (dir != null) {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if (file.getName().endsWith(LOG_FILE_END)) {
+                    file.delete();
+                }
+            }
+        }
+    }
+
+    private File getLogDir() {
+        return mContext.getExternalFilesDir(null);
+    }
+
+    private void onLog(LogEntry entry) {
+        if (mOnLogListener != null) {
+            mOnLogListener.onLog(entry);
+        }
+    }
+
+    private String getLogFileName() {
+        String pattern = "%s%s";
+        String currentDate = FILENAME_DATE.format(Calendar.getInstance().getTime());
+
+        return String.format(pattern, currentDate, LOG_FILE_END);
+    }
+
+    public interface OnSaveLogListener {
+        void onSave(File file);
+
+        void onError(String message);
+    }
+
+    public interface OnLogListener {
+        void onLog(LogEntry logEntry);
+    }
+}
