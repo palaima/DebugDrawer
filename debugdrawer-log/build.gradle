@@ -23,3 +23,5 @@ dependencies {
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile project(':debugdrawer')
 }
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

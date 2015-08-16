@@ -4,49 +4,54 @@
 
 Faster development with Debug Drawer
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/all.png)
+![](./images/all.png)
 
 ## Features
 
-Currently exists 8 modules:
+Currently exists 9 modules:
 
 `DeviceModule` - common information about your device
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/device.png)
+![](./images/device.png)
 
 `BuildModule` - app build information
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/build.png)
+![](./images/build.png)
 
 `SettingsModule` - open Developer, Battery, Default settings, open app info and possibility to uninstall app directly from itself
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/settings.png)
+![](./images/settings.png)
 
 `NetworkModule` - enable/disable Wifi, Mobile or Bluetooth
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/network.png)
+![](./images/network.png)
 
 `OkHttpModule` - common information about http client (requires extra dependency)
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/okhttp.png)
+![](./images/okhttp.png)
 
 `PicassoModule` - image downloading and caching statistics (requires extra dependency)
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/picasso.png)
+![](./images/picasso.png)
 
 `ScalpelModule` - tool to uncover the layers under your app (requires extra dependency)
 Thanks [ebabel](https://github.com/ebabel) for contributing.
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/scalpel.png)
+![](./images/scalpel.png)
 
 `LocationModule` - common location information (requires extra dependency)
 
-![](https://github.com/palaima/DebugDrawer/raw/master/images/location.png)
+![](./images/location.png)
 
 `LogModule` - log viewer with sharing feature
+Thanks [Vilian](https://github.com/Vilian) for contributing.
+
 ![](./images/log.png)
 
-## TODO Modules
+## TODO
+- Network delay/error adapters
+- Take screenshot feature
+
 You are always welcome to suggest modules!
 
 ## Getting Started
@@ -55,66 +60,68 @@ Add Gradle dependency:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.3.1'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.4.0'
 }
 ```
 
 If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.3.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.4.0'
 }
 ```
 
 Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.3.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.4.0'
 }
 ```
 
 `ScalpelModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.3.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.4.0'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.3.1'
+   compile 'io.palaima.debugdrawer:debugdrawer-location:0.4.0'
 }
 ```
 
 `LogModule`
 ```gradle
-todo
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-log:0.4.0'
+}
 ```
 
 * Or
-[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.3.1/debugdrawer-0.3.1.aar)
+[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.4.0/debugdrawer-0.4.0.aar)
 
 * Or
-[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.3.1/debugdrawer-picasso-0.3.1.aar)
+[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.4.0/debugdrawer-picasso-0.4.0.aar)
 
 * Or
-[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.3.1/debugdrawer-okhttp-0.3.1.aar)
+[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.4.0/debugdrawer-okhttp-0.4.0.aar)
 
 * Or
-[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.3.1/debugdrawer-scalpel-0.3.1.aar)
+[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.4.0/debugdrawer-scalpel-0.4.0.aar)
 
 * Or
-[DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.3.1/debugdrawer-location-0.3.1.aar)
+[DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.4.0/debugdrawer-location-0.4.0.aar)
 
 * Or
-[DebugDrawer-Log Download from Maven todo]()
+[DebugDrawer-Log Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-log/0.4.0/debugdrawer-log-0.4.0.aar)
 
 You can try the SNAPSHOT version:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.4.0-SNAPSHOT'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.5.0-SNAPSHOT'
 }
 ```
 Make sure to add the snapshot repository:
@@ -213,7 +220,13 @@ public interface DrawerModule {
      * Override this method if you need to refresh
      * some information  when drawer is opened
      */
-    void onRefreshView();
+    void onOpened();
+
+    /**
+     * Override this method if you need to stop
+     * some actions  when drawer is closed
+     */
+    void onClosed();
 
     /**
      * Override this method if you need to start
