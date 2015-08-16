@@ -14,16 +14,18 @@
         <item name="android:background">@drawable/debug_drawer_header_bg</item>
     </style>
     <style name="Widget.DebugDrawer.RowWidget" parent="None">
-        <item name="android:minHeight">26dp</item>
+        <item name="android:minHeight">30dp</item>
         <item name="android:layout_marginTop">4dp</item>
     </style>
     <style name="Widget.DebugDrawer.RowTitle" parent="Widget.DebugDrawer.RowWidget">
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
     <style name="Widget.DebugDrawer.RowValue" parent="Widget.DebugDrawer.RowWidget">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 </resources>

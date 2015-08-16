@@ -40,8 +40,6 @@ import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
 
 public class DebugDrawer {
 
-    private static final String TAG = "DebugDrawer2";
-
     private final DrawerLayout mDrawerLayout;
 
     private ScrollView mSliderLayout;
@@ -330,10 +328,9 @@ public class DebugDrawer {
                     if (mOnDrawerListener != null) {
                         mOnDrawerListener.onDrawerOpened(drawerView);
                     }
-
                     if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
                         for (DrawerModule drawerItem : mDrawerItems) {
-                            drawerItem.onRefreshView();
+                            drawerItem.onOpened();
                         }
                     }
                 }
@@ -342,6 +339,11 @@ public class DebugDrawer {
                 public void onDrawerClosed(View drawerView) {
                     if (mOnDrawerListener != null) {
                         mOnDrawerListener.onDrawerClosed(drawerView);
+                    }
+                    if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
+                        for (DrawerModule drawerItem : mDrawerItems) {
+                            drawerItem.onClosed();
+                        }
                     }
                 }
 

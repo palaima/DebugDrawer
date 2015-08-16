@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2014 LemonLabs
  * Copyright (C) 2015 Mantas Palaima
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,11 +34,17 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
 
     private final Context mContext;
 
+    private View mDeveloperTitle;
     private ImageView mDeveloper;
+    private View mBatteryTitle;
     private ImageView mBattery;
+    private View mSettingsTitle;
     private ImageView mSettings;
+    private View mInfoTitle;
     private ImageView mInfo;
+    private View mUninstallTitle;
     private ImageView mUninstall;
+    private View mLocationTitle;
     private ImageView mLocation;
 
     public SettingsModule(Context context) {
@@ -51,23 +58,40 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
         view.setEnabled(false);
 
         mDeveloper = (ImageView) view.findViewById(R.id.debug_settings_developer);
+        mDeveloperTitle = view.findViewById(R.id.debug_settings_developer_title);
         mBattery = (ImageView) view.findViewById(R.id.debug_settings_batery);
+        mBatteryTitle = view.findViewById(R.id.debug_settings_batery_title);
         mSettings = (ImageView) view.findViewById(R.id.debug_settings_settings);
+        mSettingsTitle = view.findViewById(R.id.debug_settings_settings_title);
         mInfo = (ImageView) view.findViewById(R.id.debug_settings_info);
+        mInfoTitle = view.findViewById(R.id.debug_settings_info_title);
         mUninstall = (ImageView) view.findViewById(R.id.debug_settings_delete);
+        mUninstallTitle = view.findViewById(R.id.debug_settings_delete_title);
         mLocation = (ImageView) view.findViewById(R.id.debug_location_settings);
+        mLocationTitle = view.findViewById(R.id.debug_location_settings_title);
 
         mDeveloper.setOnClickListener(this);
+        mDeveloperTitle.setOnClickListener(this);
         mBattery.setOnClickListener(this);
+        mBatteryTitle.setOnClickListener(this);
         mSettings.setOnClickListener(this);
+        mSettingsTitle.setOnClickListener(this);
         mInfo.setOnClickListener(this);
+        mInfoTitle.setOnClickListener(this);
         mUninstall.setOnClickListener(this);
+        mUninstallTitle.setOnClickListener(this);
         mLocation.setOnClickListener(this);
+        mLocationTitle.setOnClickListener(this);
         return view;
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
+
+    }
+
+    @Override
+    public void onClosed() {
 
     }
 
@@ -83,33 +107,32 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.debug_settings_developer) {
+        if (v == mDeveloper || v == mDeveloperTitle) {
             // open dev settings
             Intent devIntent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
             ResolveInfo resolveInfo = mContext.getPackageManager().resolveActivity(devIntent, 0);
             if (resolveInfo != null) mContext.startActivity(devIntent);
             else Toast.makeText(mContext, "Developer settings not available on device",
-                    Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.debug_settings_batery) {
+                Toast.LENGTH_SHORT).show();
+        } else if (v == mBattery || v == mBatteryTitle) {
             // try to find an app to handle battery settings
             Intent batteryIntent = new Intent(Intent.ACTION_POWER_USAGE_SUMMARY);
             ResolveInfo resolveInfo = mContext.getPackageManager().resolveActivity(batteryIntent, 0);
             if (resolveInfo != null) mContext.startActivity(batteryIntent);
             else Toast.makeText(mContext, "No app found to handle power usage intent", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.debug_settings_settings) {
+        } else if (v == mSettings || v == mSettingsTitle) {
             // open android settings
             mContext.startActivity(new Intent(Settings.ACTION_SETTINGS));
-        } else if (id == R.id.debug_settings_info) {
+        } else if (v == mInfo || v == mInfoTitle) {
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.parse("package:" + mContext.getPackageName()));
             mContext.startActivity(intent);
-        } else if (id == R.id.debug_settings_delete) {
+        } else if (v == mUninstall || v == mUninstallTitle) {
             // open dialog to uninstall app
             Uri packageURI = Uri.parse("package:" + mContext.getPackageName());
             Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
             mContext.startActivity(uninstallIntent);
-        } else if (id == R.id.debug_location_settings) {
+        } else if (v == mLocation || v == mLocationTitle) {
             mContext.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
     }

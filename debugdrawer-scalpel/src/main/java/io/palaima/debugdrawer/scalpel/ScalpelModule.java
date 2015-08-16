@@ -1,6 +1,8 @@
 package io.palaima.debugdrawer.scalpel;
 
 
+import com.jakewharton.scalpel.ScalpelFrameLayout;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
-
-import com.jakewharton.scalpel.ScalpelFrameLayout;
 
 import io.palaima.debugdrawer.module.DrawerModule;
 
@@ -68,7 +68,13 @@ public class ScalpelModule implements DrawerModule {
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
+
+    }
+
+    @Override
+    public void onClosed() {
+
     }
 
     @Override

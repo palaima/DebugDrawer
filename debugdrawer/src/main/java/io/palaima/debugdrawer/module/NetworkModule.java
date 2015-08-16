@@ -18,6 +18,7 @@ package io.palaima.debugdrawer.module;
 
 import android.content.Context;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class NetworkModule implements DrawerModule {
         View view = inflater.inflate(R.layout.debug_drawer_module_network, parent, false);
         mWifi = (Switch) view.findViewById(R.id.debug_network_wifi);
         mMobile = (Switch) view.findViewById(R.id.debug_network_mobile);
+        // In JellyBean 4.2, mobile network settings are only accessible from system apps
+        mMobile.setEnabled(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1);
         mBluetooth = (Switch) view.findViewById(R.id.debug_network_bluetooth);
 
 
@@ -91,7 +94,12 @@ public class NetworkModule implements DrawerModule {
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
+
+    }
+
+    @Override
+    public void onClosed() {
 
     }
 

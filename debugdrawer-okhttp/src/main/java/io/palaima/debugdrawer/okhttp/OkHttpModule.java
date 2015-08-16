@@ -57,8 +57,13 @@ public class OkHttpModule implements DrawerModule {
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
         refresh();
+    }
+
+    @Override
+    public void onClosed() {
+
     }
 
     @Override
