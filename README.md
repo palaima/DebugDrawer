@@ -43,8 +43,10 @@ Thanks [ebabel](https://github.com/ebabel) for contributing.
 
 ![](https://github.com/palaima/DebugDrawer/raw/master/images/location.png)
 
+`LogModule` - log viewer with sharing feature
+![](./images/log.png)
+
 ## TODO Modules
-`LogsModule`
 You are always welcome to suggest modules!
 
 ## Getting Started
@@ -85,6 +87,11 @@ dependencies {
 }
 ```
 
+`LogModule`
+```gradle
+todo
+```
+
 * Or
 [DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.3.1/debugdrawer-0.3.1.aar)
 
@@ -99,6 +106,9 @@ dependencies {
 
 * Or
 [DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.3.1/debugdrawer-location-0.3.1.aar)
+
+* Or
+[DebugDrawer-Log Download from Maven todo]()
 
 You can try the SNAPSHOT version:
 
@@ -131,6 +141,7 @@ protected void onCreate(Bundle savedInstanceState) {
         mDebugDrawer = new DebugDrawer.Builder(this).modules(
                 new LocationModule(this),
                 new ScalpelModule(this),
+                new LogModule(),
                 new OkHttpModule(mOkHttpClient),
                 new PicassoModule(mPicasso),
                 new DeviceModule(this),
@@ -161,6 +172,27 @@ protected void onStop() {
     super.onStop();
     if (mDebugDrawer != null) {
         mDebugDrawer.onStop();
+    }
+}
+```
+
+### 3. Timber
+If you want to use `LogModule` you need to use [Timber](https://github.com/JakeWharton/timber) for logging. Don't forget
+to plant needed log trees in Application class. Tree that is used by `LogModule` stored in `LumberYard` class.
+
+Application class example:
+
+```java
+public class DebugDrawerApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        LumberYard lumberYard = LumberYard.getInstance(this);
+        lumberYard.cleanUp();
+
+        Timber.plant(lumberYard.tree());
+        Timber.plant(new Timber.DebugTree());
     }
 }
 ```

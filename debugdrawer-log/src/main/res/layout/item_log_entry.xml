@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <TextView
+            android:id="@+id/text_log_level"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/debug_log_level_text"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            tools:text="Log level"
+            />
+
+    <TextView
+            android:id="@+id/text_log_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@id/text_log_level"
+            android:layout_toRightOf="@id/text_log_level"
+            android:background="@color/debug_log_background"
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="10sp"
+            tools:text="Log tag"
+            />
+
+    <TextView
+            android:id="@+id/text_log_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_log_level"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/debug_log_background"
+            android:padding="4dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="bold"
+            tools:text="Log message"
+            />
+</RelativeLayout>
