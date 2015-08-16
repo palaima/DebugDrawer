@@ -65,8 +65,13 @@ public class PicassoModule implements DrawerModule {
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
         refresh();
+    }
+
+    @Override
+    public void onClosed() {
+
     }
 
     private void refresh() {

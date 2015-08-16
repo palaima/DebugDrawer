@@ -86,7 +86,12 @@ public class SettingsModule implements DrawerModule, View.OnClickListener {
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
+
+    }
+
+    @Override
+    public void onClosed() {
 
     }
 

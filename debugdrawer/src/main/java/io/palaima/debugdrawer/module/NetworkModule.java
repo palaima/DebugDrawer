@@ -94,7 +94,12 @@ public class NetworkModule implements DrawerModule {
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
+
+    }
+
+    @Override
+    public void onClosed() {
 
     }
 

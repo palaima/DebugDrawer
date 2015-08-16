@@ -31,7 +31,13 @@ public interface DrawerModule {
      * Override this method if you need to refresh
      * some information  when drawer is opened
      */
-    void onRefreshView();
+    void onOpened();
+
+    /**
+     * Override this method if you need to stop
+     * some actions  when drawer is closed
+     */
+    void onClosed();
 
     /**
      * Override this method if you need to start

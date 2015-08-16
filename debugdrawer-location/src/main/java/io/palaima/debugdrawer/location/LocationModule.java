@@ -57,6 +57,8 @@ public class LocationModule implements DrawerModule {
 
     private Location mLocation;
 
+    private boolean mOpened;
+
     public LocationModule(Context context) {
         this(context, true);
     }
@@ -101,16 +103,19 @@ public class LocationModule implements DrawerModule {
             mAccuracy = (TextView) view.findViewById(R.id.debug_location_accuracy);
             mTime = (TextView) view.findViewById(R.id.debug_location_time);
             mProvider = (TextView) view.findViewById(R.id.debug_location_provider);
-            view.findViewById(R.id.debug_location_map).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openMaps(mContext);
-                }
-            });
+            view.findViewById(R.id.debug_location_map).setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openMaps(mContext);
+                        }
+                    });
             mLocationController.setLocationListener(new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    updateLocation(location);
+                    if (mOpened) {
+                        updateLocation(location);
+                    }
                 }
             });
             updateLastLocation();
@@ -124,8 +129,14 @@ public class LocationModule implements DrawerModule {
     }
 
     @Override
-    public void onRefreshView() {
+    public void onOpened() {
         updateLastLocation();
+        mOpened = true;
+    }
+
+    @Override
+    public void onClosed() {
+        mOpened = false;
     }
 
     private void updateLastLocation() {
