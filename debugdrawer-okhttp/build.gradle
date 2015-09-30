@@ -27,7 +27,7 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile project(':debugdrawer')
 }
 
