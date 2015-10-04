@@ -16,6 +16,7 @@
 
 package io.palaima.debugdrawer.module;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public interface DrawerModule {
     /**
      * Creates module view
      */
-    View onCreateView(LayoutInflater inflater, ViewGroup parent);
+    @NonNull View onCreateView(LayoutInflater inflater, ViewGroup parent);
 
     /**
      * Override this method if you need to refresh
