@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class LocationModule implements DrawerModule {
 
     private transient final Context mContext;
 
+    @Nullable
     private LocationController mLocationController;
 
     private TextView mLatitude;
@@ -64,8 +66,7 @@ public class LocationModule implements DrawerModule {
     }
 
     /**
-     *
-     * @param context
+     * @param context context
      * @param locationRequestsAvailable defines if location should be updated every 10 seconds
      */
     public LocationModule(Context context, boolean locationRequestsAvailable) {
@@ -140,8 +141,10 @@ public class LocationModule implements DrawerModule {
     }
 
     private void updateLastLocation() {
-        Location lastLocation = mLocationController.getLastLocation();
-        updateLocation(lastLocation);
+        if (mLocationController != null) {
+            Location lastLocation = mLocationController.getLastLocation();
+            updateLocation(lastLocation);
+        }
     }
 
     private void updateLocation(Location location) {
