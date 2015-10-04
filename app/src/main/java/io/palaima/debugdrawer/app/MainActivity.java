@@ -9,10 +9,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import io.palaima.debugdrawer.DebugDrawer;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.log.LogModule;
@@ -24,12 +31,6 @@ import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import timber.log.Timber;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -150,12 +151,8 @@ public class MainActivity extends AppCompatActivity {
         client.setReadTimeout(10, TimeUnit.SECONDS);
         client.setWriteTimeout(10, TimeUnit.SECONDS);
 
-        try {
-            File cacheDir = new File(application.getCacheDir(), "http");
-            client.setCache(new Cache(cacheDir, DISK_CACHE_SIZE));
-        } catch (IOException e) {
-            Log.e("OkHttp","failed creating ok http cache", e);
-        }
+        File cacheDir = new File(application.getCacheDir(), "http");
+        client.setCache(new Cache(cacheDir, DISK_CACHE_SIZE));
 
         return client;
     }

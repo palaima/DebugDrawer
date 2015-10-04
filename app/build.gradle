@@ -38,7 +38,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.google.android.gms:play-services-location:7.5.0'
+    compile 'com.google.android.gms:play-services-location:8.1.0'
     /*compile 'io.palaima.debugdrawer:debugdrawer:0.4.0'
     compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.4.0'
     compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.4.0'
