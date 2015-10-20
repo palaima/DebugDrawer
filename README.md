@@ -204,7 +204,7 @@ public class DebugDrawerApplication extends Application {
 }
 ```
 
-## Creating You Own Module
+## Creating Your Own Module
 Module must implement `DrawerModule` interface
 
 
