@@ -20,7 +20,7 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.jakewharton.timber:timber:4.0.1'
+    compile 'com.jakewharton.timber:timber:4.1.0'
     compile project(':debugdrawer')
 }
 
