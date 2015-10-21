@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
     compile project(':debugdrawer')
 }
