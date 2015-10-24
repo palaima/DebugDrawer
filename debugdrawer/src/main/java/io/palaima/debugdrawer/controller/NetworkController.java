@@ -196,6 +196,7 @@ public class NetworkController {
      * <p/>
      */
     public static class NetworkReceiver extends BroadcastReceiver {
+
         @Nullable
         private final Listener mListener;
 
