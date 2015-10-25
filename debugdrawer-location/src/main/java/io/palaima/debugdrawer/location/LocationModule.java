@@ -17,22 +17,25 @@
 
 package io.palaima.debugdrawer.location;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,6 +46,7 @@ import io.palaima.debugdrawer.module.DrawerModule;
 public class LocationModule implements DrawerModule {
 
     private transient final Context mContext;
+    private boolean mHasPermission;
 
     @Nullable
     private LocationController mLocationController;
@@ -71,23 +75,24 @@ public class LocationModule implements DrawerModule {
      */
     public LocationModule(Context context, boolean locationRequestsAvailable) {
         this(context, locationRequestsAvailable ? new LocationRequest()
-                .setInterval(TimeUnit.SECONDS.toMillis(10))
-                .setFastestInterval(TimeUnit.SECONDS.toMillis(5))
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
+            .setInterval(TimeUnit.SECONDS.toMillis(10))
+            .setFastestInterval(TimeUnit.SECONDS.toMillis(5))
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
     }
 
     public LocationModule(Context context, long interval, long fastestInterval) {
         this(context, new LocationRequest()
-                .setInterval(interval)
-                .setFastestInterval(fastestInterval)
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY));
+            .setInterval(interval)
+            .setFastestInterval(fastestInterval)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY));
     }
 
     public LocationModule(Context context, LocationRequest locationRequest) {
         mContext = context.getApplicationContext();
+        checkPermission();
         boolean available = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(mContext) == ConnectionResult.SUCCESS;
-        if (available) {
+            .isGooglePlayServicesAvailable(mContext) == ConnectionResult.SUCCESS;
+        if (available && mHasPermission) {
             mLocationController = LocationController.newInstance(mContext);
             if (locationRequest != null) {
                 mLocationController.setLocationRequest(locationRequest);
@@ -97,7 +102,7 @@ public class LocationModule implements DrawerModule {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
-        if (mLocationController != null) {
+        if (mLocationController != null && mHasPermission) {
             View view = inflater.inflate(R.layout.debug_drawer_module_location, parent, false);
             mLatitude = (TextView) view.findViewById(R.id.debug_location_latitude);
             mLongitude = (TextView) view.findViewById(R.id.debug_location_longitude);
@@ -121,6 +126,11 @@ public class LocationModule implements DrawerModule {
             });
             updateLastLocation();
             return view;
+        } else if(!mHasPermission) {
+            TextView errorText = new TextView(mContext);
+            errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Header);
+            errorText.setText(R.string.debug_drawer_location_no_permission);
+            return errorText;
         } else {
             TextView errorText = new TextView(mContext);
             errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Header);
@@ -170,6 +180,7 @@ public class LocationModule implements DrawerModule {
     @Override
     public void onStart() {
         if (mLocationController != null) {
+            checkPermission();
             mLocationController.startLocationUpdates();
         }
     }
@@ -194,5 +205,10 @@ public class LocationModule implements DrawerModule {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, R.string.debug_drawer_location_map_not_found, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void checkPermission() {
+        mHasPermission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED;
     }
 }
