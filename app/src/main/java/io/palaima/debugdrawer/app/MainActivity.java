@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.DebugDrawer;
+import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.log.LogModule;
 import io.palaima.debugdrawer.module.BuildModule;
@@ -30,6 +31,7 @@ import io.palaima.debugdrawer.module.SettingsModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
+import jp.wasabeef.takt.Takt;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,8 +65,10 @@ public class MainActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark_material_light));
         }*/
+
         if (BuildConfig.DEBUG) {
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                    new FpsModule(Takt.stock(getApplication())),
                     new LocationModule(this),
                     new ScalpelModule(this),
                     new LogModule(),
