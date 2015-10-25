@@ -8,7 +8,7 @@ Faster development with Debug Drawer
 
 ## Features
 
-Currently exists 9 modules:
+Currently exists 10 modules:
 
 `DeviceModule` - common information about your device
 
@@ -43,10 +43,12 @@ Thanks [ebabel](https://github.com/ebabel) for contributing.
 
 ![](./images/location.png)
 
-`LogModule` - log viewer with sharing feature
+`LogModule` - log viewer with sharing feature (requires extra dependency)
 Thanks [Vilian](https://github.com/Vilian) for contributing.
 
 ![](./images/log.png)
+
+`FpsModule` - measuring the FPS using Choreographer (requires extra dependency)
 
 ## TODO
 - Network delay/error adapters
@@ -60,68 +62,79 @@ Add Gradle dependency:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.4.0'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.5.0'
 }
 ```
 
 If you are using popular [OkHttp](https://github.com/square/okhttp) library. Probably you will be interesting in network statistics
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.4.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.5.0'
 }
 ```
 
 Or if you are using [Picasso](https://github.com/square/picasso) library, also from Square Inc.
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.4.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.5.0'
 }
 ```
 
 `ScalpelModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.4.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.5.0'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.4.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-location:0.5.0'
 }
 ```
 
 `LogModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-log:0.4.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-log:0.5.0'
+}
+```
+
+[Takt](https://github.com/wasabeef/Takt) library required
+`FpsModule`
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.5.0'
 }
 ```
 
 * Or
-[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.4.0/debugdrawer-0.4.0.aar)
+[DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.5.0/debugdrawer-0.5.0.aar)
 
 * Or
-[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.4.0/debugdrawer-picasso-0.4.0.aar)
+[DebugDrawer-Picasso Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-picasso/0.5.0/debugdrawer-picasso-0.5.0.aar)
 
 * Or
-[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.4.0/debugdrawer-okhttp-0.4.0.aar)
+[DebugDrawer-OkHttp Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-okhttp/0.5.0/debugdrawer-okhttp-0.5.0.aar)
 
 * Or
-[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.4.0/debugdrawer-scalpel-0.4.0.aar)
+[DebugDrawer-Scalpel Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-scalpel/0.5.0/debugdrawer-scalpel-0.5.0.aar)
 
 * Or
-[DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.4.0/debugdrawer-location-0.4.0.aar)
+[DebugDrawer-Location Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-location/0.5.0/debugdrawer-location-0.5.0.aar)
 
 * Or
-[DebugDrawer-Log Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-log/0.4.0/debugdrawer-log-0.4.0.aar)
+[DebugDrawer-Log Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-log/0.5.0/debugdrawer-log-0.5.0.aar)
+
+* Or
+[DebugDrawer-Fps Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-fps/0.5.0/debugdrawer-fps-0.5.0.aar)
 
 You can try the SNAPSHOT version:
 
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer:0.5.0-SNAPSHOT'
+   compile 'io.palaima.debugdrawer:debugdrawer:0.6.0-SNAPSHOT'
 }
 ```
 Make sure to add the snapshot repository:
@@ -183,7 +196,7 @@ protected void onStop() {
 }
 ```
 
-### 3. Timber
+### 3. Timber - `LogModule`
 If you want to use `LogModule` you need to use [Timber](https://github.com/JakeWharton/timber) for logging. Don't forget
 to plant needed log trees in Application class. Tree that is used by `LogModule` stored in `LumberYard` class.
 
@@ -201,6 +214,14 @@ public class DebugDrawerApplication extends Application {
         Timber.plant(lumberYard.tree());
         Timber.plant(new Timber.DebugTree());
     }
+}
+```
+
+### 4. Takt - `FpsModule`
+If you want to use `FpsModule` you need to use [Takt](https://github.com/wasabeef/Takt).
+
+```java
+    new FpsModule(Takt.stock(getApplication()))
 }
 ```
 
