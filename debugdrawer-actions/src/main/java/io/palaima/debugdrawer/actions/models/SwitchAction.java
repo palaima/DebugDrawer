@@ -17,10 +17,10 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class SwitchAction implements Action {
-    private final Listener mListener;
+    private final Context mContext;
     private final String mName;
-
-    private Context mContext;
+    private final Listener mListener;
+    private final CompoundButton.OnCheckedChangeListener mSwitchListener;
 
     private Switch mSwitch;
 
@@ -28,6 +28,13 @@ public class SwitchAction implements Action {
         mContext = context.getApplicationContext();
         mName = name;
         mListener = listener;
+        mSwitchListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mListener.onCheckedChanged(isChecked);
+                writeValue(isChecked);
+            }
+        };
     }
 
     @Override
@@ -54,13 +61,7 @@ public class SwitchAction implements Action {
         textView.setGravity(Gravity.CENTER_VERTICAL);
 
         mSwitch = new Switch(context);
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mListener.onCheckedChanged(isChecked);
-                writeValue(isChecked);
-            }
-        });
+        mSwitch.setOnCheckedChangeListener(mSwitchListener);
 
         viewGroup.addView(textView);
         viewGroup.addView(mSwitch);
@@ -81,7 +82,9 @@ public class SwitchAction implements Action {
     @Override
     public void onStart() {
         boolean checked = readValue();
+        mSwitch.setOnCheckedChangeListener(null);
         mSwitch.setChecked(checked);
+        mSwitch.setOnCheckedChangeListener(mSwitchListener);
     }
 
     @Override

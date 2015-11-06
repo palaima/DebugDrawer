@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import io.palaima.debugdrawer.DebugDrawer;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.models.ButtonAction;
+import io.palaima.debugdrawer.actions.models.SwitchAction;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.log.LogModule;
@@ -70,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (BuildConfig.DEBUG) {
             ActionsModule actionsModule = new ActionsModule();
+
+            SwitchAction switchAction = new SwitchAction(this, "Test switch", new SwitchAction.Listener() {
+                @Override
+                public void onCheckedChanged(boolean value) {
+                    Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
+                }
+            });
+
             ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
                 @Override
                 public void onClick() {
@@ -77,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            actionsModule.addAction(switchAction);
             actionsModule.addAction(buttonAction);
 
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
