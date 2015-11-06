@@ -44,9 +44,13 @@ Thanks [ebabel](https://github.com/ebabel) for contributing.
 ![](./images/location.png)
 
 `LogModule` - log viewer with sharing feature (requires extra dependency)
-Thanks [Vilian](https://github.com/Vilian) for contributing.
+Thanks [AntonyGolovin](https://github.com/AntonyGolovin) for contributing.
 
 ![](./images/log.png)
+
+`ActionsModule` - any context dependent action
+
+![](./images/actions.png)
 
 `FpsModule` - measuring the FPS using Choreographer (requires extra dependency)
 
@@ -109,6 +113,11 @@ dependencies {
 }
 ```
 
+`ActionsModule`
+```
+    TODO
+```
+
 * Or
 [DebugDrawer Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer/0.5.0/debugdrawer-0.5.0.aar)
 
@@ -129,6 +138,9 @@ dependencies {
 
 * Or
 [DebugDrawer-Fps Download from Maven](https://oss.sonatype.org/content/repositories/releases/io/palaima/debugdrawer/debugdrawer-fps/0.5.0/debugdrawer-fps-0.5.0.aar)
+
+* Or
+ActionsModule TODO
 
 You can try the SNAPSHOT version:
 
@@ -158,17 +170,28 @@ private DebugDrawer mDebugDrawer;
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (BuildConfig.DEBUG) {
+        ActionsModule actionsModule = new ActionsModule();
+        ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
+            @Override
+            public void onClick() {
+                Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
+            }
+        });
+        actionsModule.addAction(buttonAction);
+        
         mDebugDrawer = new DebugDrawer.Builder(this).modules(
-                new LocationModule(this),
-                new ScalpelModule(this),
-                new LogModule(),
-                new OkHttpModule(mOkHttpClient),
-                new PicassoModule(mPicasso),
-                new DeviceModule(this),
-                new BuildModule(this),
-                new NetworkModule(this),
-                new SettingsModule(this)
-        ).build();
+            new FpsModule(Takt.stock(getApplication())),
+            actionsModule,
+            new LocationModule(this),
+            new ScalpelModule(this),
+            new LogModule(),
+            new OkHttpModule(mOkHttpClient),
+            new PicassoModule(mPicasso),
+            new DeviceModule(this),
+            new BuildModule(this),
+            new NetworkModule(this),
+            new SettingsModule(this)
+         ).build();
     }
 }
 ```
