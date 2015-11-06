@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import io.palaima.debugdrawer.DebugDrawer;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.models.ButtonAction;
-import io.palaima.debugdrawer.actions.models.SwitchAction;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.log.LogModule;
@@ -69,29 +68,21 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
 
-        ActionsModule actionsModule = new ActionsModule();
-        SwitchAction switchAction = new SwitchAction(this, "Test switch", new SwitchAction.Listener() {
-            @Override
-            public void onCheckedChanged(boolean value) {
-                Toast.makeText(MainActivity.this, String.format("Switch enabled %b", value), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
-            @Override
-            public void onClick() {
-                Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        actionsModule.addAction(switchAction);
-        actionsModule.addAction(buttonAction);
-
         if (BuildConfig.DEBUG) {
+            ActionsModule actionsModule = new ActionsModule();
+            ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
+                @Override
+                public void onClick() {
+                    Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            actionsModule.addAction(buttonAction);
+
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
                     new FpsModule(Takt.stock(getApplication())),
-                    new LocationModule(this),
                     actionsModule,
+                    new LocationModule(this),
                     new ScalpelModule(this),
                     new LogModule(),
                     new OkHttpModule(mOkHttpClient),
@@ -102,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
                     new SettingsModule(this)
             ).build();
         }
-
-//        switchAction.setChecked(true);
 
         showDummyLog();
 
@@ -171,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         return mToolbar;
     }
 
-    private static final int DISK_CACHE_SIZE = 50*1024*1024; // 50 MB
+    private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB
 
     private static OkHttpClient createOkHttpClient(Application application) {
         final OkHttpClient client = new OkHttpClient();
