@@ -10,7 +10,6 @@ repositories {
     mavenCentral()
 }
 
-
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
@@ -36,6 +35,7 @@ android {
         warning 'InvalidPackage'
     }
 }
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.1'
@@ -100,4 +100,3 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 }
-
