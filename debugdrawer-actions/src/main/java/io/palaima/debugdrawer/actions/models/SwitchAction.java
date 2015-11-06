@@ -81,9 +81,8 @@ public class SwitchAction implements Action {
 
     @Override
     public void onStart() {
-        boolean checked = readValue();
         mSwitch.setOnCheckedChangeListener(null);
-        mSwitch.setChecked(checked);
+        mSwitch.setChecked(readValue());
         mSwitch.setOnCheckedChangeListener(mSwitchListener);
     }
 
