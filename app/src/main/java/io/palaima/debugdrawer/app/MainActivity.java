@@ -10,10 +10,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import io.palaima.debugdrawer.DebugDrawer;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.models.ButtonAction;
@@ -30,11 +37,6 @@ import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import jp.wasabeef.takt.Takt;
 import timber.log.Timber;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,9 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (BuildConfig.DEBUG) {
-            ActionsModule actionsModule = new ActionsModule();
-
-            SwitchAction switchAction = new SwitchAction(this, "Test switch", new SwitchAction.Listener() {
+            SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
                 @Override
                 public void onCheckedChanged(boolean value) {
                     Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
@@ -86,12 +86,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            actionsModule.addAction(switchAction);
-            actionsModule.addAction(buttonAction);
-
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                    new ActionsModule(switchAction, buttonAction),
                     new FpsModule(Takt.stock(getApplication())),
-                    actionsModule,
                     new LocationModule(this),
                     new ScalpelModule(this),
                     new LogModule(),

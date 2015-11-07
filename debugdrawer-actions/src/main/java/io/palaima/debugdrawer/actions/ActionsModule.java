@@ -1,18 +1,28 @@
 package io.palaima.debugdrawer.actions;
 
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import io.palaima.debugdrawer.actions.models.Action;
-import io.palaima.debugdrawer.actions.models.SwitchAction;
-import io.palaima.debugdrawer.module.DrawerModule;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.palaima.debugdrawer.actions.models.Action;
+import io.palaima.debugdrawer.module.DrawerModule;
+
 public class ActionsModule implements DrawerModule {
     private final List<Action> mActions = new ArrayList<>();
+
+    public ActionsModule(Action... actions) {
+        if (actions != null) {
+            for (int i = 0; i < actions.length; i++) {
+                mActions.add(actions[i]);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
@@ -20,8 +30,15 @@ public class ActionsModule implements DrawerModule {
 
         LinearLayout linearLayout = (LinearLayout) view;
 
-        for (Action action : mActions) {
-            linearLayout.addView(action.getView(linearLayout));
+        if (mActions.isEmpty()) {
+            TextView noActionsLabel = new TextView(parent.getContext());
+            noActionsLabel.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.white));
+            noActionsLabel.setText("No actions added");
+            linearLayout.addView(noActionsLabel);
+        } else {
+            for (Action action : mActions) {
+                linearLayout.addView(action.getView(linearLayout));
+            }
         }
 
         return view;
@@ -53,9 +70,5 @@ public class ActionsModule implements DrawerModule {
         for (Action action : mActions) {
             action.onStop();
         }
-    }
-
-    public void addAction(Action action) {
-        mActions.add(action);
     }
 }

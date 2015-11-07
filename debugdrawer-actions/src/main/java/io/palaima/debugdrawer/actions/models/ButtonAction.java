@@ -10,6 +10,7 @@ import io.palaima.debugdrawer.actions.R;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ButtonAction implements Action {
+
     private final String mName;
     private final Listener mListener;
 
@@ -32,7 +33,9 @@ public class ButtonAction implements Action {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClick();
+                if (mListener != null) {
+                    mListener.onClick();
+                }
             }
         });
 

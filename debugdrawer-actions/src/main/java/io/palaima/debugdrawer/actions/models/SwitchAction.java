@@ -17,50 +17,42 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class SwitchAction implements Action {
-    private final Context mContext;
+
     private final String mName;
     private final Listener mListener;
-    private final CompoundButton.OnCheckedChangeListener mSwitchListener;
 
+    private Context mContext;
     private Switch mSwitch;
 
-    public SwitchAction(Context context, String name, Listener listener) {
-        mContext = context.getApplicationContext();
+    public SwitchAction(String name, Listener listener) {
         mName = name;
         mListener = listener;
-        mSwitchListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mListener.onCheckedChanged(isChecked);
-                writeValue(isChecked);
-            }
-        };
     }
 
     @Override
     public View getView(LinearLayout linearLayout) {
 
-        Context context = linearLayout.getContext();
-        Resources resources = context.getResources();
+        mContext = linearLayout.getContext();
+        Resources resources = mContext.getResources();
 
         LinearLayout.LayoutParams viewGroupLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         viewGroupLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.padding_small);
 
-        LinearLayout viewGroup = new LinearLayout(context);
+        LinearLayout viewGroup = new LinearLayout(mContext);
         viewGroup.setLayoutParams(viewGroupLayoutParams);
         viewGroup.setOrientation(LinearLayout.HORIZONTAL);
 
         LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         textViewLayoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.spacing_big);
 
-        TextView textView = new TextView(context);
+        TextView textView = new TextView(mContext);
         textView.setLayoutParams(textViewLayoutParams);
         textView.setText(mName);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+        textView.setTextColor(ContextCompat.getColor(mContext, R.color.white));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.font_normal));
         textView.setGravity(Gravity.CENTER_VERTICAL);
 
-        mSwitch = new Switch(context);
+        mSwitch = new Switch(mContext);
         mSwitch.setOnCheckedChangeListener(mSwitchListener);
 
         viewGroup.addView(textView);
@@ -90,6 +82,16 @@ public class SwitchAction implements Action {
     public void onStop() {
         /* no-op */
     }
+
+    private CompoundButton.OnCheckedChangeListener mSwitchListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (mListener != null) {
+                mListener.onCheckedChanged(isChecked);
+            }
+            writeValue(isChecked);
+        }
+    };
 
     public boolean isChecked() {
         return readValue();
