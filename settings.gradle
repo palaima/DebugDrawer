@@ -1,1 +1,1 @@
-include ':app', ':debugdrawer', ':debugdrawer-picasso', ':debugdrawer-okhttp', ':debugdrawer-scalpel', ':debugdrawer-location', ':debugdrawer-log', ':debugdrawer-fps'
+include ':app', ':debugdrawer', ':debugdrawer-picasso', ':debugdrawer-okhttp', ':debugdrawer-scalpel', ':debugdrawer-location', ':debugdrawer-log', ':debugdrawer-fps', ':debugdrawer-actions'

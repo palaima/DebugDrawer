@@ -9,18 +9,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-
+import android.widget.Toast;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import io.palaima.debugdrawer.DebugDrawer;
+import io.palaima.debugdrawer.actions.ActionsModule;
+import io.palaima.debugdrawer.actions.models.ButtonAction;
+import io.palaima.debugdrawer.actions.models.SwitchAction;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.log.LogModule;
@@ -33,6 +30,11 @@ import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import jp.wasabeef.takt.Takt;
 import timber.log.Timber;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,9 +68,30 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark_material_light));
         }*/
 
+
         if (BuildConfig.DEBUG) {
+            ActionsModule actionsModule = new ActionsModule();
+
+            SwitchAction switchAction = new SwitchAction(this, "Test switch", new SwitchAction.Listener() {
+                @Override
+                public void onCheckedChanged(boolean value) {
+                    Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
+                @Override
+                public void onClick() {
+                    Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            actionsModule.addAction(switchAction);
+            actionsModule.addAction(buttonAction);
+
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
                     new FpsModule(Takt.stock(getApplication())),
+                    actionsModule,
                     new LocationModule(this),
                     new ScalpelModule(this),
                     new LogModule(),
@@ -147,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         return mToolbar;
     }
 
-    private static final int DISK_CACHE_SIZE = 50*1024*1024; // 50 MB
+    private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB
 
     private static OkHttpClient createOkHttpClient(Application application) {
         final OkHttpClient client = new OkHttpClient();
