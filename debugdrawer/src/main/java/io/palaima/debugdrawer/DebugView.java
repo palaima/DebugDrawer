@@ -44,7 +44,7 @@ public class DebugView extends LinearLayout {
         }
     }
 
-    public void init(DrawerModule... drawerItems) {
+    public void initModules(DrawerModule... drawerItems) {
         mDrawerItems = drawerItems;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         if (this.mDrawerItems != null && !(this.mDrawerItems.length == 0)) {

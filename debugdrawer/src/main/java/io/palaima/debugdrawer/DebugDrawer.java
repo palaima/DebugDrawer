@@ -363,7 +363,7 @@ public class DebugDrawer {
                 UIUtils.setBackground(mSliderLayout, mSliderBackgroundColorRes);
             }
 
-            mDebugView.init(mDrawerItems);
+            mDebugView.initModules(mDrawerItems);
 
             //create the result object
             DebugDrawer result = new DebugDrawer(this);
