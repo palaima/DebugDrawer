@@ -1,6 +1,7 @@
 package io.palaima.debugdrawer.app;
 
 import android.app.Application;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,13 +28,13 @@ import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.models.ButtonAction;
 import io.palaima.debugdrawer.actions.models.SpinnerAction;
 import io.palaima.debugdrawer.actions.models.SwitchAction;
+import io.palaima.debugdrawer.common.BuildModule;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.log.LogModule;
-import io.palaima.debugdrawer.module.BuildModule;
-import io.palaima.debugdrawer.module.DeviceModule;
-import io.palaima.debugdrawer.module.NetworkModule;
-import io.palaima.debugdrawer.module.SettingsModule;
+import io.palaima.debugdrawer.common.DeviceModule;
+import io.palaima.debugdrawer.common.NetworkModule;
+import io.palaima.debugdrawer.common.SettingsModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
@@ -140,6 +141,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override protected void onResume() {
+        super.onResume();
+        if (mDebugDrawer != null) {
+            mDebugDrawer.onResume();
+        }
+    }
+
+    @Override protected void onPause() {
+        super.onPause();
+        if (mDebugDrawer != null) {
+            mDebugDrawer.onPause();
+        }
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -163,7 +178,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_debug_view_activity) {
+            startActivity(new Intent(this, DebugViewActivity.class));
             return true;
         }
 

@@ -72,6 +72,16 @@ public class SwitchAction implements Action {
     }
 
     @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
     public void onStart() {
         mSwitch.setOnCheckedChangeListener(null);
         mSwitch.setChecked(readValue());

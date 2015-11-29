@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.palaima.debugdrawer.actions.models.Action;
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 
-public class ActionsModule implements DrawerModule {
+public class ActionsModule implements DebugModule {
     private final List<Action> mActions = new ArrayList<>();
 
     public ActionsModule(Action... actions) {
@@ -53,6 +53,20 @@ public class ActionsModule implements DrawerModule {
     public void onClosed() {
         for (Action action : mActions) {
             action.onClosed();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        for (Action action : mActions) {
+            action.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        for (Action action : mActions) {
+            action.onPause();
         }
     }
 

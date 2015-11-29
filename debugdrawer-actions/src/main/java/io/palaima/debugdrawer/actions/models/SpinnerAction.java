@@ -37,7 +37,8 @@ public class SpinnerAction<T> implements Action {
         this.listener = listener;
     }
 
-    @Override public View getView(LinearLayout view) {
+    @Override
+    public View getView(LinearLayout view) {
         Context context = view.getContext();
         Resources resources = context.getResources();
 
@@ -70,19 +71,33 @@ public class SpinnerAction<T> implements Action {
         return spinner;
     }
 
-    @Override public void onOpened() {
+    @Override
+    public void onOpened() {
 
     }
 
-    @Override public void onClosed() {
+    @Override
+    public void onClosed() {
 
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onResume() {
 
     }
 
-    @Override public void onStop() {
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
 
     }
 

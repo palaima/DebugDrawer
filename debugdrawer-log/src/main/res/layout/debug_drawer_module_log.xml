@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logs"
-            style="@style/Widget.DebugDrawer.Header"
+            style="@style/Widget.DebugDrawer.Base.Header"
             />
     <Button
             android:id="@+id/button_log"

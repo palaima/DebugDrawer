@@ -11,7 +11,7 @@
     android:layout_marginEnd="@dimen/debug_drawer_margin"
     android:background="#ee212121">
 
-        <io.palaima.debugdrawer.DebugView
+        <io.palaima.debugdrawer.view.DebugView
             android:id="@+id/debug_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -53,6 +53,16 @@ public class ButtonAction implements Action {
     }
 
     @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
     public void onStart() {
         /* no-op */
     }

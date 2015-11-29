@@ -29,8 +29,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 import io.palaima.debugdrawer.util.UIUtils;
+import io.palaima.debugdrawer.view.DebugView;
 import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
 
 public class DebugDrawer {
@@ -89,14 +90,28 @@ public class DebugDrawer {
     }
 
     /**
-     * Starts all modules and calls their {@link DrawerModule#onStart()} method
+     * Calls modules {@link DebugModule#onResume()} method
+     */
+    public void onResume() {
+        mDebugView.onResume();
+    }
+
+    /**
+     * Calls modules {@link DebugModule#onPause()} method
+     */
+    public void onPause() {
+        mDebugView.onPause();
+    }
+
+    /**
+     * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
     public void onStart() {
         mDebugView.onStart();
     }
 
     /**
-     * Removes all modules and calls their {@link DrawerModule#onStop()} method
+     * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
     public void onStop() {
         mDebugView.onStop();
@@ -117,7 +132,7 @@ public class DebugDrawer {
         //the width of the drawer
         private int mDrawerWidth = -1;
 
-        private DrawerModule[] mDrawerItems;
+        private DebugModule[] mDrawerItems;
 
         private DrawerLayout.DrawerListener mOnDrawerListener;
 
@@ -243,7 +258,7 @@ public class DebugDrawer {
         /**
          * Add a initial DrawerItem or a DrawerItem Array  for the Drawer
          */
-        public Builder modules(DrawerModule... drawerItems) {
+        public Builder modules(DebugModule... drawerItems) {
             mDrawerItems = drawerItems;
             return this;
         }
@@ -311,8 +326,8 @@ public class DebugDrawer {
                     if (mOnDrawerListener != null) {
                         mOnDrawerListener.onDrawerOpened(drawerView);
                     }
-                    if (mDrawerItems != null && !(mDrawerItems.length == 0)) {
-                        for (DrawerModule drawerItem : mDrawerItems) {
+                    if (mDrawerItems != null && mDrawerItems.length != 0) {
+                        for (DebugModule drawerItem : mDrawerItems) {
                             drawerItem.onOpened();
                         }
                     }
@@ -323,8 +338,8 @@ public class DebugDrawer {
                     if (mOnDrawerListener != null) {
                         mOnDrawerListener.onDrawerClosed(drawerView);
                     }
-                    if (mDrawerItems != null && !(mDrawerItems.length == 0)) {
-                        for (DrawerModule drawerItem : mDrawerItems) {
+                    if (mDrawerItems != null && mDrawerItems.length != 0) {
+                        for (DebugModule drawerItem : mDrawerItems) {
                             drawerItem.onClosed();
                         }
                     }
@@ -363,7 +378,7 @@ public class DebugDrawer {
                 UIUtils.setBackground(mSliderLayout, mSliderBackgroundColorRes);
             }
 
-            mDebugView.initModules(mDrawerItems);
+            mDebugView.modules(mDrawerItems);
 
             //create the result object
             DebugDrawer result = new DebugDrawer(this);

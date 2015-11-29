@@ -12,126 +12,126 @@
         android:layout_width="0dp"
         android:layout_gravity="start|fill_horizontal"
         android:text="Picasso"
-        style="@style/Widget.DebugDrawer.Header"
+        style="@style/Widget.DebugDrawer.Base.Header"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Indicators"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <Switch
         android:id="@+id/debug_picasso_indicators"
         android:layout_gravity="start|center_vertical"
-        style="@style/Widget.DebugDrawer.RowWidget"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Cache"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_cache_size"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Hits"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_cache_hit"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Misses"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_cache_miss"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Decoded"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_decoded"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Total"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_decoded_total"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Average"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_decoded_avg"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Transformed"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_transformed"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Total"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_transformed_total"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Average"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_picasso_transformed_avg"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
 </GridLayout>

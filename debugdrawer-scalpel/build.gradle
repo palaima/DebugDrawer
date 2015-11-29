@@ -21,7 +21,7 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
-    compile project(':debugdrawer')
+    compile project(':debugdrawer-base')
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

@@ -10,6 +10,10 @@ public interface Action {
 
     void onClosed();
 
+    void onResume();
+
+    void onPause();
+
     void onStart();
 
     void onStop();
