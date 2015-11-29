@@ -15,4 +15,6 @@
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <include layout="@layout/debug_drawer_slider" />
 </android.support.v4.widget.DrawerLayout>
