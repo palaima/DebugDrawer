@@ -18,12 +18,14 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.DebugDrawer;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.models.ButtonAction;
+import io.palaima.debugdrawer.actions.models.SpinnerAction;
 import io.palaima.debugdrawer.actions.models.SwitchAction;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
@@ -86,8 +88,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            SpinnerAction<String> spinnerAction = new SpinnerAction<>(
+                Arrays.asList("First", "Second", "Third"),
+                new SpinnerAction.OnItemSelectedListener<String>() {
+                    @Override public void onItemSelected(String value) {
+                        Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
+                    }
+                }
+            );
+
             mDebugDrawer = new DebugDrawer.Builder(this).modules(
-                    new ActionsModule(switchAction, buttonAction),
+                    new ActionsModule(switchAction, buttonAction, spinnerAction),
                     new FpsModule(Takt.stock(getApplication())),
                     new LocationModule(this),
                     new ScalpelModule(this),

@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 public interface Action {
-    View getView(LinearLayout linearLayout);
+    View getView(LinearLayout view);
 
     void onOpened();
 

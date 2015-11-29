@@ -26,18 +26,16 @@ public class ActionsModule implements DrawerModule {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_module_actions, parent, false);
-
-        LinearLayout linearLayout = (LinearLayout) view;
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.debug_drawer_module_actions, parent, false);
 
         if (mActions.isEmpty()) {
             TextView noActionsLabel = new TextView(parent.getContext());
             noActionsLabel.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.white));
             noActionsLabel.setText("No actions added");
-            linearLayout.addView(noActionsLabel);
+            view.addView(noActionsLabel);
         } else {
             for (Action action : mActions) {
-                linearLayout.addView(action.getView(linearLayout));
+                view.addView(action.getView(view));
             }
         }
 
