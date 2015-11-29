@@ -74,44 +74,42 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
 
-        if (BuildConfig.DEBUG) {
-            SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
-                @Override
-                public void onCheckedChanged(boolean value) {
-                    Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
-                }
-            });
+        SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
+            @Override
+            public void onCheckedChanged(boolean value) {
+                Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
+            }
+        });
 
-            ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
-                @Override
-                public void onClick() {
-                    Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
-                }
-            });
+        ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
+            @Override
+            public void onClick() {
+                Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
+            }
+        });
 
-            SpinnerAction<String> spinnerAction = new SpinnerAction<>(
-                Arrays.asList("First", "Second", "Third"),
-                new SpinnerAction.OnItemSelectedListener<String>() {
-                    @Override public void onItemSelected(String value) {
-                        Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
-                    }
+        SpinnerAction<String> spinnerAction = new SpinnerAction<>(
+            Arrays.asList("First", "Second", "Third"),
+            new SpinnerAction.OnItemSelectedListener<String>() {
+                @Override public void onItemSelected(String value) {
+                    Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
                 }
-            );
+            }
+        );
 
-            mDebugDrawer = new DebugDrawer.Builder(this).modules(
-                    new ActionsModule(switchAction, buttonAction, spinnerAction),
-                    new FpsModule(Takt.stock(getApplication())),
-                    new LocationModule(this),
-                    new ScalpelModule(this),
-                    new LogModule(),
-                    new OkHttpModule(mOkHttpClient),
-                    new PicassoModule(mPicasso),
-                    new DeviceModule(this),
-                    new BuildModule(this),
-                    new NetworkModule(this),
-                    new SettingsModule(this)
-            ).build();
-        }
+        mDebugDrawer = new DebugDrawer.Builder(this).modules(
+                new ActionsModule(switchAction, buttonAction, spinnerAction),
+                new FpsModule(Takt.stock(getApplication())),
+                new LocationModule(this),
+                new ScalpelModule(this),
+                new LogModule(),
+                new OkHttpModule(mOkHttpClient),
+                new PicassoModule(mPicasso),
+                new DeviceModule(this),
+                new BuildModule(this),
+                new NetworkModule(this),
+                new SettingsModule(this)
+        ).build();
 
         showDummyLog();
 
@@ -136,31 +134,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mDebugDrawer != null) {
-            mDebugDrawer.onStart();
-        }
+        mDebugDrawer.onStart();
     }
 
     @Override protected void onResume() {
         super.onResume();
-        if (mDebugDrawer != null) {
-            mDebugDrawer.onResume();
-        }
+        mDebugDrawer.onResume();
     }
 
     @Override protected void onPause() {
         super.onPause();
-        if (mDebugDrawer != null) {
-            mDebugDrawer.onPause();
-        }
+        mDebugDrawer.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mDebugDrawer != null) {
-            mDebugDrawer.onStop();
-        }
+        mDebugDrawer.onStop();
     }
 
     @Override
