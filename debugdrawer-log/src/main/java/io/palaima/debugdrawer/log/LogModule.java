@@ -4,10 +4,11 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import io.palaima.debugdrawer.log.ui.LogDialog;
-import io.palaima.debugdrawer.module.DrawerModule;
 
-public class LogModule implements DrawerModule {
+import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.log.ui.LogDialog;
+
+public class LogModule implements DebugModule {
     @NonNull
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup parent) {

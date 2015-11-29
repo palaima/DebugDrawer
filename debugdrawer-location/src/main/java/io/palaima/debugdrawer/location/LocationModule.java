@@ -41,9 +41,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 
-public class LocationModule implements DrawerModule {
+public class LocationModule implements DebugModule {
 
     private transient final Context mContext;
     private boolean mHasPermission;
@@ -128,12 +128,12 @@ public class LocationModule implements DrawerModule {
             return view;
         } else if(!mHasPermission) {
             TextView errorText = new TextView(mContext);
-            errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Header);
+            errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Base_Header);
             errorText.setText(R.string.debug_drawer_location_no_permission);
             return errorText;
         } else {
             TextView errorText = new TextView(mContext);
-            errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Header);
+            errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Base_Header);
             errorText.setText(R.string.debug_drawer_location_google_play_unavailable);
             return errorText;
         }

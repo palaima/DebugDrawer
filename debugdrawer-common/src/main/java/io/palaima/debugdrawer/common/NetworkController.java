@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.controller;
+package io.palaima.debugdrawer.common;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
@@ -31,7 +31,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class NetworkController {
+final class NetworkController {
 
     public enum BluetoothState {
         On, Off, Turning_On, Turning_Off, Unknown

@@ -12,18 +12,18 @@
         android:layout_width="0dp"
         android:layout_gravity="start|fill_horizontal"
         android:text="FPS"
-        style="@style/Widget.DebugDrawer.Header"
+        style="@style/Widget.DebugDrawer.Base.Header"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Show fps"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <Switch
         android:id="@+id/debug_fps"
         android:layout_gravity="start|center_vertical"
-        style="@style/Widget.DebugDrawer.RowWidget"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
         />
 
 

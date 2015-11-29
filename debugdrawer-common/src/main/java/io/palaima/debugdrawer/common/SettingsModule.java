@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.module;
+package io.palaima.debugdrawer.common;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +28,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import io.palaima.debugdrawer.R;
+import io.palaima.debugdrawer.base.DebugModule;
 
-public class SettingsModule implements DrawerModule, View.OnClickListener {
+public class SettingsModule implements DebugModule, View.OnClickListener {
 
     private final Context mContext;
 

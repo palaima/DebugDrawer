@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.module;
+package io.palaima.debugdrawer.base;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public interface DrawerModule {
+public interface DebugModule {
 
     /**
      * Creates module view
      */
-    @NonNull View onCreateView(LayoutInflater inflater, ViewGroup parent);
+    @NonNull View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent);
 
     /**
      * Override this method if you need to refresh

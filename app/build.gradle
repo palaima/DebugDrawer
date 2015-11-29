@@ -48,6 +48,8 @@ dependencies {
         compile 'io.palaima.debugdrawer:debugdrawer-log:0.5.0'
         compile 'io.palaima.debugdrawer:debugdrawer-fps:0.5.0'*/
     compile project(':debugdrawer')
+    compile project(':debugdrawer-base')
+    compile project(':debugdrawer-common')
     compile project(':debugdrawer-picasso')
     compile project(':debugdrawer-okhttp')
     compile project(':debugdrawer-scalpel')

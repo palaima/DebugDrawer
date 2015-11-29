@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.module;
+package io.palaima.debugdrawer.common;
 
 import android.content.Context;
 import android.net.NetworkInfo;
@@ -25,10 +25,9 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import io.palaima.debugdrawer.R;
-import io.palaima.debugdrawer.controller.NetworkController;
+import io.palaima.debugdrawer.base.DebugModule;
 
-public class NetworkModule implements DrawerModule {
+public class NetworkModule implements DebugModule {
 
     private final NetworkController mNetworkController;
 

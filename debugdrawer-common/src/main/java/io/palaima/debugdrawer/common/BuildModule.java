@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.module;
+package io.palaima.debugdrawer.common;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -24,9 +24,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.R;
+import io.palaima.debugdrawer.base.DebugModule;
 
-public class BuildModule implements DrawerModule {
+public class BuildModule implements DebugModule {
 
 
     private final Context mContext;

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 import jp.wasabeef.takt.Takt;
 
-public class FpsModule implements DrawerModule {
+public class FpsModule implements DebugModule {
 
     private final Takt.Program program;
 

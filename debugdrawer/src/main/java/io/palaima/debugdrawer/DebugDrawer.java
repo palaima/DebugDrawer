@@ -33,8 +33,9 @@ import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 import io.palaima.debugdrawer.util.UIUtils;
 import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
 
@@ -46,7 +47,7 @@ public class DebugDrawer {
 
     private int mDrawerGravity;
 
-    private final ArrayList<DrawerModule> mDrawerItems;
+    private final List<DebugModule> mDrawerItems;
 
 
     private DebugDrawer(Builder builder) {
@@ -96,19 +97,19 @@ public class DebugDrawer {
     }
 
     /**
-     * Starts all modules and calls their {@link DrawerModule#onStart()} method
+     * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
     public void onStart() {
-        for (DrawerModule drawerItem : mDrawerItems) {
+        for (DebugModule drawerItem : mDrawerItems) {
             drawerItem.onStart();
         }
     }
 
     /**
-     * Removes all modules and calls their {@link DrawerModule#onStop()} method
+     * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
     public void onStop() {
-        for (DrawerModule drawerItem : mDrawerItems) {
+        for (DebugModule drawerItem : mDrawerItems) {
             drawerItem.onStop();
         }
     }
@@ -128,7 +129,7 @@ public class DebugDrawer {
         //the width of the drawer
         private int mDrawerWidth = -1;
 
-        private ArrayList<DrawerModule> mDrawerItems;
+        private List<DebugModule> mDrawerItems;
 
         private DrawerLayout.DrawerListener mOnDrawerListener;
 
@@ -254,7 +255,7 @@ public class DebugDrawer {
         /**
          * Add a initial DrawerItem or a DrawerItem Array  for the Drawer
          */
-        public Builder modules(DrawerModule... drawerItems) {
+        public Builder modules(DebugModule... drawerItems) {
             if (this.mDrawerItems == null) {
                 this.mDrawerItems = new ArrayList<>();
             }
@@ -329,7 +330,7 @@ public class DebugDrawer {
                         mOnDrawerListener.onDrawerOpened(drawerView);
                     }
                     if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
-                        for (DrawerModule drawerItem : mDrawerItems) {
+                        for (DebugModule drawerItem : mDrawerItems) {
                             drawerItem.onOpened();
                         }
                     }
@@ -341,7 +342,7 @@ public class DebugDrawer {
                         mOnDrawerListener.onDrawerClosed(drawerView);
                     }
                     if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
-                        for (DrawerModule drawerItem : mDrawerItems) {
+                        for (DebugModule drawerItem : mDrawerItems) {
                             drawerItem.onClosed();
                         }
                     }
@@ -384,7 +385,7 @@ public class DebugDrawer {
 
             LayoutInflater inflater = LayoutInflater.from(mActivity);
             if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
-                DrawerModule drawerItem;
+                DebugModule drawerItem;
                 for (int i = 0; i < mDrawerItems.size(); i++) {
                     drawerItem = mDrawerItems.get(i);
                     mContainer.addView(drawerItem.onCreateView(inflater, mContainer), i);
