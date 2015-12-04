@@ -280,24 +280,17 @@ public class DebugDrawer {
                         "You have to set your layout for this activity with setContentView() first.");
             }
 
-
-            mDrawerLayout = (DrawerLayout) mActivity.getLayoutInflater()
-                    .inflate(R.layout.debug_drawer, mRootView, false);
-
             //get the content view
             View contentView = mRootView.getChildAt(0);
             boolean alreadyInflated = contentView instanceof DrawerLayout;
 
-            //get the drawer root
-            mDrawerContentRoot = (ScrimInsetsFrameLayout) mDrawerLayout.getChildAt(0);
-
             //only add the new layout if it wasn't done before
-            if (!alreadyInflated) {
-                // remove the contentView
-                mRootView.removeView(contentView);
-            } else {
+            if (alreadyInflated) {
                 //if it was already inflated we have to clean up again
                 mRootView.removeAllViews();
+            } else {
+                // remove the contentView
+                mRootView.removeView(contentView);
             }
 
             //create the layoutParams to use for the contentView
@@ -306,14 +299,20 @@ public class DebugDrawer {
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
 
-            //add the contentView to the drawer content frameLayout
-            mDrawerContentRoot.addView(contentView, layoutParamsContentView);
+            mDrawerLayout = (DrawerLayout) mActivity.getLayoutInflater()
+                    .inflate(R.layout.debug_drawer, mRootView, false);
 
             //add the drawerLayout to the root
             mRootView.addView(mDrawerLayout, new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
             ));
+
+            //get the drawer root
+            mDrawerContentRoot = (ScrimInsetsFrameLayout) mDrawerLayout.getChildAt(0);
+
+            //add the contentView to the drawer content frameLayout
+            mDrawerContentRoot.addView(contentView, layoutParamsContentView);
 
             mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
                 @Override
