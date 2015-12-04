@@ -280,6 +280,31 @@ public class DebugDrawer {
                         "You have to set your layout for this activity with setContentView() first.");
             }
 
+            //create the layoutParams to use for the contentView
+            FrameLayout.LayoutParams layoutParamsContentView = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+            );
+
+            // if activity's layout is just merged using <merge> we should add
+            // an intermediate frame saving original layout params
+            // (and it's ok if content is merged with just one view in it - just skip frame injection)
+            final boolean isActivityContentMerged = mRootView.getChildCount() > 1;
+            if (isActivityContentMerged) {
+                final int originalCount = mRootView.getChildCount();
+                final View[] children = new View[originalCount];
+                for (int i = 0; i < originalCount; i++) {
+                    children[i] = mRootView.getChildAt(i);
+                }
+                final FrameLayout frame = new FrameLayout(mActivity);
+                mRootView.removeAllViews();
+                for (int i = 0; i < originalCount; i++) {
+                    final View child = children[i];
+                    frame.addView(child, i, child.getLayoutParams());
+                }
+                mRootView.addView(frame, layoutParamsContentView);
+            }
+
             //get the content view
             View contentView = mRootView.getChildAt(0);
             boolean alreadyInflated = contentView instanceof DrawerLayout;
@@ -292,12 +317,6 @@ public class DebugDrawer {
                 // remove the contentView
                 mRootView.removeView(contentView);
             }
-
-            //create the layoutParams to use for the contentView
-            FrameLayout.LayoutParams layoutParamsContentView = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-            );
 
             mDrawerLayout = (DrawerLayout) mActivity.getLayoutInflater()
                     .inflate(R.layout.debug_drawer, mRootView, false);
