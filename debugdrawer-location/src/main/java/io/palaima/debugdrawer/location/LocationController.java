@@ -16,30 +16,30 @@
 
 package io.palaima.debugdrawer.location;
 
+import android.content.Context;
+import android.location.Location;
+import android.os.Bundle;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import android.content.Context;
-import android.location.Location;
-import android.os.Bundle;
-
 public class LocationController implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private transient LocationListener mLocationListener;
+    private transient LocationListener locationListener;
 
     private static LocationController instance;
 
-    private GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient googleApiClient;
 
-    private LocationRequest mLocationRequest;
+    private LocationRequest locationRequest;
 
-    private boolean mIsStarted;
+    private boolean isStarted;
 
-    private boolean mConnected;
+    private boolean connected;
 
     public static LocationController newInstance(Context context) {
         if (instance == null)
@@ -52,25 +52,25 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
     }
 
     public void setLocationListener(LocationListener listener) {
-        mLocationListener = listener;
+        locationListener = listener;
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        mConnected = true;
-        if (!mIsStarted) {
+        connected = true;
+        if (!isStarted) {
             startLocationUpdates();
         }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        mConnected = false;
+        connected = false;
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        mConnected = false;
+        connected = false;
     }
 
     /**
@@ -80,11 +80,11 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
      */
     public Location getLastLocation() {
         return LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
+            googleApiClient);
     }
 
     protected synchronized void buildGoogleApiClient(Context context) {
-        mGoogleApiClient = new GoogleApiClient.Builder(context)
+        googleApiClient = new GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -92,25 +92,25 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
     }
 
     public void setLocationRequest(LocationRequest locationRequest) {
-        mLocationRequest = locationRequest;
+        this.locationRequest = locationRequest;
     }
 
     public void startLocationUpdates() {
-        mGoogleApiClient.connect();
-        if (mConnected && mLocationRequest != null) {
-            mIsStarted = true;
+        googleApiClient.connect();
+        if (connected && locationRequest != null) {
+            isStarted = true;
             LocationServices.FusedLocationApi.requestLocationUpdates(
-                    mGoogleApiClient, mLocationRequest, mLocationListener);
+                googleApiClient, locationRequest, locationListener);
         }
     }
 
     public void stopLocationUpdates() {
-        if (mConnected && mLocationRequest != null) {
+        if (connected && locationRequest != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(
-                    mGoogleApiClient, mLocationListener);
-            mGoogleApiClient.disconnect();
-            mConnected = false;
-            mIsStarted = false;
+                googleApiClient, locationListener);
+            googleApiClient.disconnect();
+            connected = false;
+            isStarted = false;
         }
     }
 }

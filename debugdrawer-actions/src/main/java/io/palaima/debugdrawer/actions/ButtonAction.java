@@ -1,22 +1,21 @@
-package io.palaima.debugdrawer.actions.models;
+package io.palaima.debugdrawer.actions;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import io.palaima.debugdrawer.actions.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ButtonAction implements Action {
 
-    private final String mName;
-    private final Listener mListener;
+    private final String   name;
+    private final Listener listener;
 
     public ButtonAction(String name, Listener listener) {
-        mName = name;
-        mListener = listener;
+        this.name = name;
+        this.listener = listener;
     }
 
     @Override
@@ -29,12 +28,12 @@ public class ButtonAction implements Action {
 
         Button button = new Button(context);
         button.setLayoutParams(buttonLayoutParams);
-        button.setText(mName);
+        button.setText(name);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onClick();
+                if (listener != null) {
+                    listener.onClick();
                 }
             }
         });

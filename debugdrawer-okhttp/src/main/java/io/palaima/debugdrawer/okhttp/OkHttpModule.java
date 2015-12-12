@@ -1,5 +1,6 @@
 package io.palaima.debugdrawer.okhttp;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,8 @@ public class OkHttpModule implements DebugModule {
         mClient = client;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_module_okhttp, parent, false);
 
         mOkHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.debug_okhttp_cache_max_size);

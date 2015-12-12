@@ -22,7 +22,7 @@ public class FpsModule implements DebugModule {
 
     @Override
     @NonNull
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_item_fps, parent, false);
         Switch showSwitch = (Switch) view.findViewById(R.id.debug_fps);
         showSwitch.setOnCheckedChangeListener(

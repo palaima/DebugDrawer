@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.common;
+package io.palaima.debugdrawer.commons;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,25 +30,25 @@ import io.palaima.debugdrawer.base.DebugModule;
 public class BuildModule implements DebugModule {
 
 
-    private final Context mContext;
+    private final Context context;
 
-    private TextView mCode;
-    private TextView mName;
-    private TextView mPackage;
+    private TextView codeLabel;
+    private TextView nameLabel;
+    private TextView packageLabel;
 
     public BuildModule(Context context) {
-        mContext = context;
+        this.context = context;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_module_build, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
-        mCode = (TextView) view.findViewById(R.id.debug_build_code);
-        mName = (TextView) view.findViewById(R.id.debug_build_name);
-        mPackage = (TextView) view.findViewById(R.id.debug_build_package);
+        codeLabel = (TextView) view.findViewById(R.id.debug_build_code);
+        nameLabel = (TextView) view.findViewById(R.id.debug_build_name);
+        packageLabel = (TextView) view.findViewById(R.id.debug_build_package);
 
         refresh();
 
@@ -76,10 +77,10 @@ public class BuildModule implements DebugModule {
 
     private void refresh() {
         try {
-            final PackageInfo info = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
-            mCode.setText(String.valueOf(info.versionCode));
-            mName.setText(info.versionName);
-            mPackage.setText(info.packageName);
+            final PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            codeLabel.setText(String.valueOf(info.versionCode));
+            nameLabel.setText(info.versionName);
+            packageLabel.setText(info.packageName);
         } catch (PackageManager.NameNotFoundException e) {}
     }
 

@@ -1,4 +1,4 @@
-package io.palaima.debugdrawer.actions.models;
+package io.palaima.debugdrawer.actions;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,8 +10,6 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.palaima.debugdrawer.actions.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 

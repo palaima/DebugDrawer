@@ -1,6 +1,5 @@
-<manifest
-    package="io.palaima.debugdrawer"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.palaima.debugdrawer">
 
     <application android:allowBackup="true"/>
 

@@ -1,5 +1,6 @@
 package io.palaima.debugdrawer.picasso;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,8 @@ public class PicassoModule implements DebugModule {
         mPicasso = picasso;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
         View view = inflater.inflate(R.layout.debug_drawer_item_picasso, parent, false);
         mIndicator = (Switch) view.findViewById(R.id.debug_picasso_indicators);

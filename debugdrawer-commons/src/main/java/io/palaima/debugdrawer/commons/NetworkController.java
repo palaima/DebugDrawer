@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.common;
+package io.palaima.debugdrawer.commons;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
@@ -43,15 +43,15 @@ final class NetworkController {
 
     private static NetworkController instance;
 
-    private WifiManager mWifiManager;
-    private ConnectivityManager mConnectivityManager;
-    private BluetoothAdapter mBluetoothAdapter;
+    private WifiManager         wifiManager;
+    private ConnectivityManager connectivityManager;
+    private BluetoothAdapter    bluetoothAdapter;
 
-    private NetworkReceiver mReceiver;
+    private NetworkReceiver receiver;
 
-    private transient Context mContext;
+    private transient Context context;
 
-    private OnNetworkChangedListener mOnNetworkChangedListener;
+    private OnNetworkChangedListener onNetworkChangedListener;
 
     public static NetworkController newInstance(Context context) {
         if (instance == null)
@@ -66,23 +66,21 @@ final class NetworkController {
      * @param context
      */
     private NetworkController(Context context) {
-        mContext = context.getApplicationContext();
-        mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-        mConnectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.context = context.getApplicationContext();
+        wifiManager = (WifiManager) this.context.getSystemService(Context.WIFI_SERVICE);
+        connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
     public void setOnNetworkChangedListener(OnNetworkChangedListener listener) {
-        mOnNetworkChangedListener = listener;
+        onNetworkChangedListener = listener;
     }
 
     /**
      * True if WiFi enabled
-     *
-     * @return
      */
     public boolean isWifiEnabled() {
-        return mWifiManager.isWifiEnabled();
+        return wifiManager.isWifiEnabled();
     }
 
     /**
@@ -91,17 +89,15 @@ final class NetworkController {
      * @param enabled
      */
     public void setWifiEnabled(boolean enabled) {
-        mWifiManager.setWifiEnabled(enabled);
+        wifiManager.setWifiEnabled(enabled);
     }
 
     /**
      * True if mobile network enabled
-     *
-     * @return
      */
     public boolean isMobileNetworkEnabled() {
-        final NetworkInfo info = mConnectivityManager.getNetworkInfo(
-                ConnectivityManager.TYPE_MOBILE);
+        final NetworkInfo info = connectivityManager.getNetworkInfo(
+            ConnectivityManager.TYPE_MOBILE);
         return (info != null && info.isConnected());
     }
 
@@ -111,14 +107,13 @@ final class NetworkController {
      * Returns true if succeeded
      *
      * @param enabled
-     * @return
      */
     public boolean setMobileNetworkEnabled(boolean enabled) {
         try {
-            final Class conmanClass = Class.forName(mConnectivityManager.getClass().getName());
+            final Class conmanClass = Class.forName(connectivityManager.getClass().getName());
             final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
             iConnectivityManagerField.setAccessible(true);
-            final Object iConnectivityManager = iConnectivityManagerField.get(mConnectivityManager);
+            final Object iConnectivityManager = iConnectivityManagerField.get(connectivityManager);
             final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
             final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
             setMobileDataEnabledMethod.setAccessible(true);
@@ -137,14 +132,14 @@ final class NetworkController {
      * @return True if bluetooth adapter is not null
      */
     public boolean isBluetoothAvailable() {
-        return mBluetoothAdapter != null;
+        return bluetoothAdapter != null;
     }
 
     /**
      * @return True if bluetooth is enabled
      */
     public boolean isBluetoothEnabled() {
-        return isBluetoothAvailable() && mBluetoothAdapter.isEnabled();
+        return isBluetoothAvailable() && bluetoothAdapter.isEnabled();
     }
 
     /**
@@ -152,11 +147,10 @@ final class NetworkController {
      * error occurs
      *
      * @param enabled
-     * @return
      */
     public boolean setBluetoothEnabled(boolean enabled) {
-        return isBluetoothAvailable() && (enabled ? mBluetoothAdapter.enable()
-                : mBluetoothAdapter.disable());
+        return isBluetoothAvailable() && (enabled ? bluetoothAdapter.enable()
+            : bluetoothAdapter.disable());
     }
 
 
@@ -165,7 +159,7 @@ final class NetworkController {
      */
     public void unregisterReceiver() {
         try {
-            mContext.unregisterReceiver(mReceiver);
+            context.unregisterReceiver(receiver);
         } catch (IllegalArgumentException e) {
         }
     }
@@ -174,19 +168,19 @@ final class NetworkController {
      * Register network state broadcast receiver
      */
     public void registerReceiver() {
-        if (mReceiver == null)
-            mReceiver = new NetworkReceiver(new Listener() {
+        if (receiver == null)
+            receiver = new NetworkReceiver(new Listener() {
                 @Override
                 public void post(NetworkChangeEvent event) {
-                    if (mOnNetworkChangedListener != null) {
-                        mOnNetworkChangedListener.onChanged(event);
+                    if (onNetworkChangedListener != null) {
+                        onNetworkChangedListener.onChanged(event);
                     }
                 }
             });
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        mContext.registerReceiver(mReceiver, filter);
+        context.registerReceiver(receiver, filter);
     }
 
     /**
@@ -197,16 +191,14 @@ final class NetworkController {
      */
     public static class NetworkReceiver extends BroadcastReceiver {
 
-        @Nullable
-        private final Listener mListener;
+        @Nullable private final Listener listener;
 
         public NetworkReceiver(@Nullable Listener listener) {
-            mListener = listener;
+            this.listener = listener;
         }
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (mListener != null) {
+        @Override public void onReceive(Context context, Intent intent) {
+            if (listener != null) {
                 ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
                 NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -214,11 +206,11 @@ final class NetworkController {
                 BluetoothAdapter bluetoothInfo = BluetoothAdapter.getDefaultAdapter();
 
                 final NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent(
-                        (wifiInfo != null) ? wifiInfo.getState() : NetworkInfo.State.UNKNOWN,
-                        (mobileInfo != null) ? mobileInfo.getState() : NetworkInfo.State.UNKNOWN,
-                        (bluetoothInfo != null) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
+                    (wifiInfo != null) ? wifiInfo.getState() : NetworkInfo.State.UNKNOWN,
+                    (mobileInfo != null) ? mobileInfo.getState() : NetworkInfo.State.UNKNOWN,
+                    (bluetoothInfo != null) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
 
-                mListener.post(networkChangeEvent);
+                listener.post(networkChangeEvent);
             }
 
         }
@@ -227,7 +219,6 @@ final class NetworkController {
          * Converts Bluetooth state representation to an Enum
          *
          * @param state
-         * @return
          */
         private BluetoothState getBluetoothState(int state) {
             switch (state) {
@@ -248,7 +239,7 @@ final class NetworkController {
     public static class NetworkChangeEvent {
         public final NetworkInfo.State wifiState;
         public final NetworkInfo.State mobileState;
-        public final BluetoothState bluetoothState;
+        public final BluetoothState    bluetoothState;
 
         public NetworkChangeEvent(NetworkInfo.State wifiState, NetworkInfo.State mobileState, BluetoothState bluetoothState) {
             this.wifiState = wifiState;

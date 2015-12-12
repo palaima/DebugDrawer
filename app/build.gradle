@@ -40,19 +40,41 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'jp.wasabeef:takt:1.0.2'
     compile 'com.google.android.gms:play-services-location:8.3.0'
-    /*compile 'io.palaima.debugdrawer:debugdrawer:0.5.0'
-        compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.5.0'
-        compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.5.0'
-        compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.5.0'
-        compile 'io.palaima.debugdrawer:debugdrawer-location:0.5.0'
-        compile 'io.palaima.debugdrawer:debugdrawer-log:0.5.0'
-        compile 'io.palaima.debugdrawer:debugdrawer-fps:0.5.0'*/
+
+   /* debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.0'
+    debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.6.0'
+    releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.0'
+    releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-location:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-log:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-fps:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-actions:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-commons:0.6.0'
+    compile 'io.palaima.debugdrawer:debugdrawer-base:0.6.0'*/
+
+    /*debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.0-SNAPSHOT'
+    debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.6.0-SNAPSHOT'
+    releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.0-SNAPSHOT'
+    releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-location:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-log:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-fps:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-actions:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-commons:0.6.0-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-base:0.6.0-SNAPSHOT'*/
+
     releaseCompile project(':debugdrawer-no-op')
     releaseCompile project(':debugdrawer-view-no-op')
     debugCompile project(':debugdrawer')
     debugCompile project(':debugdrawer-view')
     compile project(':debugdrawer-base')
-    compile project(':debugdrawer-common')
+    compile project(':debugdrawer-commons')
     compile project(':debugdrawer-picasso')
     compile project(':debugdrawer-okhttp')
     compile project(':debugdrawer-scalpel')

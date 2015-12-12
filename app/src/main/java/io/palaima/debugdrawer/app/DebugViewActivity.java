@@ -18,13 +18,13 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.actions.ActionsModule;
-import io.palaima.debugdrawer.actions.models.ButtonAction;
-import io.palaima.debugdrawer.actions.models.SpinnerAction;
-import io.palaima.debugdrawer.actions.models.SwitchAction;
-import io.palaima.debugdrawer.common.BuildModule;
-import io.palaima.debugdrawer.common.DeviceModule;
-import io.palaima.debugdrawer.common.NetworkModule;
-import io.palaima.debugdrawer.common.SettingsModule;
+import io.palaima.debugdrawer.actions.ButtonAction;
+import io.palaima.debugdrawer.actions.SpinnerAction;
+import io.palaima.debugdrawer.actions.SwitchAction;
+import io.palaima.debugdrawer.commons.BuildModule;
+import io.palaima.debugdrawer.commons.DeviceModule;
+import io.palaima.debugdrawer.commons.NetworkModule;
+import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.log.LogModule;
@@ -61,53 +61,45 @@ public class DebugViewActivity extends AppCompatActivity {
             .build();
 
         setupToolBar();
-        //change status bar color programmatically
-/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark_material_light));
-        }*/
 
+        SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
+            @Override
+            public void onCheckedChanged(boolean value) {
+                Toast.makeText(DebugViewActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
+            }
+        });
 
-        if (BuildConfig.DEBUG) {
-            SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
-                @Override
-                public void onCheckedChanged(boolean value) {
-                    Toast.makeText(DebugViewActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
+        ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
+            @Override
+            public void onClick() {
+                Toast.makeText(DebugViewActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        SpinnerAction<String> spinnerAction = new SpinnerAction<>(
+            Arrays.asList("First", "Second", "Third"),
+            new SpinnerAction.OnItemSelectedListener<String>() {
+                @Override public void onItemSelected(String value) {
+                    Toast.makeText(DebugViewActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
                 }
-            });
+            }
+        );
 
-            ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
-                @Override
-                public void onClick() {
-                    Toast.makeText(DebugViewActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
-                }
-            });
+        mDebugView = (DebugView) findViewById(R.id.debug_view);
 
-            SpinnerAction<String> spinnerAction = new SpinnerAction<>(
-                Arrays.asList("First", "Second", "Third"),
-                new SpinnerAction.OnItemSelectedListener<String>() {
-                    @Override public void onItemSelected(String value) {
-                        Toast.makeText(DebugViewActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
-                    }
-                }
-            );
-
-            mDebugView = (DebugView) findViewById(R.id.debug_view);
-
-            mDebugView.modules(
-                new ActionsModule(switchAction, buttonAction, spinnerAction),
-                new FpsModule(Takt.stock(getApplication())),
-                new LocationModule(this),
-                new ScalpelModule(this),
-                new LogModule(),
-                new OkHttpModule(mOkHttpClient),
-                new PicassoModule(mPicasso),
-                new DeviceModule(this),
-                new BuildModule(this),
-                new NetworkModule(this),
-                new SettingsModule(this)
-            );
-        }
+        mDebugView.modules(
+            new ActionsModule(switchAction, buttonAction, spinnerAction),
+            new FpsModule(Takt.stock(getApplication())),
+            new LocationModule(this),
+            new ScalpelModule(this),
+            new LogModule(),
+            new OkHttpModule(mOkHttpClient),
+            new PicassoModule(mPicasso),
+            new DeviceModule(this),
+            new BuildModule(this),
+            new NetworkModule(this),
+            new SettingsModule(this)
+        );
 
         showDummyLog();
     }
@@ -123,32 +115,24 @@ public class DebugViewActivity extends AppCompatActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        if (mDebugView != null) {
-            mDebugView.onResume();
-        }
+        mDebugView.onResume();
     }
 
     @Override protected void onPause() {
         super.onPause();
-        if (mDebugView != null) {
-            mDebugView.onPause();
-        }
+        mDebugView.onPause();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mDebugView != null) {
-            mDebugView.onStart();
-        }
+        mDebugView.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mDebugView != null) {
-            mDebugView.onStop();
-        }
+        mDebugView.onStop();
     }
 
     protected Toolbar setupToolBar() {

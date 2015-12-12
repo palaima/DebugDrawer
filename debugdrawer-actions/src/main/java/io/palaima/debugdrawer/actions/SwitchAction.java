@@ -1,4 +1,4 @@
-package io.palaima.debugdrawer.actions.models;
+package io.palaima.debugdrawer.actions;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,52 +11,51 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import io.palaima.debugdrawer.actions.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class SwitchAction implements Action {
 
-    private final String mName;
-    private final Listener mListener;
+    private final String   name;
+    private final Listener listener;
 
-    private Context mContext;
-    private Switch mSwitch;
+    private Context context;
+    private Switch  switchButton;
 
     public SwitchAction(String name, Listener listener) {
-        mName = name;
-        mListener = listener;
+        this.name = name;
+        this.listener = listener;
     }
 
     @Override
     public View getView(LinearLayout linearLayout) {
 
-        mContext = linearLayout.getContext();
-        Resources resources = mContext.getResources();
+        context = linearLayout.getContext();
+        Resources resources = context.getResources();
 
         LinearLayout.LayoutParams viewGroupLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         viewGroupLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.padding_small);
 
-        LinearLayout viewGroup = new LinearLayout(mContext);
+        LinearLayout viewGroup = new LinearLayout(context);
         viewGroup.setLayoutParams(viewGroupLayoutParams);
         viewGroup.setOrientation(LinearLayout.HORIZONTAL);
 
         LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         textViewLayoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.spacing_big);
 
-        TextView textView = new TextView(mContext);
+        TextView textView = new TextView(context);
         textView.setLayoutParams(textViewLayoutParams);
-        textView.setText(mName);
-        textView.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+        textView.setText(name);
+        textView.setTextColor(ContextCompat.getColor(context, R.color.white));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.font_normal));
         textView.setGravity(Gravity.CENTER_VERTICAL);
 
-        mSwitch = new Switch(mContext);
-        mSwitch.setOnCheckedChangeListener(mSwitchListener);
+        switchButton = new Switch(context);
+        switchButton.setOnCheckedChangeListener(switchListener);
 
         viewGroup.addView(textView);
-        viewGroup.addView(mSwitch);
+        viewGroup.addView(switchButton);
 
         return viewGroup;
     }
@@ -83,9 +82,9 @@ public class SwitchAction implements Action {
 
     @Override
     public void onStart() {
-        mSwitch.setOnCheckedChangeListener(null);
-        mSwitch.setChecked(readValue());
-        mSwitch.setOnCheckedChangeListener(mSwitchListener);
+        switchButton.setOnCheckedChangeListener(null);
+        switchButton.setChecked(readValue());
+        switchButton.setOnCheckedChangeListener(switchListener);
     }
 
     @Override
@@ -93,11 +92,11 @@ public class SwitchAction implements Action {
         /* no-op */
     }
 
-    private CompoundButton.OnCheckedChangeListener mSwitchListener = new CompoundButton.OnCheckedChangeListener() {
+    private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (mListener != null) {
-                mListener.onCheckedChanged(isChecked);
+            if (listener != null) {
+                listener.onCheckedChanged(isChecked);
             }
             writeValue(isChecked);
         }
@@ -108,19 +107,19 @@ public class SwitchAction implements Action {
     }
 
     public void setChecked(boolean checked) {
-        mSwitch.setChecked(checked);
+        switchButton.setChecked(checked);
     }
 
     private boolean readValue() {
-        return getPreferences().getBoolean(mName, false);
+        return getPreferences().getBoolean(name, false);
     }
 
     private void writeValue(boolean b) {
-        getPreferences().edit().putBoolean(mName, b).apply();
+        getPreferences().edit().putBoolean(name, b).apply();
     }
 
     private SharedPreferences getPreferences() {
-        return mContext.getSharedPreferences(mName, Context.MODE_PRIVATE);
+        return context.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     public interface Listener {

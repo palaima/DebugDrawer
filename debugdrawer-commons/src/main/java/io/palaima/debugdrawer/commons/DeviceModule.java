@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package io.palaima.debugdrawer.common;
+package io.palaima.debugdrawer.commons;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,29 +29,29 @@ import io.palaima.debugdrawer.base.DebugModule;
 
 public class DeviceModule implements DebugModule {
 
-    private String mDeviceMake;
-    private String mDeviceModel;
-    private String mDeviceResolution;
-    private String mDeviceDensity;
-    private String mDeviceRelease;
-    private String mDeviceApi;
+    private String deviceMake;
+    private String deviceModel;
+    private String deviceResolution;
+    private String deviceDensity;
+    private String deviceRelease;
+    private String deviceApi;
 
-    private TextView mDeviceMakeView;
-    private TextView mDeviceModelView;
-    private TextView mDeviceResolutionView;
-    private TextView mDeviceDensityView;
-    private TextView mDeviceReleaseView;
-    private TextView mDeviceApiView;
+    private TextView deviceMakeLabel;
+    private TextView deviceModelLabel;
+    private TextView deviceResolutionLabel;
+    private TextView deviceDensityLabel;
+    private TextView deviceReleaseLabel;
+    private TextView deviceApiLabel;
 
     public DeviceModule(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         String densityBucket = getDensityString(displayMetrics);
-        mDeviceMake = truncateAt(Build.MANUFACTURER, 20);
-        mDeviceModel = truncateAt(Build.MODEL, 20);
-        mDeviceResolution = displayMetrics.heightPixels + "x" + displayMetrics.widthPixels;
-        mDeviceDensity = displayMetrics.densityDpi + "dpi (" + densityBucket + ")";
-        mDeviceRelease = Build.VERSION.RELEASE;
-        mDeviceApi = String.valueOf(Build.VERSION.SDK_INT);
+        deviceMake = truncateAt(Build.MANUFACTURER, 20);
+        deviceModel = truncateAt(Build.MODEL, 20);
+        deviceResolution = displayMetrics.heightPixels + "x" + displayMetrics.widthPixels;
+        deviceDensity = displayMetrics.densityDpi + "dpi (" + densityBucket + ")";
+        deviceRelease = Build.VERSION.RELEASE;
+        deviceApi = String.valueOf(Build.VERSION.SDK_INT);
     }
 
     public static String truncateAt(String string, int length) {
@@ -78,25 +79,25 @@ public class DeviceModule implements DebugModule {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_module_device, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
-        mDeviceMakeView = (TextView) view.findViewById(R.id.debug_device_make);
-        mDeviceModelView = (TextView) view.findViewById(R.id.debug_device_model);
-        mDeviceResolutionView = (TextView) view.findViewById(R.id.debug_device_resolution);
-        mDeviceDensityView = (TextView) view.findViewById(R.id.debug_device_density);
-        mDeviceReleaseView = (TextView) view.findViewById(R.id.debug_device_release);
-        mDeviceApiView = (TextView) view.findViewById(R.id.debug_device_api);
+        deviceMakeLabel = (TextView) view.findViewById(R.id.debug_device_make);
+        deviceModelLabel = (TextView) view.findViewById(R.id.debug_device_model);
+        deviceResolutionLabel = (TextView) view.findViewById(R.id.debug_device_resolution);
+        deviceDensityLabel = (TextView) view.findViewById(R.id.debug_device_density);
+        deviceReleaseLabel = (TextView) view.findViewById(R.id.debug_device_release);
+        deviceApiLabel = (TextView) view.findViewById(R.id.debug_device_api);
 
-        mDeviceModelView.setText(mDeviceModel);
-        mDeviceMakeView.setText(mDeviceMake);
-        mDeviceResolutionView.setText(mDeviceResolution);
-        mDeviceDensityView.setText(mDeviceDensity);
-        mDeviceApiView.setText(mDeviceApi);
-        mDeviceReleaseView.setText(mDeviceRelease);
+        deviceModelLabel.setText(deviceModel);
+        deviceMakeLabel.setText(deviceMake);
+        deviceResolutionLabel.setText(deviceResolution);
+        deviceDensityLabel.setText(deviceDensity);
+        deviceApiLabel.setText(deviceApi);
+        deviceReleaseLabel.setText(deviceRelease);
 
         return view;
     }

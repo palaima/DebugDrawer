@@ -3,6 +3,7 @@ package io.palaima.debugdrawer.scalpel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,8 @@ public class ScalpelModule implements DebugModule {
         mRootView = (ViewGroup) activity.findViewById(android.R.id.content);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
         ViewGroup contentView = (ViewGroup) mRootView.getChildAt(0);
         ViewGroup scrimInsets = (ViewGroup) contentView.getChildAt(0);
