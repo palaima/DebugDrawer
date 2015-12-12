@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -41,36 +42,38 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 
-public class LocationModule implements DrawerModule {
+public class LocationModule implements DebugModule {
 
-    private transient final Context mContext;
-    private boolean mHasPermission;
+    private transient final Context         context;
+    private final           LocationRequest locationRequest;
+
+    private boolean hasPermission;
 
     @Nullable
-    private LocationController mLocationController;
+    private LocationController locationController;
 
-    private TextView mLatitude;
+    private TextView latitude;
 
-    private TextView mLongitude;
+    private TextView longitude;
 
-    private TextView mAccuracy;
+    private TextView accuracy;
 
-    private TextView mTime;
+    private TextView time;
 
-    private TextView mProvider;
+    private TextView provider;
 
-    private Location mLocation;
+    private Location location;
 
-    private boolean mOpened;
+    private boolean opened;
 
     public LocationModule(Context context) {
         this(context, true);
     }
 
     /**
-     * @param context context
+     * @param context                   context
      * @param locationRequestsAvailable defines if location should be updated every 10 seconds
      */
     public LocationModule(Context context, boolean locationRequestsAvailable) {
@@ -88,52 +91,54 @@ public class LocationModule implements DrawerModule {
     }
 
     public LocationModule(Context context, LocationRequest locationRequest) {
-        mContext = context.getApplicationContext();
-        checkPermission();
-        boolean available = GooglePlayServicesUtil
-            .isGooglePlayServicesAvailable(mContext) == ConnectionResult.SUCCESS;
-        if (available && mHasPermission) {
-            mLocationController = LocationController.newInstance(mContext);
-            if (locationRequest != null) {
-                mLocationController.setLocationRequest(locationRequest);
-            }
-        }
+        this.locationRequest = locationRequest;
+        this.context = context.getApplicationContext();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
-        if (mLocationController != null && mHasPermission) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        checkPermission();
+        boolean available = GooglePlayServicesUtil
+            .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
+        if (available && hasPermission) {
+            locationController = LocationController.newInstance(context);
+            if (locationRequest != null) {
+                locationController.setLocationRequest(locationRequest);
+            }
+        }
+
+        if (locationController != null && hasPermission) {
             View view = inflater.inflate(R.layout.debug_drawer_module_location, parent, false);
-            mLatitude = (TextView) view.findViewById(R.id.debug_location_latitude);
-            mLongitude = (TextView) view.findViewById(R.id.debug_location_longitude);
-            mAccuracy = (TextView) view.findViewById(R.id.debug_location_accuracy);
-            mTime = (TextView) view.findViewById(R.id.debug_location_time);
-            mProvider = (TextView) view.findViewById(R.id.debug_location_provider);
+            latitude = (TextView) view.findViewById(R.id.debug_location_latitude);
+            longitude = (TextView) view.findViewById(R.id.debug_location_longitude);
+            accuracy = (TextView) view.findViewById(R.id.debug_location_accuracy);
+            time = (TextView) view.findViewById(R.id.debug_location_time);
+            provider = (TextView) view.findViewById(R.id.debug_location_provider);
             view.findViewById(R.id.debug_location_map).setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            openMaps(mContext);
-                        }
-                    });
-            mLocationController.setLocationListener(new LocationListener() {
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openMaps(context);
+                    }
+                });
+            locationController.setLocationListener(new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    if (mOpened) {
+                    if (opened) {
                         updateLocation(location);
                     }
                 }
             });
             updateLastLocation();
             return view;
-        } else if(!mHasPermission) {
-            TextView errorText = new TextView(mContext);
-            errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Header);
+        } else if (!hasPermission) {
+            TextView errorText = new TextView(context);
+            errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
             errorText.setText(R.string.debug_drawer_location_no_permission);
             return errorText;
         } else {
-            TextView errorText = new TextView(mContext);
-            errorText.setTextAppearance(mContext, R.style.Widget_DebugDrawer_Header);
+            TextView errorText = new TextView(context);
+            errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
             errorText.setText(R.string.debug_drawer_location_google_play_unavailable);
             return errorText;
         }
@@ -142,60 +147,71 @@ public class LocationModule implements DrawerModule {
     @Override
     public void onOpened() {
         updateLastLocation();
-        mOpened = true;
+        opened = true;
     }
 
     @Override
     public void onClosed() {
-        mOpened = false;
+        opened = false;
+    }
+
+    @Override
+    public void onResume() {
+        updateLastLocation();
+        opened = true;
+    }
+
+    @Override
+    public void onPause() {
+        opened = false;
     }
 
     private void updateLastLocation() {
-        if (mLocationController != null) {
-            Location lastLocation = mLocationController.getLastLocation();
+        if (locationController != null) {
+            Location lastLocation = locationController.getLastLocation();
             updateLocation(lastLocation);
         }
     }
 
     private void updateLocation(Location location) {
         if (location != null) {
-            mLocation = location;
-            mLatitude.setText(String.valueOf(location.getLatitude()));
-            mLongitude.setText(String.valueOf(location.getLongitude()));
-            mAccuracy.setText(String.valueOf(location.getAccuracy()) + "m");
+            this.location = location;
+            latitude.setText(String.valueOf(location.getLatitude()));
+            longitude.setText(String.valueOf(location.getLongitude()));
+            accuracy.setText(String.valueOf(location.getAccuracy()) + "m");
 
             Date date = new Date(location.getTime());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            mTime.setText(sdf.format(date));
-            mProvider.setText(location.getProvider());
+            time.setText(sdf.format(date));
+            provider.setText(location.getProvider());
         } else {
-            mLatitude.setText(R.string.debug_drawer_location_empty);
-            mLongitude.setText(R.string.debug_drawer_location_empty);
-            mAccuracy.setText(R.string.debug_drawer_location_empty);
-            mTime.setText(R.string.debug_drawer_location_empty);
-            mProvider.setText(R.string.debug_drawer_location_no_provider);
+            latitude.setText(R.string.debug_drawer_location_empty);
+            longitude.setText(R.string.debug_drawer_location_empty);
+            accuracy.setText(R.string.debug_drawer_location_empty);
+            time.setText(R.string.debug_drawer_location_empty);
+            provider.setText(R.string.debug_drawer_location_no_provider);
         }
     }
 
     @Override
     public void onStart() {
-        if (mLocationController != null) {
+        if (locationController != null) {
             checkPermission();
-            mLocationController.startLocationUpdates();
+            locationController.startLocationUpdates();
         }
     }
 
     @Override
     public void onStop() {
-        if (mLocationController != null) {
-            mLocationController.stopLocationUpdates();
+        if (locationController != null) {
+            locationController.stopLocationUpdates();
         }
     }
 
     private void openMaps(Context context) {
         try {
-            if (mLocation != null) {
-                String uri = "geo:" + mLocation.getLatitude() + "," + mLocation.getLongitude();
+            if (location != null) {
+                String uri = "geo:" + location.getLatitude() + "," + location.getLongitude();
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -208,7 +224,7 @@ public class LocationModule implements DrawerModule {
     }
 
     private void checkPermission() {
-        mHasPermission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
+        hasPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED;
     }
 }

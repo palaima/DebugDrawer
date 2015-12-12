@@ -1,8 +1,9 @@
 package io.palaima.debugdrawer.app;
 
+import android.app.Application;
+
 import com.squareup.leakcanary.LeakCanary;
 
-import android.app.Application;
 import io.palaima.debugdrawer.log.data.LumberYard;
 import timber.log.Timber;
 

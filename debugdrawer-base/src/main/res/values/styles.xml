@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="None">
+    </style>
+
+    <style name="Widget.DebugDrawer.Base.Header" parent="None">
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:background">@drawable/debug_drawer_header_bg</item>
+    </style>
+    <style name="Widget.DebugDrawer.Base.RowWidget" parent="None">
+        <item name="android:minHeight">30dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+    <style name="Widget.DebugDrawer.Base.RowTitle" parent="Widget.DebugDrawer.Base.RowWidget">
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="Widget.DebugDrawer.Base.RowValue" parent="Widget.DebugDrawer.Base.RowWidget">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+</resources>

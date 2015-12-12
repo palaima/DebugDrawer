@@ -11,9 +11,8 @@
     android:layout_marginEnd="@dimen/debug_drawer_margin"
     android:background="#ee212121">
 
-        <LinearLayout
-            android:id="@+id/container"
-            android:orientation="vertical"
+        <io.palaima.debugdrawer.view.DebugView
+            android:id="@+id/debug_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 </ScrollView>

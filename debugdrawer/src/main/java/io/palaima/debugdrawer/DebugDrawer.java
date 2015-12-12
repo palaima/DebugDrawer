@@ -24,18 +24,14 @@ import android.support.annotation.IntegerRes;
 import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 import io.palaima.debugdrawer.util.UIUtils;
+import io.palaima.debugdrawer.view.DebugView;
 import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
 
 public class DebugDrawer {
@@ -43,17 +39,15 @@ public class DebugDrawer {
     private final DrawerLayout mDrawerLayout;
 
     private ScrollView mSliderLayout;
+    private DebugView mDebugView;
 
     private int mDrawerGravity;
-
-    private final ArrayList<DrawerModule> mDrawerItems;
-
 
     private DebugDrawer(Builder builder) {
         mDrawerLayout = builder.mDrawerLayout;
         mDrawerGravity = builder.mDrawerGravity;
-        mDrawerItems = builder.mDrawerItems;
         mSliderLayout = builder.mSliderLayout;
+        mDebugView = builder.mDebugView;
     }
 
     /**
@@ -96,21 +90,31 @@ public class DebugDrawer {
     }
 
     /**
-     * Starts all modules and calls their {@link DrawerModule#onStart()} method
+     * Calls modules {@link DebugModule#onResume()} method
      */
-    public void onStart() {
-        for (DrawerModule drawerItem : mDrawerItems) {
-            drawerItem.onStart();
-        }
+    public void onResume() {
+        mDebugView.onResume();
     }
 
     /**
-     * Removes all modules and calls their {@link DrawerModule#onStop()} method
+     * Calls modules {@link DebugModule#onPause()} method
+     */
+    public void onPause() {
+        mDebugView.onPause();
+    }
+
+    /**
+     * Starts all modules and calls their {@link DebugModule#onStart()} method
+     */
+    public void onStart() {
+        mDebugView.onStart();
+    }
+
+    /**
+     * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
     public void onStop() {
-        for (DrawerModule drawerItem : mDrawerItems) {
-            drawerItem.onStop();
-        }
+        mDebugView.onStop();
     }
 
     public static class Builder {
@@ -128,7 +132,7 @@ public class DebugDrawer {
         //the width of the drawer
         private int mDrawerWidth = -1;
 
-        private ArrayList<DrawerModule> mDrawerItems;
+        private DebugModule[] mDrawerItems;
 
         private DrawerLayout.DrawerListener mOnDrawerListener;
 
@@ -140,7 +144,7 @@ public class DebugDrawer {
 
         private int mSliderBackgroundDrawableRes = -1;
 
-        private LinearLayout mContainer;
+        private DebugView mDebugView;
 
         private ScrimInsetsFrameLayout mDrawerContentRoot;
 
@@ -254,14 +258,8 @@ public class DebugDrawer {
         /**
          * Add a initial DrawerItem or a DrawerItem Array  for the Drawer
          */
-        public Builder modules(DrawerModule... drawerItems) {
-            if (this.mDrawerItems == null) {
-                this.mDrawerItems = new ArrayList<>();
-            }
-
-            if (drawerItems != null) {
-                Collections.addAll(this.mDrawerItems, drawerItems);
-            }
+        public Builder modules(DebugModule... drawerItems) {
+            mDrawerItems = drawerItems;
             return this;
         }
 
@@ -328,8 +326,8 @@ public class DebugDrawer {
                     if (mOnDrawerListener != null) {
                         mOnDrawerListener.onDrawerOpened(drawerView);
                     }
-                    if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
-                        for (DrawerModule drawerItem : mDrawerItems) {
+                    if (mDrawerItems != null && mDrawerItems.length != 0) {
+                        for (DebugModule drawerItem : mDrawerItems) {
                             drawerItem.onOpened();
                         }
                     }
@@ -340,8 +338,8 @@ public class DebugDrawer {
                     if (mOnDrawerListener != null) {
                         mOnDrawerListener.onDrawerClosed(drawerView);
                     }
-                    if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
-                        for (DrawerModule drawerItem : mDrawerItems) {
+                    if (mDrawerItems != null && mDrawerItems.length != 0) {
+                        for (DebugModule drawerItem : mDrawerItems) {
                             drawerItem.onClosed();
                         }
                     }
@@ -353,10 +351,8 @@ public class DebugDrawer {
                 }
             });
 
-
-            mSliderLayout = (ScrollView) mActivity.getLayoutInflater().inflate(
-                    R.layout.debug_drawer_slider, mDrawerLayout, false);
-            mContainer = (LinearLayout) mSliderLayout.findViewById(R.id.container);
+            mSliderLayout = (ScrollView) mDrawerLayout.findViewById(R.id.slider_layout);
+            mDebugView = (DebugView) mSliderLayout.findViewById(R.id.debug_view);
 
             // get the layout params
             DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mSliderLayout.getLayoutParams();
@@ -382,16 +378,7 @@ public class DebugDrawer {
                 UIUtils.setBackground(mSliderLayout, mSliderBackgroundColorRes);
             }
 
-            LayoutInflater inflater = LayoutInflater.from(mActivity);
-            if (mDrawerItems != null && !mDrawerItems.isEmpty()) {
-                DrawerModule drawerItem;
-                for (int i = 0; i < mDrawerItems.size(); i++) {
-                    drawerItem = mDrawerItems.get(i);
-                    mContainer.addView(drawerItem.onCreateView(inflater, mContainer), i);
-                }
-            }
-
-            mDrawerLayout.addView(mSliderLayout, 1);
+            mDebugView.modules(mDrawerItems);
 
             //create the result object
             DebugDrawer result = new DebugDrawer(this);

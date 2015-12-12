@@ -12,67 +12,67 @@
         android:layout_width="0dp"
         android:layout_gravity="start|fill_horizontal"
         android:text="OkHttp Cache"
-        style="@style/Widget.DebugDrawer.Header"
+        style="@style/Widget.DebugDrawer.Base.Header"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Max Size"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_okhttp_cache_max_size"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Write Errors"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_okhttp_cache_write_error"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Request Count"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_okhttp_cache_request_count"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Network Count"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_okhttp_cache_network_count"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="   Hit Count"
-        style="@style/Widget.DebugDrawer.RowTitle"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         />
     <TextView
         android:id="@+id/debug_okhttp_cache_hit_count"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/Widget.DebugDrawer.RowValue"
+        style="@style/Widget.DebugDrawer.Base.RowValue"
         />
 
 </GridLayout>

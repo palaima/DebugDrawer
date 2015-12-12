@@ -1,16 +1,17 @@
 package io.palaima.debugdrawer.okhttp;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
 
-public class OkHttpModule implements DrawerModule {
+import io.palaima.debugdrawer.base.DebugModule;
+
+public class OkHttpModule implements DebugModule {
 
     private final OkHttpClient mClient;
 
@@ -28,8 +29,8 @@ public class OkHttpModule implements DrawerModule {
         mClient = client;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_module_okhttp, parent, false);
 
         mOkHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.debug_okhttp_cache_max_size);
@@ -63,6 +64,16 @@ public class OkHttpModule implements DrawerModule {
 
     @Override
     public void onClosed() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
 
     }
 

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import io.palaima.debugdrawer.base.DebugModule;
 import jp.wasabeef.takt.Takt;
 
-public class FpsModule implements DrawerModule {
+public class FpsModule implements DebugModule {
 
     private final Takt.Program program;
 
@@ -20,7 +20,9 @@ public class FpsModule implements DrawerModule {
         this.program = program;
     }
 
-    @Override @NonNull public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @Override
+    @NonNull
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.debug_drawer_item_fps, parent, false);
         Switch showSwitch = (Switch) view.findViewById(R.id.debug_fps);
         showSwitch.setOnCheckedChangeListener(
@@ -38,23 +40,37 @@ public class FpsModule implements DrawerModule {
         return view;
     }
 
-    @Override public void onOpened() {
+    @Override
+    public void onOpened() {
 
     }
 
-    @Override public void onClosed() {
+    @Override
+    public void onClosed() {
 
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onResume() {
         if (isChecked) {
             program.play();
         }
     }
 
-    @Override public void onStop() {
+    @Override
+    public void onPause() {
         if (isChecked) {
             program.stop();
         }
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
     }
 }

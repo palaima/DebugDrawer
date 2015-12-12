@@ -1,8 +1,6 @@
 package io.palaima.debugdrawer.picasso;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.StatsSnapshot;
-
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +8,12 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.module.DrawerModule;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.StatsSnapshot;
 
-public class PicassoModule implements DrawerModule {
+import io.palaima.debugdrawer.base.DebugModule;
+
+public class PicassoModule implements DebugModule {
 
     private final Picasso mPicasso;
 
@@ -34,8 +35,8 @@ public class PicassoModule implements DrawerModule {
         mPicasso = picasso;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent) {
+    @NonNull @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
         View view = inflater.inflate(R.layout.debug_drawer_item_picasso, parent, false);
         mIndicator = (Switch) view.findViewById(R.id.debug_picasso_indicators);
@@ -71,6 +72,16 @@ public class PicassoModule implements DrawerModule {
 
     @Override
     public void onClosed() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
 
     }
 
