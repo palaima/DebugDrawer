@@ -41,7 +41,7 @@ dependencies {
     compile 'jp.wasabeef:takt:1.0.2'
     compile 'com.google.android.gms:play-services-location:8.3.0'
 
-   /* debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.0'
+    /*debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.0'
     debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.6.0'
     releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.0'
     releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.0'
