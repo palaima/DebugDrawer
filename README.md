@@ -8,7 +8,7 @@ Faster development with Debug Drawer
 
 ## Features
 
-Currently exists 10 modules:
+Currently 10 modules exist:
 
 `DeviceModule` - common information about your device
 
