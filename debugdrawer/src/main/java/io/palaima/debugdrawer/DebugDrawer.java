@@ -278,40 +278,58 @@ public class DebugDrawer {
                         "You have to set your layout for this activity with setContentView() first.");
             }
 
-
-            mDrawerLayout = (DrawerLayout) mActivity.getLayoutInflater()
-                    .inflate(R.layout.debug_drawer, mRootView, false);
-
-            //get the content view
-            View contentView = mRootView.getChildAt(0);
-            boolean alreadyInflated = contentView instanceof DrawerLayout;
-
-            //get the drawer root
-            mDrawerContentRoot = (ScrimInsetsFrameLayout) mDrawerLayout.getChildAt(0);
-
-            //only add the new layout if it wasn't done before
-            if (!alreadyInflated) {
-                // remove the contentView
-                mRootView.removeView(contentView);
-            } else {
-                //if it was already inflated we have to clean up again
-                mRootView.removeAllViews();
-            }
-
             //create the layoutParams to use for the contentView
             FrameLayout.LayoutParams layoutParamsContentView = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
 
-            //add the contentView to the drawer content frameLayout
-            mDrawerContentRoot.addView(contentView, layoutParamsContentView);
+            // if activity's layout is just merged using <merge> we should add
+            // an intermediate frame saving original layout params
+            // (and it's ok if content is merged with just one view in it - just skip frame injection)
+            final boolean isActivityContentMerged = mRootView.getChildCount() > 1;
+            if (isActivityContentMerged) {
+                final int originalCount = mRootView.getChildCount();
+                final View[] children = new View[originalCount];
+                for (int i = 0; i < originalCount; i++) {
+                    children[i] = mRootView.getChildAt(i);
+                }
+                final FrameLayout frame = new FrameLayout(mActivity);
+                mRootView.removeAllViews();
+                for (int i = 0; i < originalCount; i++) {
+                    final View child = children[i];
+                    frame.addView(child, i, child.getLayoutParams());
+                }
+                mRootView.addView(frame, layoutParamsContentView);
+            }
+
+            //get the content view
+            View contentView = mRootView.getChildAt(0);
+            boolean alreadyInflated = contentView instanceof DrawerLayout;
+
+            //only add the new layout if it wasn't done before
+            if (alreadyInflated) {
+                //if it was already inflated we have to clean up again
+                mRootView.removeAllViews();
+            } else {
+                // remove the contentView
+                mRootView.removeView(contentView);
+            }
+
+            mDrawerLayout = (DrawerLayout) mActivity.getLayoutInflater()
+                    .inflate(R.layout.debug_drawer, mRootView, false);
 
             //add the drawerLayout to the root
             mRootView.addView(mDrawerLayout, new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
             ));
+
+            //get the drawer root
+            mDrawerContentRoot = (ScrimInsetsFrameLayout) mDrawerLayout.getChildAt(0);
+
+            //add the contentView to the drawer content frameLayout
+            mDrawerContentRoot.addView(contentView, layoutParamsContentView);
 
             mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
                 @Override
