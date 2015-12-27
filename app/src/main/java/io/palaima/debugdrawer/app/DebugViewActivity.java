@@ -27,31 +27,31 @@ import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
-import io.palaima.debugdrawer.log.LogModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
+import io.palaima.debugdrawer.timber.TimberModule;
 import io.palaima.debugdrawer.view.DebugView;
 import jp.wasabeef.takt.Takt;
 import timber.log.Timber;
 
 public class DebugViewActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    private Toolbar toolbar;
 
-    private DebugView mDebugView;
+    private DebugView debugView;
 
-    private Picasso mPicasso;
+    private Picasso picasso;
 
-    private OkHttpClient mOkHttpClient;
+    private OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debugview);
-        mOkHttpClient = createOkHttpClient(this.getApplication());
-        mPicasso = new Picasso.Builder(this)
-            .downloader(new OkHttpDownloader(mOkHttpClient))
+        okHttpClient = createOkHttpClient(this.getApplication());
+        picasso = new Picasso.Builder(this)
+            .downloader(new OkHttpDownloader(okHttpClient))
             .listener(new Picasso.Listener() {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
@@ -85,16 +85,16 @@ public class DebugViewActivity extends AppCompatActivity {
             }
         );
 
-        mDebugView = (DebugView) findViewById(R.id.debug_view);
+        debugView = (DebugView) findViewById(R.id.debug_view);
 
-        mDebugView.modules(
+        debugView.modules(
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
             new LocationModule(this),
             new ScalpelModule(this),
-            new LogModule(),
-            new OkHttpModule(mOkHttpClient),
-            new PicassoModule(mPicasso),
+            new TimberModule(),
+            new OkHttpModule(okHttpClient),
+            new PicassoModule(picasso),
             new DeviceModule(this),
             new BuildModule(this),
             new NetworkModule(this),
@@ -115,32 +115,32 @@ public class DebugViewActivity extends AppCompatActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        mDebugView.onResume();
+        debugView.onResume();
     }
 
     @Override protected void onPause() {
         super.onPause();
-        mDebugView.onPause();
+        debugView.onPause();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mDebugView.onStart();
+        debugView.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mDebugView.onStop();
+        debugView.onStop();
     }
 
     protected Toolbar setupToolBar() {
-        mToolbar = (Toolbar) findViewById(R.id.mainToolbar);
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
+        toolbar = (Toolbar) findViewById(R.id.mainToolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
         }
-        return mToolbar;
+        return toolbar;
     }
 
     private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB

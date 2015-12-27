@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
-import io.palaima.debugdrawer.log.data.LumberYard;
+import io.palaima.debugdrawer.timber.data.LumberYard;
 import timber.log.Timber;
 
 
@@ -13,6 +13,7 @@ import timber.log.Timber;
  * @since 01/07/15
  */
 public class DebugDrawerApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();

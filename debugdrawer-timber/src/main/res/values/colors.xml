@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dd_debug_log_background">#ffeeeeee</color>
+    <color name="dd_debug_log_accent_debug">#2196F3</color>
+    <color name="dd_debug_log_accent_info">#8BC34A</color>
+    <color name="dd_debug_log_accent_warn">#FFC107</color>
+    <color name="dd_debug_log_accent_error">#F44336</color>
+    <color name="dd_debug_log_accent_unknown">#9C27B0</color>
+    <color name="dd_debug_log_level_text">#ffffffff</color>
+</resources>

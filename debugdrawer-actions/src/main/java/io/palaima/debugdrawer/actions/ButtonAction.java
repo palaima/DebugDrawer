@@ -24,7 +24,7 @@ public class ButtonAction implements Action {
         Resources resources = context.getResources();
 
         LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        buttonLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.padding_small);
+        buttonLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
 
         Button button = new Button(context);
         button.setLayoutParams(buttonLayoutParams);

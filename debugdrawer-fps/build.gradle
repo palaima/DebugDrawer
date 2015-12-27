@@ -20,8 +20,7 @@ android {
 
 dependencies {
     compile project(':debugdrawer-base')
-    compile 'com.android.support:support-annotations:23.1.1'
-    compile 'jp.wasabeef:takt:1.0.2'
+    provided 'jp.wasabeef:takt:1.0.2'
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
