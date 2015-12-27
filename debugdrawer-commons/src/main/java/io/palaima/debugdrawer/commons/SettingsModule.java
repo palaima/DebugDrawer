@@ -54,22 +54,22 @@ public class SettingsModule implements DebugModule, View.OnClickListener {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_module_settings, parent, false);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_module_settings, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
-        developer = (ImageView) view.findViewById(R.id.debug_settings_developer);
-        developerTitle = view.findViewById(R.id.debug_settings_developer_title);
-        battery = (ImageView) view.findViewById(R.id.debug_settings_batery);
-        batteryTitle = view.findViewById(R.id.debug_settings_batery_title);
-        settings = (ImageView) view.findViewById(R.id.debug_settings_settings);
-        settingsTitle = view.findViewById(R.id.debug_settings_settings_title);
-        info = (ImageView) view.findViewById(R.id.debug_settings_info);
-        infoTitle = view.findViewById(R.id.debug_settings_info_title);
-        uninstall = (ImageView) view.findViewById(R.id.debug_settings_delete);
-        uninstallTitle = view.findViewById(R.id.debug_settings_delete_title);
-        location = (ImageView) view.findViewById(R.id.debug_location_settings);
-        locationTitle = view.findViewById(R.id.debug_location_settings_title);
+        developer = (ImageView) view.findViewById(R.id.dd_debug_settings_developer);
+        developerTitle = view.findViewById(R.id.dd_debug_settings_developer_title);
+        battery = (ImageView) view.findViewById(R.id.dd_debug_settings_batery);
+        batteryTitle = view.findViewById(R.id.dd_debug_settings_batery_title);
+        settings = (ImageView) view.findViewById(R.id.dd_debug_settings_settings);
+        settingsTitle = view.findViewById(R.id.dd_debug_settings_settings_title);
+        info = (ImageView) view.findViewById(R.id.dd_debug_settings_info);
+        infoTitle = view.findViewById(R.id.dd_debug_settings_info_title);
+        uninstall = (ImageView) view.findViewById(R.id.dd_debug_settings_delete);
+        uninstallTitle = view.findViewById(R.id.dd_debug_settings_delete_title);
+        location = (ImageView) view.findViewById(R.id.dd_debug_location_settings);
+        locationTitle = view.findViewById(R.id.dd_debug_location_settings_title);
 
         developer.setOnClickListener(this);
         developerTitle.setOnClickListener(this);

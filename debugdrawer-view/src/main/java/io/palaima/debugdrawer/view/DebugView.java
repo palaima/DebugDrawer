@@ -9,7 +9,7 @@ import io.palaima.debugdrawer.base.DebugModule;
 
 public class DebugView extends LinearLayout {
 
-    private DebugModule[] mDrawerItems;
+    private DebugModule[] drawerItems;
 
     public DebugView(Context context) {
         super(context);
@@ -30,8 +30,8 @@ public class DebugView extends LinearLayout {
      * Calls modules {@link DebugModule#onResume()} method
      */
     public void onResume() {
-        if (mDrawerItems != null) {
-            for (DebugModule drawerItem : mDrawerItems) {
+        if (drawerItems != null) {
+            for (DebugModule drawerItem : drawerItems) {
                 drawerItem.onResume();
             }
         }
@@ -41,8 +41,8 @@ public class DebugView extends LinearLayout {
      * Calls modules {@link DebugModule#onPause()} method
      */
     public void onPause() {
-        if (mDrawerItems != null) {
-            for (DebugModule drawerItem : mDrawerItems) {
+        if (drawerItems != null) {
+            for (DebugModule drawerItem : drawerItems) {
                 drawerItem.onPause();
             }
         }
@@ -52,8 +52,8 @@ public class DebugView extends LinearLayout {
      * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
     public void onStart() {
-        if (mDrawerItems != null) {
-            for (DebugModule drawerItem : mDrawerItems) {
+        if (drawerItems != null) {
+            for (DebugModule drawerItem : drawerItems) {
                 drawerItem.onStart();
             }
         }
@@ -63,20 +63,20 @@ public class DebugView extends LinearLayout {
      * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
     public void onStop() {
-        if (mDrawerItems != null) {
-            for (DebugModule drawerItem : mDrawerItems) {
+        if (drawerItems != null) {
+            for (DebugModule drawerItem : drawerItems) {
                 drawerItem.onStop();
             }
         }
     }
 
     public void modules(DebugModule... drawerItems) {
-        mDrawerItems = drawerItems;
-        if (this.mDrawerItems != null && this.mDrawerItems.length != 0) {
+        this.drawerItems = drawerItems;
+        if (this.drawerItems != null && this.drawerItems.length != 0) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             DebugModule drawerItem;
-            for (int i = 0; i < this.mDrawerItems.length; i++) {
-                drawerItem = this.mDrawerItems[i];
+            for (int i = 0; i < this.drawerItems.length; i++) {
+                drawerItem = this.drawerItems[i];
                 addView(drawerItem.onCreateView(inflater, this));
             }
         }

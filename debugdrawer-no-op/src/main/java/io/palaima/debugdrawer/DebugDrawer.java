@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 
 import io.palaima.debugdrawer.base.DebugModule;
@@ -53,6 +54,15 @@ public class DebugDrawer {
      */
     public boolean isDrawerOpen() {
         return false;
+    }
+
+    /**
+     * Enable or disable interaction with all drawers.
+     *
+     * @return
+     */
+    public void setDrawerLockMode(int lockMode) {
+
     }
 
     /**
@@ -167,6 +177,10 @@ public class DebugDrawer {
          * This is the view containing the list.
          */
         public Builder backgroundDrawableRes(@DrawableRes int sliderBackgroundDrawableRes) {
+            return this;
+        }
+
+        public Builder setDrawerListener(DrawerLayout.DrawerListener onDrawerListener) {
             return this;
         }
 

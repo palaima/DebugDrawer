@@ -81,16 +81,16 @@ public class DeviceModule implements DebugModule {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_module_device, parent, false);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_module_device, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
-        deviceMakeLabel = (TextView) view.findViewById(R.id.debug_device_make);
-        deviceModelLabel = (TextView) view.findViewById(R.id.debug_device_model);
-        deviceResolutionLabel = (TextView) view.findViewById(R.id.debug_device_resolution);
-        deviceDensityLabel = (TextView) view.findViewById(R.id.debug_device_density);
-        deviceReleaseLabel = (TextView) view.findViewById(R.id.debug_device_release);
-        deviceApiLabel = (TextView) view.findViewById(R.id.debug_device_api);
+        deviceMakeLabel = (TextView) view.findViewById(R.id.dd_debug_device_make);
+        deviceModelLabel = (TextView) view.findViewById(R.id.dd_debug_device_model);
+        deviceResolutionLabel = (TextView) view.findViewById(R.id.dd_debug_device_resolution);
+        deviceDensityLabel = (TextView) view.findViewById(R.id.dd_debug_device_density);
+        deviceReleaseLabel = (TextView) view.findViewById(R.id.dd_debug_device_release);
+        deviceApiLabel = (TextView) view.findViewById(R.id.dd_debug_device_api);
 
         deviceModelLabel.setText(deviceModel);
         deviceMakeLabel.setText(deviceMake);

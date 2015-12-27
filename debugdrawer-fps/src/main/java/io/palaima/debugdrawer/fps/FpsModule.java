@@ -12,19 +12,38 @@ import jp.wasabeef.takt.Takt;
 
 public class FpsModule implements DebugModule {
 
+    private static final boolean HAS_TAKT;
+
+    static {
+        boolean hasDependency;
+
+        try {
+            Class.forName("jp.wasabeef.takt.Takt");
+            hasDependency = true;
+        } catch (ClassNotFoundException e) {
+            hasDependency = false;
+        }
+
+        HAS_TAKT = hasDependency;
+    }
+
     private final Takt.Program program;
 
     private boolean isChecked;
 
     public FpsModule(@NonNull Takt.Program program) {
+        if (!HAS_TAKT) {
+            throw new RuntimeException("Takt dependency is not found");
+        }
+
         this.program = program;
     }
 
     @Override
     @NonNull
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_item_fps, parent, false);
-        Switch showSwitch = (Switch) view.findViewById(R.id.debug_fps);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_item_fps, parent, false);
+        Switch showSwitch = (Switch) view.findViewById(R.id.dd_debug_fps);
         showSwitch.setOnCheckedChangeListener(
             new CompoundButton.OnCheckedChangeListener() {
                 @Override

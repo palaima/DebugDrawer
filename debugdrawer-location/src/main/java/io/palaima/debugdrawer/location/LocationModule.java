@@ -46,6 +46,21 @@ import io.palaima.debugdrawer.base.DebugModule;
 
 public class LocationModule implements DebugModule {
 
+    private static final boolean HAS_LOCATION;
+
+    static {
+        boolean hasDependency;
+
+        try {
+            Class.forName("com.google.android.gms.location.LocationRequest");
+            hasDependency = true;
+        } catch (ClassNotFoundException e) {
+            hasDependency = false;
+        }
+
+        HAS_LOCATION = hasDependency;
+    }
+
     private transient final Context         context;
     private final           LocationRequest locationRequest;
 
@@ -77,29 +92,31 @@ public class LocationModule implements DebugModule {
      * @param locationRequestsAvailable defines if location should be updated every 10 seconds
      */
     public LocationModule(Context context, boolean locationRequestsAvailable) {
-        this(context, locationRequestsAvailable ? new LocationRequest()
+        this(context, HAS_LOCATION && locationRequestsAvailable ? new LocationRequest()
             .setInterval(TimeUnit.SECONDS.toMillis(10))
             .setFastestInterval(TimeUnit.SECONDS.toMillis(5))
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
     }
 
     public LocationModule(Context context, long interval, long fastestInterval) {
-        this(context, new LocationRequest()
+        this(context, HAS_LOCATION ? new LocationRequest()
             .setInterval(interval)
             .setFastestInterval(fastestInterval)
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY));
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
     }
 
-    public LocationModule(Context context, LocationRequest locationRequest) {
-        this.locationRequest = locationRequest;
+    public LocationModule(@NonNull Context context, LocationRequest locationRequest) {
+        if (!HAS_LOCATION) {
+            throw new RuntimeException("Google Play location dependency is not found");
+        }
         this.context = context.getApplicationContext();
+        this.locationRequest = locationRequest;
     }
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         checkPermission();
-        boolean available = GooglePlayServicesUtil
-            .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
+        boolean available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
         if (available && hasPermission) {
             locationController = LocationController.newInstance(context);
             if (locationRequest != null) {
@@ -108,13 +125,13 @@ public class LocationModule implements DebugModule {
         }
 
         if (locationController != null && hasPermission) {
-            View view = inflater.inflate(R.layout.debug_drawer_module_location, parent, false);
-            latitude = (TextView) view.findViewById(R.id.debug_location_latitude);
-            longitude = (TextView) view.findViewById(R.id.debug_location_longitude);
-            accuracy = (TextView) view.findViewById(R.id.debug_location_accuracy);
-            time = (TextView) view.findViewById(R.id.debug_location_time);
-            provider = (TextView) view.findViewById(R.id.debug_location_provider);
-            view.findViewById(R.id.debug_location_map).setOnClickListener(
+            View view = inflater.inflate(R.layout.dd_debug_drawer_module_location, parent, false);
+            latitude = (TextView) view.findViewById(R.id.dd_debug_location_latitude);
+            longitude = (TextView) view.findViewById(R.id.dd_debug_location_longitude);
+            accuracy = (TextView) view.findViewById(R.id.dd_debug_location_accuracy);
+            time = (TextView) view.findViewById(R.id.dd_debug_location_time);
+            provider = (TextView) view.findViewById(R.id.dd_debug_location_provider);
+            view.findViewById(R.id.dd_debug_location_map).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -134,12 +151,12 @@ public class LocationModule implements DebugModule {
         } else if (!hasPermission) {
             TextView errorText = new TextView(context);
             errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
-            errorText.setText(R.string.debug_drawer_location_no_permission);
+            errorText.setText(R.string.dd_debug_drawer_location_no_permission);
             return errorText;
         } else {
             TextView errorText = new TextView(context);
             errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
-            errorText.setText(R.string.debug_drawer_location_google_play_unavailable);
+            errorText.setText(R.string.dd_debug_drawer_location_google_play_unavailable);
             return errorText;
         }
     }
@@ -185,11 +202,11 @@ public class LocationModule implements DebugModule {
             time.setText(sdf.format(date));
             provider.setText(location.getProvider());
         } else {
-            latitude.setText(R.string.debug_drawer_location_empty);
-            longitude.setText(R.string.debug_drawer_location_empty);
-            accuracy.setText(R.string.debug_drawer_location_empty);
-            time.setText(R.string.debug_drawer_location_empty);
-            provider.setText(R.string.debug_drawer_location_no_provider);
+            latitude.setText(R.string.dd_debug_drawer_location_empty);
+            longitude.setText(R.string.dd_debug_drawer_location_empty);
+            accuracy.setText(R.string.dd_debug_drawer_location_empty);
+            time.setText(R.string.dd_debug_drawer_location_empty);
+            provider.setText(R.string.dd_debug_drawer_location_no_provider);
         }
     }
 
@@ -216,10 +233,10 @@ public class LocationModule implements DebugModule {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else {
-                Toast.makeText(context, R.string.debug_drawer_location_not_found, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.dd_debug_drawer_location_not_found, Toast.LENGTH_SHORT).show();
             }
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, R.string.debug_drawer_location_map_not_found, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.dd_debug_drawer_location_map_not_found, Toast.LENGTH_SHORT).show();
         }
     }
 

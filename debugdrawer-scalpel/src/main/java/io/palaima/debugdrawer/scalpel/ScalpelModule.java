@@ -17,47 +17,64 @@ import io.palaima.debugdrawer.base.DebugModule;
 
 public class ScalpelModule implements DebugModule {
 
+    private static final boolean HAS_SCALPEL;
 
-    private final Context mContext;
-    private ViewGroup mRootView;
+    static {
+        boolean hasDependency;
 
-    public ScalpelModule(Activity activity) {
-        mContext = activity;
-        mRootView = (ViewGroup) activity.findViewById(android.R.id.content);
+        try {
+            Class.forName("com.jakewharton.scalpel.ScalpelFrameLayout");
+            hasDependency = true;
+        } catch (ClassNotFoundException e) {
+            hasDependency = false;
+        }
+
+        HAS_SCALPEL = hasDependency;
+    }
+
+    private final Context context;
+    private ViewGroup     rootView;
+
+    public ScalpelModule(@NonNull Activity activity) {
+        if (!HAS_SCALPEL) {
+            throw new RuntimeException("Scalpel dependency is not found");
+        }
+        context = activity;
+        rootView = (ViewGroup) activity.findViewById(android.R.id.content);
     }
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
-        ViewGroup contentView = (ViewGroup) mRootView.getChildAt(0);
+        ViewGroup contentView = (ViewGroup) rootView.getChildAt(0);
         ViewGroup scrimInsets = (ViewGroup) contentView.getChildAt(0);
         View contentRelativeView = scrimInsets.getChildAt(0);
 
         scrimInsets.removeView(contentRelativeView);
 
-        final ScalpelFrameLayout scalpelFrameLayout = new ScalpelFrameLayout(mContext);
+        final ScalpelFrameLayout scalpelFrameLayout = new ScalpelFrameLayout(context);
         scalpelFrameLayout.setLayoutParams(new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.MATCH_PARENT));
         scrimInsets.addView(scalpelFrameLayout);
         scalpelFrameLayout.addView(contentRelativeView);
 
-        View view = inflater.inflate(R.layout.debug_drawer_item_scalpel, parent, false);
-        Switch debugEnableScalpel = (Switch) view.findViewById(R.id.debug_enable_scalpel);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_item_scalpel, parent, false);
+        Switch debugEnableScalpel = (Switch) view.findViewById(R.id.dd_debug_enable_scalpel);
         debugEnableScalpel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setLayerInteractionEnabled(isChecked);
             }
         });
-        Switch debugDisableGraphics = (Switch) view.findViewById(R.id.debug_disable_graphics);
+        Switch debugDisableGraphics = (Switch) view.findViewById(R.id.dd_debug_disable_graphics);
         debugDisableGraphics.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setDrawViews(!isChecked);
             }
         });
-        Switch debugShowIds = (Switch) view.findViewById(R.id.debug_show_ids);
+        Switch debugShowIds = (Switch) view.findViewById(R.id.dd_debug_show_ids);
         debugShowIds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

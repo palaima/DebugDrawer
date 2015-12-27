@@ -94,7 +94,7 @@ public class UIUtils {
     public static int getOptimalDrawerWidth(Context context) {
         int possibleMinDrawerWidth = UIUtils.getScreenWidth(context) - UIUtils.getActionBarHeight(context);
         int maxDrawerWidth = context.getResources().getDimensionPixelSize(
-                R.dimen.debug_drawer_width);
+                R.dimen.dd_debug_drawer_width);
         return Math.min(possibleMinDrawerWidth, maxDrawerWidth);
     }
 

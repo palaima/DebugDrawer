@@ -11,7 +11,7 @@
         <item name="android:textSize">13sp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:background">@drawable/debug_drawer_header_bg</item>
+        <item name="android:background">@drawable/dd_debug_drawer_header_bg</item>
     </style>
     <style name="Widget.DebugDrawer.Base.RowWidget" parent="None">
         <item name="android:minHeight">30dp</item>
