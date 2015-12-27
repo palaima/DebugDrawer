@@ -29,35 +29,35 @@ import io.palaima.debugdrawer.actions.ButtonAction;
 import io.palaima.debugdrawer.actions.SpinnerAction;
 import io.palaima.debugdrawer.actions.SwitchAction;
 import io.palaima.debugdrawer.commons.BuildModule;
-import io.palaima.debugdrawer.fps.FpsModule;
-import io.palaima.debugdrawer.location.LocationModule;
-import io.palaima.debugdrawer.log.LogModule;
 import io.palaima.debugdrawer.commons.DeviceModule;
 import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
+import io.palaima.debugdrawer.fps.FpsModule;
+import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
+import io.palaima.debugdrawer.timber.TimberModule;
 import jp.wasabeef.takt.Takt;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    private Toolbar toolbar;
 
-    private DebugDrawer mDebugDrawer;
+    private DebugDrawer debugDrawer;
 
-    private Picasso mPicasso;
+    private Picasso picasso;
 
-    private OkHttpClient mOkHttpClient;
+    private OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mOkHttpClient = createOkHttpClient(this.getApplication());
-        mPicasso = new Picasso.Builder(this)
-                .downloader(new OkHttpDownloader(mOkHttpClient))
+        okHttpClient = createOkHttpClient(this.getApplication());
+        picasso = new Picasso.Builder(this)
+                .downloader(new OkHttpDownloader(okHttpClient))
                 .listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
@@ -97,14 +97,14 @@ public class MainActivity extends AppCompatActivity {
             }
         );
 
-        mDebugDrawer = new DebugDrawer.Builder(this).modules(
+        debugDrawer = new DebugDrawer.Builder(this).modules(
                 new ActionsModule(switchAction, buttonAction, spinnerAction),
                 new FpsModule(Takt.stock(getApplication())),
                 new LocationModule(this),
                 new ScalpelModule(this),
-                new LogModule(),
-                new OkHttpModule(mOkHttpClient),
-                new PicassoModule(mPicasso),
+                new TimberModule(),
+                new OkHttpModule(okHttpClient),
+                new PicassoModule(picasso),
                 new DeviceModule(this),
                 new BuildModule(this),
                 new NetworkModule(this),
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ListView listView = (ListView) findViewById(R.id.image_list);
-        listView.setAdapter(new ImageAdapter(this, images, mPicasso));
+        listView.setAdapter(new ImageAdapter(this, images, picasso));
     }
 
     private void showDummyLog() {
@@ -134,23 +134,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mDebugDrawer.onStart();
+        debugDrawer.onStart();
     }
 
     @Override protected void onResume() {
         super.onResume();
-        mDebugDrawer.onResume();
+        debugDrawer.onResume();
     }
 
     @Override protected void onPause() {
         super.onPause();
-        mDebugDrawer.onPause();
+        debugDrawer.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mDebugDrawer.onStop();
+        debugDrawer.onStop();
     }
 
     @Override
@@ -177,11 +177,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected Toolbar setupToolBar() {
-        mToolbar = (Toolbar) findViewById(R.id.mainToolbar);
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
+        toolbar = (Toolbar) findViewById(R.id.mainToolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
         }
-        return mToolbar;
+        return toolbar;
     }
 
     private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB

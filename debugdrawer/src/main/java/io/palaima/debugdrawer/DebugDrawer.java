@@ -36,29 +36,29 @@ import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
 
 public class DebugDrawer {
 
-    private final DrawerLayout mDrawerLayout;
+    private final DrawerLayout drawerLayout;
 
-    private ScrollView mSliderLayout;
-    private DebugView mDebugView;
+    private ScrollView sliderLayout;
+    private DebugView  debugView;
 
-    private int mDrawerGravity;
+    private int drawerGravity;
 
     private DebugDrawer(Builder builder) {
-        mDrawerLayout = builder.mDrawerLayout;
-        mDrawerGravity = builder.mDrawerGravity;
-        mSliderLayout = builder.mSliderLayout;
-        mDebugView = builder.mDebugView;
+        drawerLayout = builder.drawerLayout;
+        drawerGravity = builder.drawerGravity;
+        sliderLayout = builder.sliderLayout;
+        debugView = builder.debugView;
     }
 
     /**
      * Open the drawer
      */
     public void openDrawer() {
-        if (mDrawerLayout != null && mSliderLayout != null) {
-            if (mDrawerGravity != 0) {
-                mDrawerLayout.openDrawer(mDrawerGravity);
+        if (drawerLayout != null && sliderLayout != null) {
+            if (drawerGravity != 0) {
+                drawerLayout.openDrawer(drawerGravity);
             } else {
-                mDrawerLayout.openDrawer(mSliderLayout);
+                drawerLayout.openDrawer(sliderLayout);
             }
         }
     }
@@ -67,11 +67,11 @@ public class DebugDrawer {
      * close the drawer
      */
     public void closeDrawer() {
-        if (mDrawerLayout != null) {
-            if (mDrawerGravity != 0) {
-                mDrawerLayout.closeDrawer(mDrawerGravity);
+        if (drawerLayout != null) {
+            if (drawerGravity != 0) {
+                drawerLayout.closeDrawer(drawerGravity);
             } else {
-                mDrawerLayout.closeDrawer(mSliderLayout);
+                drawerLayout.closeDrawer(sliderLayout);
             }
         }
     }
@@ -83,85 +83,96 @@ public class DebugDrawer {
      * @return
      */
     public boolean isDrawerOpen() {
-        if (mDrawerLayout != null && mSliderLayout != null) {
-            return mDrawerLayout.isDrawerOpen(mSliderLayout);
+        if (drawerLayout != null && sliderLayout != null) {
+            return drawerLayout.isDrawerOpen(sliderLayout);
         }
         return false;
+    }
+
+    /**
+     * Enable or disable interaction with all drawers.
+     *
+     * @return
+     */
+    public void setDrawerLockMode(int lockMode) {
+        if (drawerLayout != null && sliderLayout != null) {
+            drawerLayout.setDrawerLockMode(lockMode);
+        }
     }
 
     /**
      * Calls modules {@link DebugModule#onResume()} method
      */
     public void onResume() {
-        mDebugView.onResume();
+        debugView.onResume();
     }
 
     /**
      * Calls modules {@link DebugModule#onPause()} method
      */
     public void onPause() {
-        mDebugView.onPause();
+        debugView.onPause();
     }
 
     /**
      * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
     public void onStart() {
-        mDebugView.onStart();
+        debugView.onStart();
     }
 
     /**
      * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
     public void onStop() {
-        mDebugView.onStop();
+        debugView.onStop();
     }
 
     public static class Builder {
 
-        private ViewGroup mRootView;
+        private ViewGroup rootView;
 
-        private Activity mActivity;
+        private Activity activity;
 
-        private DrawerLayout mDrawerLayout;
+        private DrawerLayout drawerLayout;
 
-        private ScrollView mSliderLayout;
+        private ScrollView sliderLayout;
 
-        private int mDrawerGravity = Gravity.END;
+        private int drawerGravity = Gravity.END;
 
         //the width of the drawer
-        private int mDrawerWidth = -1;
+        private int drawerWidth = -1;
 
-        private DebugModule[] mDrawerItems;
+        private DebugModule[] drawerItems;
 
-        private DrawerLayout.DrawerListener mOnDrawerListener;
+        private DrawerLayout.DrawerListener onDrawerListener;
 
-        private int mSliderBackgroundColor = 0;
+        private int sliderBackgroundColor = 0;
 
-        private int mSliderBackgroundColorRes = -1;
+        private int sliderBackgroundColorRes = -1;
 
-        private Drawable mSliderBackgroundDrawable;
+        private Drawable sliderBackgroundDrawable;
 
-        private int mSliderBackgroundDrawableRes = -1;
+        private int sliderBackgroundDrawableRes = -1;
 
-        private DebugView mDebugView;
+        private DebugView debugView;
 
-        private ScrimInsetsFrameLayout mDrawerContentRoot;
+        private ScrimInsetsFrameLayout drawerContentRoot;
 
         /**
          * Pass the activity you use the drawer in ;)
          * This is required if you want to set any values by resource
          */
         public Builder(Activity activity) {
-            this.mRootView = (ViewGroup) activity.findViewById(android.R.id.content);
-            this.mActivity = activity;
+            this.rootView = (ViewGroup) activity.findViewById(android.R.id.content);
+            this.activity = activity;
         }
 
         /**
          * Pass the rootView of the Drawer which will be used to inflate the DrawerLayout in
          */
         public Builder rootView(ViewGroup rootView) {
-            this.mRootView = rootView;
+            this.rootView = rootView;
             return this;
         }
 
@@ -170,18 +181,18 @@ public class DebugDrawer {
          * DrawerLayout in
          */
         public Builder rootView(int rootViewRes) {
-            if (mActivity == null) {
+            if (activity == null) {
                 throw new RuntimeException("please pass an activity first to use this call");
             }
 
-            return rootView((ViewGroup) mActivity.findViewById(rootViewRes));
+            return rootView((ViewGroup) activity.findViewById(rootViewRes));
         }
 
         /**
          * Set the gravity for the drawer. START, LEFT | RIGHT, END
          */
         public Builder gravity(int gravity) {
-            this.mDrawerGravity = gravity;
+            this.drawerGravity = gravity;
             return this;
         }
 
@@ -189,7 +200,7 @@ public class DebugDrawer {
          * Set the Drawer width with a pixel value
          */
         public Builder widthPx(int drawerWidthPx) {
-            this.mDrawerWidth = drawerWidthPx;
+            this.drawerWidth = drawerWidthPx;
             return this;
         }
 
@@ -197,11 +208,11 @@ public class DebugDrawer {
          * Set the Drawer width with a dp value
          */
         public Builder widthDp(int drawerWidthDp) {
-            if (mActivity == null) {
+            if (activity == null) {
                 throw new RuntimeException("please pass an activity first to use this call");
             }
-            this.mDrawerWidth = (int) TypedValue.applyDimension(1, drawerWidthDp,
-                    mActivity.getResources().getDisplayMetrics());
+            this.drawerWidth = (int) TypedValue.applyDimension(1, drawerWidthDp,
+                    activity.getResources().getDisplayMetrics());
             return this;
         }
 
@@ -209,11 +220,11 @@ public class DebugDrawer {
          * Set the Drawer width with a dimension resource
          */
         public Builder widthRes(int drawerWidthRes) {
-            if (mActivity == null) {
+            if (activity == null) {
                 throw new RuntimeException("please pass an activity first to use this call");
             }
 
-            this.mDrawerWidth = mActivity.getResources().getDimensionPixelSize(drawerWidthRes);
+            this.drawerWidth = activity.getResources().getDimensionPixelSize(drawerWidthRes);
             return this;
         }
 
@@ -222,7 +233,7 @@ public class DebugDrawer {
          * This is the view containing the list.
          */
         public Builder backgroundColor(int sliderBackgroundColor) {
-            this.mSliderBackgroundColor = sliderBackgroundColor;
+            this.sliderBackgroundColor = sliderBackgroundColor;
             return this;
         }
 
@@ -231,7 +242,7 @@ public class DebugDrawer {
          * This is the view containing the list.
          */
         public Builder backgroundColorRes(@IntegerRes int sliderBackgroundColorRes) {
-            this.mSliderBackgroundColorRes = sliderBackgroundColorRes;
+            this.sliderBackgroundColorRes = sliderBackgroundColorRes;
             return this;
         }
 
@@ -241,7 +252,7 @@ public class DebugDrawer {
          * This is the view containing the list.
          */
         public Builder backgroundDrawable(Drawable sliderBackgroundDrawable) {
-            this.mSliderBackgroundDrawable = sliderBackgroundDrawable;
+            this.sliderBackgroundDrawable = sliderBackgroundDrawable;
             return this;
         }
 
@@ -251,15 +262,20 @@ public class DebugDrawer {
          * This is the view containing the list.
          */
         public Builder backgroundDrawableRes(@DrawableRes int sliderBackgroundDrawableRes) {
-            this.mSliderBackgroundDrawableRes = sliderBackgroundDrawableRes;
+            this.sliderBackgroundDrawableRes = sliderBackgroundDrawableRes;
+            return this;
+        }
+
+        public Builder setDrawerListener(DrawerLayout.DrawerListener onDrawerListener) {
+            this.onDrawerListener = onDrawerListener;
             return this;
         }
 
         /**
-         * Add a initial DrawerItem or a DrawerItem Array  for the Drawer
+         * Add a initial DrawerItem or a DrawerItem Array for the Drawer
          */
         public Builder modules(DebugModule... drawerItems) {
-            mDrawerItems = drawerItems;
+            this.drawerItems = drawerItems;
             return this;
         }
 
@@ -269,33 +285,33 @@ public class DebugDrawer {
          * @return
          */
         public DebugDrawer build() {
-            if (mActivity == null) {
+            if (activity == null) {
                 throw new RuntimeException("please pass an activity");
             }
 
-            if (mRootView == null || mRootView.getChildCount() == 0) {
+            if (rootView == null || rootView.getChildCount() == 0) {
                 throw new RuntimeException(
                         "You have to set your layout for this activity with setContentView() first.");
             }
 
 
-            mDrawerLayout = (DrawerLayout) mActivity.getLayoutInflater()
-                    .inflate(R.layout.debug_drawer, mRootView, false);
+            drawerLayout = (DrawerLayout) activity.getLayoutInflater()
+                    .inflate(R.layout.dd_debug_drawer, rootView, false);
 
             //get the content view
-            View contentView = mRootView.getChildAt(0);
+            View contentView = rootView.getChildAt(0);
             boolean alreadyInflated = contentView instanceof DrawerLayout;
 
             //get the drawer root
-            mDrawerContentRoot = (ScrimInsetsFrameLayout) mDrawerLayout.getChildAt(0);
+            drawerContentRoot = (ScrimInsetsFrameLayout) drawerLayout.getChildAt(0);
 
             //only add the new layout if it wasn't done before
             if (!alreadyInflated) {
                 // remove the contentView
-                mRootView.removeView(contentView);
+                rootView.removeView(contentView);
             } else {
                 //if it was already inflated we have to clean up again
-                mRootView.removeAllViews();
+                rootView.removeAllViews();
             }
 
             //create the layoutParams to use for the contentView
@@ -305,29 +321,29 @@ public class DebugDrawer {
             );
 
             //add the contentView to the drawer content frameLayout
-            mDrawerContentRoot.addView(contentView, layoutParamsContentView);
+            drawerContentRoot.addView(contentView, layoutParamsContentView);
 
             //add the drawerLayout to the root
-            mRootView.addView(mDrawerLayout, new ViewGroup.LayoutParams(
+            rootView.addView(drawerLayout, new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
             ));
 
-            mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
                 @Override
                 public void onDrawerSlide(View drawerView, float slideOffset) {
-                    if (mOnDrawerListener != null) {
-                        mOnDrawerListener.onDrawerSlide(drawerView, slideOffset);
+                    if (onDrawerListener != null) {
+                        onDrawerListener.onDrawerSlide(drawerView, slideOffset);
                     }
                 }
 
                 @Override
                 public void onDrawerOpened(View drawerView) {
-                    if (mOnDrawerListener != null) {
-                        mOnDrawerListener.onDrawerOpened(drawerView);
+                    if (onDrawerListener != null) {
+                        onDrawerListener.onDrawerOpened(drawerView);
                     }
-                    if (mDrawerItems != null && mDrawerItems.length != 0) {
-                        for (DebugModule drawerItem : mDrawerItems) {
+                    if (drawerItems != null && drawerItems.length != 0) {
+                        for (DebugModule drawerItem : drawerItems) {
                             drawerItem.onOpened();
                         }
                     }
@@ -335,11 +351,11 @@ public class DebugDrawer {
 
                 @Override
                 public void onDrawerClosed(View drawerView) {
-                    if (mOnDrawerListener != null) {
-                        mOnDrawerListener.onDrawerClosed(drawerView);
+                    if (onDrawerListener != null) {
+                        onDrawerListener.onDrawerClosed(drawerView);
                     }
-                    if (mDrawerItems != null && mDrawerItems.length != 0) {
-                        for (DebugModule drawerItem : mDrawerItems) {
+                    if (drawerItems != null && drawerItems.length != 0) {
+                        for (DebugModule drawerItem : drawerItems) {
                             drawerItem.onClosed();
                         }
                     }
@@ -351,40 +367,40 @@ public class DebugDrawer {
                 }
             });
 
-            mSliderLayout = (ScrollView) mDrawerLayout.findViewById(R.id.slider_layout);
-            mDebugView = (DebugView) mSliderLayout.findViewById(R.id.debug_view);
+            sliderLayout = (ScrollView) drawerLayout.findViewById(R.id.dd_slider_layout);
+            debugView = (DebugView) sliderLayout.findViewById(R.id.dd_debug_view);
 
             // get the layout params
-            DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mSliderLayout.getLayoutParams();
+            DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) sliderLayout.getLayoutParams();
             if (params != null) {
                 // if we've set a custom gravity set it
-                if (mDrawerGravity != 0) {
-                    params.gravity = mDrawerGravity;
+                if (drawerGravity != 0) {
+                    params.gravity = drawerGravity;
                 }
                 // if this is a drawer from the right, change the margins :D
                 params = processDrawerLayoutParams(params);
                 // set the new layout params
-                mSliderLayout.setLayoutParams(params);
+                sliderLayout.setLayoutParams(params);
             }
 
             // set the background
-            if (mSliderBackgroundColor != 0) {
-                mSliderLayout.setBackgroundColor(mSliderBackgroundColor);
-            } else if (mSliderBackgroundColorRes != -1) {
-                mSliderLayout.setBackgroundColor(mActivity.getResources().getColor(mSliderBackgroundColorRes));
-            } else if (mSliderBackgroundDrawable != null) {
-                UIUtils.setBackground(mSliderLayout, mSliderBackgroundDrawable);
-            } else if (mSliderBackgroundDrawableRes != -1) {
-                UIUtils.setBackground(mSliderLayout, mSliderBackgroundColorRes);
+            if (sliderBackgroundColor != 0) {
+                sliderLayout.setBackgroundColor(sliderBackgroundColor);
+            } else if (sliderBackgroundColorRes != -1) {
+                sliderLayout.setBackgroundColor(activity.getResources().getColor(sliderBackgroundColorRes));
+            } else if (sliderBackgroundDrawable != null) {
+                UIUtils.setBackground(sliderLayout, sliderBackgroundDrawable);
+            } else if (sliderBackgroundDrawableRes != -1) {
+                UIUtils.setBackground(sliderLayout, sliderBackgroundColorRes);
             }
 
-            mDebugView.modules(mDrawerItems);
+            debugView.modules(drawerItems);
 
             //create the result object
             DebugDrawer result = new DebugDrawer(this);
 
             //forget the reference to the activity
-            mActivity = null;
+            activity = null;
 
 
             return result;
@@ -398,22 +414,22 @@ public class DebugDrawer {
          */
         private DrawerLayout.LayoutParams processDrawerLayoutParams(DrawerLayout.LayoutParams params) {
             if (params != null) {
-                if (mDrawerGravity != 0 && (mDrawerGravity == Gravity.RIGHT || mDrawerGravity == Gravity.END)) {
+                if (drawerGravity != 0 && (drawerGravity == Gravity.RIGHT || drawerGravity == Gravity.END)) {
                     params.rightMargin = 0;
                     if (Build.VERSION.SDK_INT >= 17) {
                         params.setMarginEnd(0);
                     }
 
-                    params.leftMargin = mActivity.getResources().getDimensionPixelSize(R.dimen.debug_drawer_margin);
+                    params.leftMargin = activity.getResources().getDimensionPixelSize(R.dimen.dd_debug_drawer_margin);
                     if (Build.VERSION.SDK_INT >= 17) {
-                        params.setMarginEnd(mActivity.getResources().getDimensionPixelSize(R.dimen.debug_drawer_margin));
+                        params.setMarginEnd(activity.getResources().getDimensionPixelSize(R.dimen.dd_debug_drawer_margin));
                     }
                 }
 
-                if (mDrawerWidth > -1) {
-                    params.width = mDrawerWidth;
+                if (drawerWidth > -1) {
+                    params.width = drawerWidth;
                 } else {
-                    params.width = UIUtils.getOptimalDrawerWidth(mActivity);
+                    params.width = UIUtils.getOptimalDrawerWidth(activity);
                 }
             }
 

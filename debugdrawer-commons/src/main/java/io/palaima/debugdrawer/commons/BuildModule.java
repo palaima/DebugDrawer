@@ -42,13 +42,13 @@ public class BuildModule implements DebugModule {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_module_build, parent, false);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_module_build, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
-        codeLabel = (TextView) view.findViewById(R.id.debug_build_code);
-        nameLabel = (TextView) view.findViewById(R.id.debug_build_name);
-        packageLabel = (TextView) view.findViewById(R.id.debug_build_package);
+        codeLabel = (TextView) view.findViewById(R.id.dd_debug_build_code);
+        nameLabel = (TextView) view.findViewById(R.id.dd_debug_build_name);
+        packageLabel = (TextView) view.findViewById(R.id.dd_debug_build_package);
 
         refresh();
 

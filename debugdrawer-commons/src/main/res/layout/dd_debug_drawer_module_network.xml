@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:columnCount="2"
+    tools:ignore="UselessParent">
+    <TextView
+        android:layout_columnSpan="2"
+        android:layout_width="0dp"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="Network"
+        style="@style/Widget.DebugDrawer.Base.Header"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Wifi"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
+        />
+    <Switch
+        android:id="@+id/dd_debug_network_wifi"
+        android:layout_gravity="start|center_vertical"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Mobile"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
+        />
+    <Switch
+        android:id="@+id/dd_debug_network_mobile"
+        android:layout_gravity="start|center_vertical"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
+        />
+
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Bluetooth"
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
+        />
+    <Switch
+        android:id="@+id/dd_debug_network_bluetooth"
+        android:layout_gravity="start|center_vertical"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
+        />
+
+</GridLayout>

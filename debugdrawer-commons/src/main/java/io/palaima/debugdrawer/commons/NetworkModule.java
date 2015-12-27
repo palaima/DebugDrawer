@@ -44,12 +44,12 @@ public class NetworkModule implements DebugModule {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_module_network, parent, false);
-        wifi = (Switch) view.findViewById(R.id.debug_network_wifi);
-        mobile = (Switch) view.findViewById(R.id.debug_network_mobile);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_module_network, parent, false);
+        wifi = (Switch) view.findViewById(R.id.dd_debug_network_wifi);
+        mobile = (Switch) view.findViewById(R.id.dd_debug_network_mobile);
         // In JellyBean 4.2, mobile network settings are only accessible from system apps
         mobile.setEnabled(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1);
-        bluetooth = (Switch) view.findViewById(R.id.debug_network_bluetooth);
+        bluetooth = (Switch) view.findViewById(R.id.dd_debug_network_bluetooth);
 
         networkController = NetworkController.newInstance(context);
 

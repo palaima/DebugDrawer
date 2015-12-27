@@ -1,7 +1,6 @@
 package io.palaima.debugdrawer.actions;
 
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +25,11 @@ public class ActionsModule implements DebugModule {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.debug_drawer_module_actions, parent, false);
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dd_debug_drawer_module_actions, parent, false);
 
         if (actions.isEmpty()) {
             TextView noActionsLabel = new TextView(parent.getContext());
-            noActionsLabel.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.white));
+            noActionsLabel.setTextColor(parent.getResources().getColor(android.R.color.white));
             noActionsLabel.setText("No actions added");
             view.addView(noActionsLabel);
         } else {

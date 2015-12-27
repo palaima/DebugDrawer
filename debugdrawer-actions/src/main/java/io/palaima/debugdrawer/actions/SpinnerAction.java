@@ -41,7 +41,7 @@ public class SpinnerAction<T> implements Action {
         Resources resources = context.getResources();
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.padding_small);
+        layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
 
         Spinner spinner = new Spinner(context);
         spinner.setLayoutParams(layoutParams);
@@ -58,7 +58,7 @@ public class SpinnerAction<T> implements Action {
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.debug_drawer_module_actions_spinner_item, titles);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.dd_debug_drawer_module_actions_spinner_item, titles);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 

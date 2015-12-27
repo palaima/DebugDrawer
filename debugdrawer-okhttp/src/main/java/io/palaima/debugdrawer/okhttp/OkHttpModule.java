@@ -13,48 +13,66 @@ import io.palaima.debugdrawer.base.DebugModule;
 
 public class OkHttpModule implements DebugModule {
 
-    private final OkHttpClient mClient;
+    private static final boolean HAS_OKHTTP;
 
-    private TextView mOkHttpCacheMaxSizeView;
+    static {
+        boolean hasDependency;
 
-    private TextView mOkHttpCacheWriteErrorView;
+        try {
+            Class.forName("com.squareup.okhttp.OkHttpClient");
+            hasDependency = true;
+        } catch (ClassNotFoundException e) {
+            hasDependency = false;
+        }
 
-    private TextView mOkHttpCacheRequestCountView;
+        HAS_OKHTTP = hasDependency;
+    }
 
-    private TextView mOkHttpCacheNetworkCountView;
+    private final OkHttpClient client;
 
-    private TextView mOkHttpCacheHitCountView;
+    private TextView okHttpCacheMaxSizeView;
 
-    public OkHttpModule(OkHttpClient client) {
-        mClient = client;
+    private TextView okHttpCacheWriteErrorView;
+
+    private TextView okHttpCacheRequestCountView;
+
+    private TextView okHttpCacheNetworkCountView;
+
+    private TextView okHttpCacheHitCountView;
+
+    public OkHttpModule(@NonNull OkHttpClient client) {
+        if (!HAS_OKHTTP) {
+            throw new RuntimeException("OkHttp dependency is not found");
+        }
+        this.client = client;
     }
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.debug_drawer_module_okhttp, parent, false);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp, parent, false);
 
-        mOkHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.debug_okhttp_cache_max_size);
-        mOkHttpCacheWriteErrorView = (TextView) view.findViewById(R.id.debug_okhttp_cache_write_error);
-        mOkHttpCacheRequestCountView = (TextView) view.findViewById(R.id.debug_okhttp_cache_request_count);
-        mOkHttpCacheNetworkCountView = (TextView) view.findViewById(R.id.debug_okhttp_cache_network_count);
-        mOkHttpCacheHitCountView = (TextView) view.findViewById(R.id.debug_okhttp_cache_hit_count);
+        okHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
+        okHttpCacheWriteErrorView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
+        okHttpCacheRequestCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_request_count);
+        okHttpCacheNetworkCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_network_count);
+        okHttpCacheHitCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_hit_count);
 
-        Cache cache = mClient.getCache(); // Shares the cache with apiClient, so no need to check both.
-        mOkHttpCacheMaxSizeView.setText(getSizeString(cache.getMaxSize()));
+        Cache cache = client.getCache(); // Shares the cache with apiClient, so no need to check both.
+        okHttpCacheMaxSizeView.setText(getSizeString(cache.getMaxSize()));
 
         refresh();
         return view;
     }
 
     private void refresh() {
-        Cache cache = mClient.getCache(); // Shares the cache with apiClient, so no need to check both.
+        Cache cache = client.getCache(); // Shares the cache with apiClient, so no need to check both.
         int writeTotal = cache.getWriteSuccessCount() + cache.getWriteAbortCount();
         int percentage = (int) ((1f * cache.getWriteAbortCount() / writeTotal) * 100);
-        mOkHttpCacheWriteErrorView.setText(
+        okHttpCacheWriteErrorView.setText(
                 cache.getWriteAbortCount() + " / " + writeTotal + " (" + percentage + "%)");
-        mOkHttpCacheRequestCountView.setText(String.valueOf(cache.getRequestCount()));
-        mOkHttpCacheNetworkCountView.setText(String.valueOf(cache.getNetworkCount()));
-        mOkHttpCacheHitCountView.setText(String.valueOf(cache.getHitCount()));
+        okHttpCacheRequestCountView.setText(String.valueOf(cache.getRequestCount()));
+        okHttpCacheNetworkCountView.setText(String.valueOf(cache.getNetworkCount()));
+        okHttpCacheHitCountView.setText(String.valueOf(cache.getHitCount()));
     }
 
     @Override

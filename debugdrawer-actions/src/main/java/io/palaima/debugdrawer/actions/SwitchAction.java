@@ -3,7 +3,6 @@ package io.palaima.debugdrawer.actions;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -35,20 +34,20 @@ public class SwitchAction implements Action {
         Resources resources = context.getResources();
 
         LinearLayout.LayoutParams viewGroupLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        viewGroupLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.padding_small);
+        viewGroupLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
 
         LinearLayout viewGroup = new LinearLayout(context);
         viewGroup.setLayoutParams(viewGroupLayoutParams);
         viewGroup.setOrientation(LinearLayout.HORIZONTAL);
 
         LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        textViewLayoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.spacing_big);
+        textViewLayoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.dd_spacing_big);
 
         TextView textView = new TextView(context);
         textView.setLayoutParams(textViewLayoutParams);
         textView.setText(name);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.white));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.font_normal));
+        textView.setTextColor(context.getResources().getColor(android.R.color.white));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.dd_font_normal));
         textView.setGravity(Gravity.CENTER_VERTICAL);
 
         switchButton = new Switch(context);
