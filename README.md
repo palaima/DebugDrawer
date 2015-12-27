@@ -42,7 +42,7 @@ Currently 10 modules exist:
 
 ![](./images/location.png)
 
-`LogModule` - log viewer with sharing feature (requires extra dependency). Thanks [AntonyGolovin](https://github.com/AntonyGolovin) for contributing.
+`TimberModule` - log viewer with sharing feature (requires extra dependency). Thanks [AntonyGolovin](https://github.com/AntonyGolovin) for contributing.
 
 ![](./images/log.png)
 
@@ -67,30 +67,30 @@ Add Gradle dependencies:
 #### `DebugDrawer`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.0'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.2'
+   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.2'
 }
 ```
 
 #### `DebugView`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.6.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.0'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.6.2'
+   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.2'
 }
 ```
 
-`BuildModule`, `DeviceModule`, `SettingsModule`, `NetworkMoudle`
+`BuildModule`, `DeviceModule`, `SettingsModule`, `NetworkModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.6.2'
 }
 ```
 
 `ActionsModule` - `ButtonAction`, `SwitchAction`, `SpinnerAction`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.6.2'
 }
 ```
 
@@ -98,7 +98,7 @@ dependencies {
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.6.2'
 }
 ```
 
@@ -106,28 +106,30 @@ dependencies {
 [Picasso](https://github.com/square/picasso) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.6.2'
 }
 ```
 
 `ScalpelModule`
+[Scalpel](https://github.com/JakeWharton/scalpel) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.6.2'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-location:0.6.2'
 }
 ```
 
-`LogModule`
+`TimberModule`
+[Timber](https://github.com/JakeWharton/timber) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-log:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-timber:0.6.2'
 }
 ```
 
@@ -135,7 +137,7 @@ dependencies {
 [Takt](https://github.com/wasabeef/Takt) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.6.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.6.2'
 }
 ```
 
@@ -143,7 +145,7 @@ You can try the SNAPSHOT version:
 
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.1-SNAPSHOT'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.3-SNAPSHOT'
    ...
 }
 ```
@@ -203,7 +205,7 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
                 new FpsModule(Takt.stock(getApplication())),
                 new LocationModule(this),
                 new ScalpelModule(this),
-                new LogModule(),
+                new TimberModule(),
                 new OkHttpModule(mOkHttpClient),
                 new PicassoModule(mPicasso),
                 new DeviceModule(this),
@@ -244,9 +246,8 @@ If you use `NetworkModule`, `LocationModule`, `FpsModule` or your own which is h
     }
 ```
 
-### 3. Timber - `LogModule`
-If you want to use `LogModule` you need to use [Timber](https://github.com/JakeWharton/timber) for logging. Don't forget
-to plant needed log trees in Application class. Tree that is used by `LogModule` stored in `LumberYard` class.
+### 3. `TimberModule`
+Don't forget to plant needed log trees in Application class. Tree that is used by `TimberModule` stored in `LumberYard` class.
 
 Application class example:
 
@@ -268,7 +269,7 @@ Application class example:
 
 ## Creating and Publishing Your Own Module
 
-Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.6.0'` to your dependencies
+Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.6.2'` to your dependencies
 
 Module must implement `DebugModule` interface
 
@@ -342,6 +343,7 @@ Want to contribute? You are welcome!
 ### Coding Style
 * Opening braces to appear on the same line as code
 * All variables must be `camelCase`
+* All resources must have `dd_` prefix
 
 Developed By
 ------------
