@@ -37,7 +37,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.squareup.okhttp:okhttp:2.7.1'
     compile 'jp.wasabeef:takt:1.0.2'
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
@@ -48,6 +48,7 @@ dependencies {
     releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.2'
     releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.2'
     compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.6.2'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.6.2'
     compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.6.2'
     compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.6.2'
     compile 'io.palaima.debugdrawer:debugdrawer-location:0.6.2'
@@ -62,6 +63,7 @@ dependencies {
     releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.3-SNAPSHOT'
     releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.3-SNAPSHOT'
     compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.6.3-SNAPSHOT'
+    compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.6.3-SNAPSHOT'
     compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.6.3-SNAPSHOT'
     compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.6.3-SNAPSHOT'
     compile 'io.palaima.debugdrawer:debugdrawer-location:0.6.3-SNAPSHOT'
@@ -80,6 +82,7 @@ dependencies {
     compile project(':debugdrawer-actions')
     compile project(':debugdrawer-picasso')
     compile project(':debugdrawer-okhttp')
+//    compile project(':debugdrawer-okhttp3')
     compile project(':debugdrawer-scalpel')
     compile project(':debugdrawer-location')
     compile project(':debugdrawer-timber')
