@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.palaima.debugdrawer.okhttp3">
+
+    <application android:allowBackup="true"/>
+
+</manifest>
