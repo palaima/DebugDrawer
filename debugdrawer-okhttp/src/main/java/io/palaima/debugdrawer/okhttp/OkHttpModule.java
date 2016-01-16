@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
 import io.palaima.debugdrawer.base.DebugModule;
@@ -14,6 +13,7 @@ import io.palaima.debugdrawer.base.DebugModule;
 public class OkHttpModule implements DebugModule {
 
     private static final boolean HAS_OKHTTP;
+    private static final boolean HAS_OKHTTP3;
 
     static {
         boolean hasDependency;
@@ -26,9 +26,20 @@ public class OkHttpModule implements DebugModule {
         }
 
         HAS_OKHTTP = hasDependency;
+
+        try {
+            Class.forName("okhttp3.OkHttpClient");
+            hasDependency = true;
+        } catch (ClassNotFoundException e) {
+            hasDependency = false;
+        }
+
+        HAS_OKHTTP3 = hasDependency;
     }
 
     private final OkHttpClient client;
+
+    private final okhttp3.OkHttpClient client3;
 
     private TextView okHttpCacheMaxSizeView;
 
@@ -40,11 +51,20 @@ public class OkHttpModule implements DebugModule {
 
     private TextView okHttpCacheHitCountView;
 
+    public OkHttpModule(@NonNull okhttp3.OkHttpClient client) {
+        if (!HAS_OKHTTP3) {
+            throw new RuntimeException("OkHttp3 dependency is not found");
+        }
+        this.client3 = client;
+        this.client = null;
+    }
+
     public OkHttpModule(@NonNull OkHttpClient client) {
         if (!HAS_OKHTTP) {
             throw new RuntimeException("OkHttp dependency is not found");
         }
         this.client = client;
+        this.client3 = null;
     }
 
     @NonNull @Override
@@ -57,22 +77,29 @@ public class OkHttpModule implements DebugModule {
         okHttpCacheNetworkCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_network_count);
         okHttpCacheHitCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_hit_count);
 
-        Cache cache = client.getCache(); // Shares the cache with apiClient, so no need to check both.
-        okHttpCacheMaxSizeView.setText(getSizeString(cache.getMaxSize()));
+        okHttpCacheMaxSizeView.setText(sizeString(maxSize()));
 
         refresh();
         return view;
     }
 
+
+
     private void refresh() {
-        Cache cache = client.getCache(); // Shares the cache with apiClient, so no need to check both.
-        int writeTotal = cache.getWriteSuccessCount() + cache.getWriteAbortCount();
-        int percentage = (int) ((1f * cache.getWriteAbortCount() / writeTotal) * 100);
+        int writeTotal = writeSuccessCount() + writeAbortCount();
+        int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
         okHttpCacheWriteErrorView.setText(
-                cache.getWriteAbortCount() + " / " + writeTotal + " (" + percentage + "%)");
-        okHttpCacheRequestCountView.setText(String.valueOf(cache.getRequestCount()));
-        okHttpCacheNetworkCountView.setText(String.valueOf(cache.getNetworkCount()));
-        okHttpCacheHitCountView.setText(String.valueOf(cache.getHitCount()));
+            new StringBuilder().append(writeAbortCount())
+                .append(" / ")
+                .append(writeTotal)
+                .append(" (")
+                .append(percentage)
+                .append("%)")
+                .toString()
+        );
+        okHttpCacheRequestCountView.setText(String.valueOf(requestCount()));
+        okHttpCacheNetworkCountView.setText(String.valueOf(networkCount()));
+        okHttpCacheHitCountView.setText(String.valueOf(hitCount()));
     }
 
     @Override
@@ -105,7 +132,7 @@ public class OkHttpModule implements DebugModule {
 
     }
 
-    private static String getSizeString(long bytes) {
+    private static String sizeString(long bytes) {
         String[] units = new String[] { "B", "KB", "MB", "GB" };
         int unit = 0;
         while (bytes >= 1024) {
@@ -113,5 +140,65 @@ public class OkHttpModule implements DebugModule {
             unit += 1;
         }
         return bytes + units[unit];
+    }
+
+    private long maxSize() {
+        long value;
+        if (client != null) {
+            value = client.getCache().getMaxSize();
+        } else {
+            value = client3.cache().maxSize();
+        }
+        return value;
+    }
+
+    private int writeSuccessCount() {
+        int value;
+        if (client != null) {
+            value = client.getCache().getWriteSuccessCount();
+        } else {
+            value = client3.cache().writeSuccessCount();
+        }
+        return value;
+    }
+
+    private int writeAbortCount() {
+        int value;
+        if (client != null) {
+            value = client.getCache().getWriteAbortCount();
+        } else {
+            value = client3.cache().writeAbortCount();
+        }
+        return value;
+    }
+
+    private int requestCount() {
+        int value;
+        if (client != null) {
+            value = client.getCache().getRequestCount();
+        } else {
+            value = client3.cache().requestCount();
+        }
+        return value;
+    }
+
+    private int networkCount() {
+        int value;
+        if (client != null) {
+            value = client.getCache().getNetworkCount();
+        } else {
+            value = client3.cache().networkCount();
+        }
+        return value;
+    }
+
+    private int hitCount() {
+        int value;
+        if (client != null) {
+            value = client.getCache().getHitCount();
+        } else {
+            value = client3.cache().hitCount();
+        }
+        return value;
     }
 }
