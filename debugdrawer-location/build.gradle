@@ -21,7 +21,7 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile project(':debugdrawer-base')
-    provided 'com.google.android.gms:play-services-location:8.3.0'
+    provided 'com.google.android.gms:play-services-location:8.4.0'
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
