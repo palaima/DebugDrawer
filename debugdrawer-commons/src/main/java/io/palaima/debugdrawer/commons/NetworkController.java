@@ -17,11 +17,13 @@
 
 package io.palaima.debugdrawer.commons;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -139,7 +141,11 @@ final class NetworkController {
      * @return True if bluetooth is enabled
      */
     public boolean isBluetoothEnabled() {
-        return isBluetoothAvailable() && bluetoothAdapter.isEnabled();
+        return isBluetoothAvailable() && hasBlueBoothPermission() && bluetoothAdapter.isEnabled();
+    }
+
+    private boolean hasBlueBoothPermission() {
+        return context.checkCallingOrSelfPermission(Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
