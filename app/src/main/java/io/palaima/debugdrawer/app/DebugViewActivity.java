@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +21,7 @@ import io.palaima.debugdrawer.commons.DeviceModule;
 import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
+import io.palaima.debugdrawer.glide.GlideModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.okhttp.OkHttpModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
@@ -72,6 +75,7 @@ public class DebugViewActivity extends AppCompatActivity {
         debugView.modules(
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
+            new GlideModule(Glide.get(this)),
             new LocationModule(this),
             new ScalpelModule(this),
             new TimberModule(),
