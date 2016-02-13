@@ -34,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
@@ -116,7 +116,8 @@ public class LocationModule implements DebugModule {
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         checkPermission();
-        boolean available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        boolean available = api.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
         if (available && hasPermission) {
             locationController = LocationController.newInstance(context);
             if (locationRequest != null) {

@@ -8,9 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.picasso.OkHttpDownloader;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -27,31 +25,31 @@ import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
-import io.palaima.debugdrawer.okhttp.OkHttpModule;
+import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import io.palaima.debugdrawer.timber.TimberModule;
 import io.palaima.debugdrawer.view.DebugView;
 import jp.wasabeef.takt.Takt;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class DebugViewActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
+    private Toolbar   toolbar;
     private DebugView debugView;
 
-    private Picasso picasso;
-
     private OkHttpClient okHttpClient;
+    private Picasso      picasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debugview);
-        okHttpClient = createOkHttpClient(this.getApplication());
+        okHttpClient = createOkHttpClientBuilder(this.getApplication()).build();
         picasso = new Picasso.Builder(this)
-            .downloader(new OkHttpDownloader(okHttpClient))
+            .downloader(new OkHttp3Downloader(okHttpClient))
             .listener(new Picasso.Listener() {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
@@ -90,11 +88,11 @@ public class DebugViewActivity extends AppCompatActivity {
         debugView.modules(
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
+            new PicassoModule(picasso),
             new LocationModule(this),
             new ScalpelModule(this),
             new TimberModule(),
-            new OkHttpModule(okHttpClient),
-            new PicassoModule(picasso),
+            new OkHttp3Module(okHttpClient),
             new DeviceModule(this),
             new BuildModule(this),
             new NetworkModule(this),
@@ -143,17 +141,17 @@ public class DebugViewActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB
+    private static final int DISK_CACHE_SIZE = 20 * 1024 * 1024; // 20 MB
 
-    private static OkHttpClient createOkHttpClient(Application application) {
-        final OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(10, TimeUnit.SECONDS);
+    private static OkHttpClient.Builder createOkHttpClientBuilder(Application app) {
+        // Install an HTTP cache in the application cache directory.
+        File cacheDir = new File(app.getCacheDir(), "okhttp3");
+        Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
 
-        File cacheDir = new File(application.getCacheDir(), "http");
-        client.setCache(new Cache(cacheDir, DISK_CACHE_SIZE));
-
-        return client;
+        return new OkHttpClient.Builder()
+            .cache(cache)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS);
     }
 }

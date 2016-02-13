@@ -8,7 +8,7 @@ Faster development with Debug Drawer
 
 ## Features
 
-Currently 10 modules exist:
+Currently 13 modules exist:
 
 `DeviceModule` - common information about your device
 
@@ -26,13 +26,17 @@ Currently 10 modules exist:
 
 ![](./images/network.png)
 
-`OkHttpModule` - common information about http client (requires extra dependency)
+`OkHttpModule`,`OkHttp3Module` - common information about http client (requires extra dependency)
 
 ![](./images/okhttp.png)
 
 `PicassoModule` - image downloading and caching statistics (requires extra dependency)
 
 ![](./images/picasso.png)
+
+`GlideModule` - image downloading and caching statistics (requires extra dependency)
+
+![](./images/glide.png)
 
 `ScalpelModule` - tool to uncover the layers under your app (requires extra dependency). Thanks [ebabel](https://github.com/ebabel) for contributing.
 
@@ -67,38 +71,39 @@ Add Gradle dependencies:
 #### `DebugDrawer`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.2'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.6.2'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.0'
+   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.0'
 }
 ```
 
 #### `DebugView`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.6.2'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.6.2'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
+   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
 }
 ```
 
 `BuildModule`, `DeviceModule`, `SettingsModule`, `NetworkModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
 }
 ```
 
 `ActionsModule` - `ButtonAction`, `SwitchAction`, `SpinnerAction`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
 }
 ```
 
-`OkHttpModule`
+`OkHttpModule`, `OkHttp3Module`
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.0'
 }
 ```
 
@@ -106,7 +111,15 @@ dependencies {
 [Picasso](https://github.com/square/picasso) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.0'
+}
+```
+
+`GlideModule`
+[Glide](https://github.com/bumptech/glide) library required
+```gradle
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-glide:0.7.0'
 }
 ```
 
@@ -114,14 +127,14 @@ dependencies {
 [Scalpel](https://github.com/JakeWharton/scalpel) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.0'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-location:0.7.0'
 }
 ```
 
@@ -129,7 +142,7 @@ dependencies {
 [Timber](https://github.com/JakeWharton/timber) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-timber:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
 }
 ```
 
@@ -137,7 +150,7 @@ dependencies {
 [Takt](https://github.com/wasabeef/Takt) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.6.2'
+   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.7.0'
 }
 ```
 
@@ -145,7 +158,7 @@ You can try the SNAPSHOT version:
 
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.3-SNAPSHOT'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.1-SNAPSHOT'
    ...
 }
 ```
@@ -206,8 +219,9 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
                 new LocationModule(this),
                 new ScalpelModule(this),
                 new TimberModule(),
-                new OkHttpModule(mOkHttpClient),
-                new PicassoModule(mPicasso),
+                new OkHttp3Module(okHttpClient),
+                new PicassoModule(picasso),
+                new GlideModule(Glide.get(getContext())),
                 new DeviceModule(this),
                 new BuildModule(this),
                 new NetworkModule(this),
@@ -269,7 +283,7 @@ Application class example:
 
 ## Creating and Publishing Your Own Module
 
-Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.6.2'` to your dependencies
+Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.7.0'` to your dependencies
 
 Module must implement `DebugModule` interface
 
@@ -362,7 +376,7 @@ Credits
 License
 --------
 
-    Copyright 2015 Mantas Palaima.
+    Copyright 2016 Mantas Palaima.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

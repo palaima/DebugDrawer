@@ -2,20 +2,15 @@ package io.palaima.debugdrawer.app;
 
 import android.app.Application;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,21 +28,20 @@ import io.palaima.debugdrawer.commons.DeviceModule;
 import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
+import io.palaima.debugdrawer.glide.GlideModule;
 import io.palaima.debugdrawer.location.LocationModule;
-import io.palaima.debugdrawer.okhttp.OkHttpModule;
-import io.palaima.debugdrawer.picasso.PicassoModule;
+import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import io.palaima.debugdrawer.timber.TimberModule;
 import jp.wasabeef.takt.Takt;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
+    private Toolbar     toolbar;
     private DebugDrawer debugDrawer;
-
-    private Picasso picasso;
 
     private OkHttpClient okHttpClient;
 
@@ -55,24 +49,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        okHttpClient = createOkHttpClient(this.getApplication());
-        picasso = new Picasso.Builder(this)
-                .downloader(new OkHttpDownloader(okHttpClient))
-                .listener(new Picasso.Listener() {
-                    @Override
-                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
-                        Log.e("Picasso", "Failed to load image: %s", e);
-                    }
-                })
-                .build();
+        okHttpClient = createOkHttpClientBuilder(this.getApplication()).build();
 
         setupToolBar();
-        //change status bar color programmatically
-/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark_material_light));
-        }*/
-
 
         SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
             @Override
@@ -98,17 +77,17 @@ public class MainActivity extends AppCompatActivity {
         );
 
         debugDrawer = new DebugDrawer.Builder(this).modules(
-                new ActionsModule(switchAction, buttonAction, spinnerAction),
-                new FpsModule(Takt.stock(getApplication())),
-                new LocationModule(this),
-                new ScalpelModule(this),
-                new TimberModule(),
-                new OkHttpModule(okHttpClient),
-                new PicassoModule(picasso),
-                new DeviceModule(this),
-                new BuildModule(this),
-                new NetworkModule(this),
-                new SettingsModule(this)
+            new GlideModule(Glide.get(this)),
+            new ActionsModule(switchAction, buttonAction, spinnerAction),
+            new FpsModule(Takt.stock(getApplication())),
+            new LocationModule(this),
+            new ScalpelModule(this),
+            new TimberModule(),
+            new OkHttp3Module(okHttpClient),
+            new DeviceModule(this),
+            new BuildModule(this),
+            new NetworkModule(this),
+            new SettingsModule(this)
         ).build();
 
         showDummyLog();
@@ -119,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ListView listView = (ListView) findViewById(R.id.image_list);
-        listView.setAdapter(new ImageAdapter(this, images, picasso));
+        listView.setAdapter(new ImageAdapter(this, images));
     }
 
     private void showDummyLog() {
@@ -184,17 +163,17 @@ public class MainActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB
+    private static final int DISK_CACHE_SIZE = 30 * 1024 * 1024; // 30 MB
 
-    private static OkHttpClient createOkHttpClient(Application application) {
-        final OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(10, TimeUnit.SECONDS);
+    private static OkHttpClient.Builder createOkHttpClientBuilder(Application app) {
+        // Install an HTTP cache in the application cache directory.
+        File cacheDir = new File(app.getCacheDir(), "okhttp3-cache");
+        Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
 
-        File cacheDir = new File(application.getCacheDir(), "http");
-        client.setCache(new Cache(cacheDir, DISK_CACHE_SIZE));
-
-        return client;
+        return new OkHttpClient.Builder()
+            .cache(cache)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS);
     }
 }

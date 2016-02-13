@@ -3,6 +3,7 @@ package io.palaima.debugdrawer.actions;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -17,14 +18,22 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class SwitchAction implements Action {
 
     private final String   name;
-    private final Listener listener;
+    @Nullable private final Listener listener;
+    private final boolean  shouldEmitFirstValue;
 
     private Context context;
     private Switch  switchButton;
 
-    public SwitchAction(String name, Listener listener) {
+    public SwitchAction(String name, @Nullable Listener listener) {
         this.name = name;
         this.listener = listener;
+        this.shouldEmitFirstValue = false;
+    }
+
+    public SwitchAction(String name, @Nullable Listener listener, boolean shouldEmitFirstValue) {
+        this.name = name;
+        this.listener = listener;
+        this.shouldEmitFirstValue = shouldEmitFirstValue;
     }
 
     @Override
@@ -81,9 +90,15 @@ public class SwitchAction implements Action {
 
     @Override
     public void onStart() {
+        boolean isChecked = readValue();
+
         switchButton.setOnCheckedChangeListener(null);
-        switchButton.setChecked(readValue());
+        switchButton.setChecked(isChecked);
         switchButton.setOnCheckedChangeListener(switchListener);
+
+        if (shouldEmitFirstValue && listener != null) {
+            listener.onCheckedChanged(isChecked);
+        }
     }
 
     @Override

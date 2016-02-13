@@ -1,4 +1,4 @@
-package io.palaima.debugdrawer.okhttp;
+package io.palaima.debugdrawer.okhttp3;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -6,25 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.okhttp.OkHttpClient;
-
 import io.palaima.debugdrawer.base.DebugModule;
+import okhttp3.OkHttpClient;
 
-public class OkHttpModule implements DebugModule {
+public class OkHttp3Module implements DebugModule {
 
-    private static final boolean HAS_OKHTTP;
+    private static final boolean HAS_OKHTTP3;
 
     static {
         boolean hasDependency;
 
         try {
-            Class.forName("com.squareup.okhttp.OkHttpClient");
+            Class.forName("okhttp3.OkHttpClient");
             hasDependency = true;
         } catch (ClassNotFoundException e) {
             hasDependency = false;
         }
 
-        HAS_OKHTTP = hasDependency;
+        HAS_OKHTTP3 = hasDependency;
     }
 
     private final OkHttpClient client;
@@ -39,16 +38,16 @@ public class OkHttpModule implements DebugModule {
 
     private TextView okHttpCacheHitCountView;
 
-    public OkHttpModule(@NonNull OkHttpClient client) {
-        if (!HAS_OKHTTP) {
-            throw new RuntimeException("OkHttp dependency is not found");
+    public OkHttp3Module(@NonNull OkHttpClient client) {
+        if (!HAS_OKHTTP3) {
+            throw new RuntimeException("OkHttp3 dependency is not found");
         }
         this.client = client;
     }
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp, parent, false);
+        View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp3, parent, false);
 
         okHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
         okHttpCacheWriteErrorView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
@@ -122,26 +121,26 @@ public class OkHttpModule implements DebugModule {
     }
 
     private long maxSize() {
-        return client.getCache().getMaxSize();
+        return client.cache().maxSize();
     }
 
     private int writeSuccessCount() {
-        return client.getCache().getWriteSuccessCount();
+        return client.cache().writeSuccessCount();
     }
 
     private int writeAbortCount() {
-        return client.getCache().getWriteAbortCount();
+        return client.cache().writeAbortCount();
     }
 
     private int requestCount() {
-        return client.getCache().getRequestCount();
+        return client.cache().requestCount();
     }
 
     private int networkCount() {
-        return client.getCache().getNetworkCount();
+        return client.cache().networkCount();
     }
 
     private int hitCount() {
-        return client.getCache().getHitCount();
+        return client.cache().hitCount();
     }
 }
