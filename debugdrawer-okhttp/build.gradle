@@ -27,8 +27,7 @@ android {
 
 dependencies {
     compile project(':debugdrawer-base')
-    provided 'com.squareup.okhttp:okhttp:2.7.2'
-    provided 'com.squareup.okhttp3:okhttp:3.0.1'
+    provided 'com.squareup.okhttp:okhttp:2.7.4'
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

@@ -20,7 +20,7 @@ android {
 
 dependencies {
     compile project(':debugdrawer-base')
-    provided 'com.github.bumptech.glide:glide:3.7.0'
+    provided 'com.squareup.okhttp3:okhttp:3.1.2'
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

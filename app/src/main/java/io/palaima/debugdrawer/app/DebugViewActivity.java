@@ -1,12 +1,15 @@
 package io.palaima.debugdrawer.app;
 
 import android.app.Application;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.Arrays;
@@ -21,29 +24,39 @@ import io.palaima.debugdrawer.commons.DeviceModule;
 import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
-import io.palaima.debugdrawer.glide.GlideModule;
 import io.palaima.debugdrawer.location.LocationModule;
-import io.palaima.debugdrawer.okhttp.OkHttpModule;
+import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
+import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import io.palaima.debugdrawer.timber.TimberModule;
 import io.palaima.debugdrawer.view.DebugView;
 import jp.wasabeef.takt.Takt;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class DebugViewActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
+    private Toolbar   toolbar;
     private DebugView debugView;
 
     private OkHttpClient okHttpClient;
+    private Picasso      picasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debugview);
         okHttpClient = createOkHttpClientBuilder(this.getApplication()).build();
+        picasso = new Picasso.Builder(this)
+            .downloader(new OkHttp3Downloader(okHttpClient))
+            .listener(new Picasso.Listener() {
+                @Override
+                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
+                    Log.e("Picasso", "Failed to load image: %s", e);
+                }
+            })
+            .build();
 
         setupToolBar();
 
@@ -75,11 +88,11 @@ public class DebugViewActivity extends AppCompatActivity {
         debugView.modules(
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
-            new GlideModule(Glide.get(this)),
+            new PicassoModule(picasso),
             new LocationModule(this),
             new ScalpelModule(this),
             new TimberModule(),
-            new OkHttpModule(okHttpClient),
+            new OkHttp3Module(okHttpClient),
             new DeviceModule(this),
             new BuildModule(this),
             new NetworkModule(this),
@@ -128,14 +141,14 @@ public class DebugViewActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    private static final int DISK_CACHE_SIZE = 20 * 1024 * 1024; // 50 MB
+    private static final int DISK_CACHE_SIZE = 20 * 1024 * 1024; // 20 MB
 
-    private static okhttp3.OkHttpClient.Builder createOkHttpClientBuilder(Application app) {
+    private static OkHttpClient.Builder createOkHttpClientBuilder(Application app) {
         // Install an HTTP cache in the application cache directory.
         File cacheDir = new File(app.getCacheDir(), "okhttp3");
-        okhttp3.Cache cache = new okhttp3.Cache(cacheDir, DISK_CACHE_SIZE);
+        Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
 
-        return new okhttp3.OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
             .cache(cache)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)

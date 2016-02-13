@@ -37,13 +37,14 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp:okhttp:2.7.2'
-    compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+    //compile 'com.squareup.okhttp:okhttp:2.7.4'
     compile 'jp.wasabeef:takt:1.0.2'
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
     compile 'com.google.android.gms:play-services-location:8.4.0'
-    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 
     /*debugCompile 'io.palaima.debugdrawer:debugdrawer:0.6.2'
     debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.6.2'
@@ -81,7 +82,8 @@ dependencies {
     compile project(':debugdrawer-commons')
     compile project(':debugdrawer-actions')
     compile project(':debugdrawer-picasso')
-    compile project(':debugdrawer-okhttp')
+    compile project(':debugdrawer-okhttp3')
+    //compile project(':debugdrawer-okhttp')
     compile project(':debugdrawer-scalpel')
     compile project(':debugdrawer-location')
     compile project(':debugdrawer-timber')

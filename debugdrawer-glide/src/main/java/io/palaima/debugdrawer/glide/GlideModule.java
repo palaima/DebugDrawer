@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
@@ -33,6 +35,12 @@ public class GlideModule implements DebugModule {
     @NonNull private final Glide       glide;
     @NonNull private final MemoryCache memoryCache;
 
+    private TextView poolSizeLabel;
+    private TextView memCacheCurrentLabel;
+    private TextView memCacheMaxLabel;
+    private Button   memCacheClearButton;
+    private Button   diskCacheClearButton;
+
     public GlideModule(@NonNull Glide glide) {
         if (!HAS_GLIDE) {
             throw new RuntimeException("Glide dependency is not found");
@@ -53,6 +61,29 @@ public class GlideModule implements DebugModule {
     @NonNull @Override public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.dd_debug_drawer_item_glide, parent, false);
 
+        poolSizeLabel = (TextView) view.findViewById(R.id.dd_debug_glide_pool_size);
+        memCacheCurrentLabel = (TextView) view.findViewById(R.id.dd_debug_glide_memcache_current);
+        memCacheMaxLabel = (TextView) view.findViewById(R.id.dd_debug_glide_memcache_max);
+        memCacheClearButton = (Button) view.findViewById(R.id.dd_button_clear_memcache);
+        diskCacheClearButton = (Button) view.findViewById(R.id.dd_button_clear_diskcache);
+
+        memCacheClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                glide.clearMemory();
+                refresh();
+            }
+        });
+
+        diskCacheClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override public void run() {
+                        // Needs to be called on a background thread
+                        glide.clearDiskCache();
+                    }
+                }).start();
+            }
+        });
         refresh();
         return view;
     }
@@ -83,6 +114,7 @@ public class GlideModule implements DebugModule {
 
     private void refresh() {
         BitmapPool pool = glide.getBitmapPool();
+
         String total = getSizeString(pool.getMaxSize());
         String memCacheCurrent = getSizeString(memoryCache.getCurrentSize());
         String memCacheMax = getSizeString(memoryCache.getMaxSize());
