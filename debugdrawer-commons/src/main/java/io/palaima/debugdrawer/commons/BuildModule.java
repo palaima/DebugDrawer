@@ -22,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -81,7 +82,9 @@ public class BuildModule implements DebugModule {
             codeLabel.setText(String.valueOf(info.versionCode));
             nameLabel.setText(info.versionName);
             packageLabel.setText(info.packageName);
-        } catch (PackageManager.NameNotFoundException e) {}
+        } catch (PackageManager.NameNotFoundException e) {
+        	Log.e("PackageManager.NameNotFoundException", e);
+        }
     }
 
     @Override

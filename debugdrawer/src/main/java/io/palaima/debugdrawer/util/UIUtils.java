@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.util.DisplayMetrics;
 import android.view.View;
 
@@ -70,6 +71,7 @@ public class UIUtils {
                 d = c.getResources().getDrawable(drawableRes, c.getTheme());
             }
         } catch (Exception ex) {
+        	Log.e("ClassNotFoundException", e);
         }
         return d;
     }
