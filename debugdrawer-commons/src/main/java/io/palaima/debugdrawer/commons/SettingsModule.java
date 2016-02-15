@@ -121,6 +121,7 @@ public class SettingsModule implements DebugModule, View.OnClickListener {
         if (v == developer || v == developerTitle) {
             // open dev settings
             Intent devIntent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
+            devIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(devIntent, 0);
             if (resolveInfo != null) context.startActivity(devIntent);
             else Toast.makeText(context, "Developer settings not available on device",
@@ -128,14 +129,18 @@ public class SettingsModule implements DebugModule, View.OnClickListener {
         } else if (v == battery || v == batteryTitle) {
             // try to find an app to handle battery settings
             Intent batteryIntent = new Intent(Intent.ACTION_POWER_USAGE_SUMMARY);
+            batteryIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(batteryIntent, 0);
             if (resolveInfo != null) context.startActivity(batteryIntent);
             else Toast.makeText(context, "No app found to handle power usage intent", Toast.LENGTH_SHORT).show();
         } else if (v == settings || v == settingsTitle) {
             // open android settings
-            context.startActivity(new Intent(Settings.ACTION_SETTINGS));
+            Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+            settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(settingsIntent);
         } else if (v == info || v == infoTitle) {
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setData(Uri.parse("package:" + context.getPackageName()));
             context.startActivity(intent);
         } else if (v == uninstall || v == uninstallTitle) {
@@ -144,7 +149,9 @@ public class SettingsModule implements DebugModule, View.OnClickListener {
             Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
             context.startActivity(uninstallIntent);
         } else if (v == location || v == locationTitle) {
-            context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            locationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(locationIntent);
         }
     }
 }
