@@ -38,6 +38,24 @@ public class NetworkModule implements DebugModule {
     private Switch mobile;
     private Switch bluetooth;
 
+    private NetworkController.OnNetworkChangedListener onNetworkChangedListener = new NetworkController.OnNetworkChangedListener() {
+        @Override
+        public void onChanged(NetworkController.NetworkChangeEvent event) {
+            if (wifi != null) {
+                wifi.setChecked(event.wifiState == NetworkInfo.State.CONNECTED
+                    || event.wifiState == NetworkInfo.State.CONNECTING);
+            }
+            if (mobile != null) {
+                mobile.setChecked(event.mobileState == NetworkInfo.State.CONNECTED
+                    || event.mobileState == NetworkInfo.State.CONNECTING);
+            }
+            if (bluetooth != null) {
+                bluetooth.setChecked(event.bluetoothState == NetworkController.BluetoothState.On
+                    || event.bluetoothState == NetworkController.BluetoothState.Turning_On);
+            }
+        }
+    };
+    
     public NetworkModule(Context context) {
         this.context = context.getApplicationContext();
     }
@@ -117,21 +135,4 @@ public class NetworkModule implements DebugModule {
         networkController.registerReceiver();
     }
 
-    private NetworkController.OnNetworkChangedListener onNetworkChangedListener = new NetworkController.OnNetworkChangedListener() {
-        @Override
-        public void onChanged(NetworkController.NetworkChangeEvent event) {
-            if (wifi != null) {
-                wifi.setChecked(event.wifiState == NetworkInfo.State.CONNECTED
-                    || event.wifiState == NetworkInfo.State.CONNECTING);
-            }
-            if (mobile != null) {
-                mobile.setChecked(event.mobileState == NetworkInfo.State.CONNECTED
-                    || event.mobileState == NetworkInfo.State.CONNECTING);
-            }
-            if (bluetooth != null) {
-                bluetooth.setChecked(event.bluetoothState == NetworkController.BluetoothState.On
-                    || event.bluetoothState == NetworkController.BluetoothState.Turning_On);
-            }
-        }
-    };
 }

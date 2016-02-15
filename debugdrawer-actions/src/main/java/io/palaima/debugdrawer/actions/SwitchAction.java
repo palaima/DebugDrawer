@@ -22,6 +22,16 @@ public class SwitchAction implements Action {
     private Context context;
     private Switch  switchButton;
 
+    private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (listener != null) {
+                listener.onCheckedChanged(isChecked);
+            }
+            writeValue(isChecked);
+        }
+    };
+
     public SwitchAction(String name, Listener listener) {
         this.name = name;
         this.listener = listener;
@@ -90,16 +100,6 @@ public class SwitchAction implements Action {
     public void onStop() {
         /* no-op */
     }
-
-    private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (listener != null) {
-                listener.onCheckedChanged(isChecked);
-            }
-            writeValue(isChecked);
-        }
-    };
 
     public boolean isChecked() {
         return readValue();

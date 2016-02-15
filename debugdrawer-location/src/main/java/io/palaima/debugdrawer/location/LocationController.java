@@ -40,15 +40,14 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
     private boolean isStarted;
 
     private boolean connected;
-
+    
+    private LocationController(Context context) {
+        buildGoogleApiClient(context);
+    }
     public static LocationController newInstance(Context context) {
         if (instance == null)
             instance = new LocationController(context);
         return instance;
-    }
-
-    private LocationController(Context context) {
-        buildGoogleApiClient(context);
     }
 
     public void setLocationListener(LocationListener listener) {

@@ -8,6 +8,9 @@ import android.widget.Toast;
 import java.util.List;
 
 public final class Intents {
+	
+	 private Intents() {
+	 }
     /**
      * Attempt to launch the supplied {@link Intent}. Queries on-device packages before launching and
      * will display a simple message if none are available to handle it.
@@ -31,6 +34,4 @@ public final class Intents {
         return !handlers.isEmpty();
     }
 
-    private Intents() {
-    }
 }

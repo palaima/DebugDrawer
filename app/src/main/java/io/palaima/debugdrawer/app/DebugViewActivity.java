@@ -37,6 +37,8 @@ import timber.log.Timber;
 
 public class DebugViewActivity extends AppCompatActivity {
 
+	private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB
+
     private Toolbar toolbar;
 
     private DebugView debugView;
@@ -142,8 +144,6 @@ public class DebugViewActivity extends AppCompatActivity {
         }
         return toolbar;
     }
-
-    private static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50 MB
 
     private static OkHttpClient createOkHttpClient(Application application) {
         final OkHttpClient client = new OkHttpClient();

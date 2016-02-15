@@ -52,13 +52,7 @@ final class NetworkController {
     private transient Context context;
 
     private OnNetworkChangedListener onNetworkChangedListener;
-
-    public static NetworkController newInstance(Context context) {
-        if (instance == null)
-            instance = new NetworkController(context);
-        return instance;
-    }
-
+    
     /**
      * Controller responsible for switching states related to networks.
      * E.g. wifi, mobile networks
@@ -71,6 +65,13 @@ final class NetworkController {
         connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
+
+    public static NetworkController newInstance(Context context) {
+        if (instance == null)
+            instance = new NetworkController(context);
+        return instance;
+    }
+
 
     public void setOnNetworkChangedListener(OnNetworkChangedListener listener) {
         onNetworkChangedListener = listener;
