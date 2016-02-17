@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 import android.support.annotation.Nullable;
 
 import java.lang.reflect.Field;
@@ -122,10 +123,15 @@ final class NetworkController {
             setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
             return true;
         } catch (ClassNotFoundException e) {
+        	Log.e("ClassNotFoundException", e);
         } catch (InvocationTargetException e) {
+        	Log.e("InvocationTargetException", e);
         } catch (NoSuchMethodException e) {
+        	Log.e("NoSuchMethodException", e);
         } catch (IllegalAccessException e) {
+        	Log.e("IllegalAccessException", e);
         } catch (NoSuchFieldException e) {
+        	Log.e("NoSuchFieldException", e);
         }
         return false;
     }
@@ -167,6 +173,7 @@ final class NetworkController {
         try {
             context.unregisterReceiver(receiver);
         } catch (IllegalArgumentException e) {
+        	Log.e("IllegalArgumentException", e);
         }
     }
 
