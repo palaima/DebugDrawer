@@ -137,9 +137,11 @@ public class LumberYard {
         File dir = getLogDir();
         if (dir != null) {
             File[] files = dir.listFiles();
-            for (File file : files) {
-                if (file.getName().endsWith(LOG_FILE_END)) {
-                    file.delete();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.getName().endsWith(LOG_FILE_END)) {
+                        file.delete();
+                    }
                 }
             }
         }
