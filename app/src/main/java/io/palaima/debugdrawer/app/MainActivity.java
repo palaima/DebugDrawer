@@ -1,5 +1,7 @@
 package io.palaima.debugdrawer.app;
 
+import com.bumptech.glide.Glide;
+
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,7 +40,8 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar     toolbar;
+    private Toolbar toolbar;
+
     private DebugDrawer debugDrawer;
 
     private OkHttpClient okHttpClient;
@@ -68,26 +69,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
-            Arrays.asList("First", "Second", "Third"),
-            new SpinnerAction.OnItemSelectedListener<String>() {
-                @Override public void onItemSelected(String value) {
-                    Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
+                Arrays.asList("First", "Second", "Third"),
+                new SpinnerAction.OnItemSelectedListener<String>() {
+                    @Override
+                    public void onItemSelected(String value) {
+                        Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
         );
 
         debugDrawer = new DebugDrawer.Builder(this).modules(
-            new GlideModule(Glide.get(this)),
-            new ActionsModule(switchAction, buttonAction, spinnerAction),
-            new FpsModule(Takt.stock(getApplication())),
-            new LocationModule(this),
-            new ScalpelModule(this),
-            new TimberModule(),
-            new OkHttp3Module(okHttpClient),
-            new DeviceModule(this),
-            new BuildModule(this),
-            new NetworkModule(this),
-            new SettingsModule(this)
+                new GlideModule(Glide.get(this)),
+                new ActionsModule(switchAction, buttonAction, spinnerAction),
+                new FpsModule(Takt.stock(getApplication())),
+                new LocationModule(this),
+                new ScalpelModule(this),
+                new TimberModule(),
+                new OkHttp3Module(okHttpClient),
+                new DeviceModule(this),
+                new BuildModule(this),
+                new NetworkModule(this),
+                new SettingsModule(this)
         ).build();
 
         showDummyLog();
@@ -116,12 +118,14 @@ public class MainActivity extends AppCompatActivity {
         debugDrawer.onStart();
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         debugDrawer.onResume();
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
         debugDrawer.onPause();
     }
@@ -171,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
         Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
 
         return new OkHttpClient.Builder()
-            .cache(cache)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
-            .connectTimeout(10, TimeUnit.SECONDS);
+                .cache(cache)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS);
     }
 }

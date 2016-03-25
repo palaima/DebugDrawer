@@ -17,6 +17,11 @@
 
 package io.palaima.debugdrawer.location;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -33,13 +38,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.base.DebugModule;
@@ -61,8 +62,9 @@ public class LocationModule implements DebugModule {
         HAS_LOCATION = hasDependency;
     }
 
-    private transient final Context         context;
-    private final           LocationRequest locationRequest;
+    private transient final Context context;
+
+    private final LocationRequest locationRequest;
 
     private boolean hasPermission;
 
@@ -93,16 +95,16 @@ public class LocationModule implements DebugModule {
      */
     public LocationModule(Context context, boolean locationRequestsAvailable) {
         this(context, HAS_LOCATION && locationRequestsAvailable ? new LocationRequest()
-            .setInterval(TimeUnit.SECONDS.toMillis(10))
-            .setFastestInterval(TimeUnit.SECONDS.toMillis(5))
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
+                .setInterval(TimeUnit.SECONDS.toMillis(10))
+                .setFastestInterval(TimeUnit.SECONDS.toMillis(5))
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
     }
 
     public LocationModule(Context context, long interval, long fastestInterval) {
         this(context, HAS_LOCATION ? new LocationRequest()
-            .setInterval(interval)
-            .setFastestInterval(fastestInterval)
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
+                .setInterval(interval)
+                .setFastestInterval(fastestInterval)
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
     }
 
     public LocationModule(@NonNull Context context, LocationRequest locationRequest) {
@@ -113,7 +115,8 @@ public class LocationModule implements DebugModule {
         this.locationRequest = locationRequest;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         checkPermission();
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
@@ -133,12 +136,12 @@ public class LocationModule implements DebugModule {
             time = (TextView) view.findViewById(R.id.dd_debug_location_time);
             provider = (TextView) view.findViewById(R.id.dd_debug_location_provider);
             view.findViewById(R.id.dd_debug_location_map).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openMaps(context);
-                    }
-                });
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openMaps(context);
+                        }
+                    });
             locationController.setLocationListener(new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
@@ -150,16 +153,21 @@ public class LocationModule implements DebugModule {
             updateLastLocation();
             return view;
         } else if (!hasPermission) {
-            TextView errorText = new TextView(context);
-            errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
-            errorText.setText(R.string.dd_debug_drawer_location_no_permission);
-            return errorText;
+            return getErrorTextView(context, R.string.dd_debug_drawer_location_no_permission);
         } else {
-            TextView errorText = new TextView(context);
-            errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
-            errorText.setText(R.string.dd_debug_drawer_location_google_play_unavailable);
-            return errorText;
+            return getErrorTextView(context, R.string.dd_debug_drawer_location_google_play_unavailable);
         }
+    }
+
+    @NonNull
+    private View getErrorTextView(Context context, int text) {
+        TextView errorText = new TextView(context);
+        errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
+        errorText.setText(text);
+        errorText.setTextColor(context.getResources().getColor(R.color.red));
+        final int scale = (int) context.getResources().getDisplayMetrics().density;
+        errorText.setPadding(12 * scale, 0, 0, 0);
+        return errorText;
     }
 
     @Override
@@ -199,7 +207,7 @@ public class LocationModule implements DebugModule {
             accuracy.setText(String.valueOf(location.getAccuracy()) + "m");
 
             Date date = new Date(location.getTime());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
             time.setText(sdf.format(date));
             provider.setText(location.getProvider());
         } else {
@@ -243,6 +251,6 @@ public class LocationModule implements DebugModule {
 
     private void checkPermission() {
         hasPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED;
+                == PackageManager.PERMISSION_GRANTED;
     }
 }

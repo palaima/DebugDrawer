@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
     android:columnCount="2"
-    tools:ignore="UselessParent">
+    android:padding="12dp"
+    tools:ignore="UselessParent"
+    tools:background="@color/gray"
+    >
+
     <TextView
-        android:layout_columnSpan="2"
+        style="@style/Widget.DebugDrawer.Base.Header"
         android:layout_width="0dp"
+        android:layout_columnSpan="2"
         android:layout_gravity="start|fill_horizontal"
         android:text="Scalpel"
-        style="@style/Widget.DebugDrawer.Base.Header"
         />
 
     <TextView
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
         android:layout_gravity="start|center_vertical"
         android:text="Enable Scalpel"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <Switch
-        android:id="@+id/dd_debug_enable_scalpel"
-        android:layout_gravity="start|center_vertical"
-        style="@style/Widget.DebugDrawer.Base.RowWidget"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Disable Graphics"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <Switch
-        android:id="@+id/dd_debug_disable_graphics"
-        android:layout_gravity="start|center_vertical"
-        style="@style/Widget.DebugDrawer.Base.RowWidget"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Show Ids"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <Switch
-        android:id="@+id/dd_debug_show_ids"
-        android:layout_gravity="start|center_vertical"
-        style="@style/Widget.DebugDrawer.Base.RowWidget"
         />
 
+    <Switch
+        android:id="@+id/dd_debug_enable_scalpel"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
+        android:layout_gravity="start|center_vertical"
+        />
+
+    <TextView
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
+        android:layout_gravity="start|center_vertical"
+        android:text="Disable Graphics"
+        />
+
+    <Switch
+        android:id="@+id/dd_debug_disable_graphics"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
+        android:layout_gravity="start|center_vertical"
+        />
+
+    <TextView
+        style="@style/Widget.DebugDrawer.Base.RowTitle"
+        android:layout_gravity="start|center_vertical"
+        android:text="Show Ids"
+        />
+
+    <Switch
+        android:id="@+id/dd_debug_show_ids"
+        style="@style/Widget.DebugDrawer.Base.RowWidget"
+        android:layout_gravity="start|center_vertical"
+        />
 
 </GridLayout>

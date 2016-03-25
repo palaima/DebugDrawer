@@ -16,15 +16,16 @@
 
 package io.palaima.debugdrawer.location;
 
-import android.content.Context;
-import android.location.Location;
-import android.os.Bundle;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import android.content.Context;
+import android.location.Location;
+import android.os.Bundle;
+import android.support.v4.content.PermissionChecker;
 
 public class LocationController implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -42,8 +43,9 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
     private boolean connected;
 
     public static LocationController newInstance(Context context) {
-        if (instance == null)
+        if (instance == null) {
             instance = new LocationController(context);
+        }
         return instance;
     }
 
@@ -80,7 +82,7 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
      */
     public Location getLastLocation() {
         return LocationServices.FusedLocationApi.getLastLocation(
-            googleApiClient);
+                googleApiClient);
     }
 
     protected synchronized void buildGoogleApiClient(Context context) {
@@ -100,14 +102,14 @@ public class LocationController implements GoogleApiClient.ConnectionCallbacks,
         if (connected && locationRequest != null) {
             isStarted = true;
             LocationServices.FusedLocationApi.requestLocationUpdates(
-                googleApiClient, locationRequest, locationListener);
+                    googleApiClient, locationRequest, locationListener);
         }
     }
 
     public void stopLocationUpdates() {
         if (connected && locationRequest != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(
-                googleApiClient, locationListener);
+                    googleApiClient, locationListener);
             googleApiClient.disconnect();
             connected = false;
             isStarted = false;

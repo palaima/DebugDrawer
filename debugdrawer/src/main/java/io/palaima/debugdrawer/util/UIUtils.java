@@ -107,9 +107,11 @@ public class UIUtils {
     public static int getActionBarHeight(Context context) {
         int actionBarHeight = UIUtils.getThemeAttributeDimensionSize(context,
                 android.R.attr.actionBarSize);
-        if (actionBarHeight == 0) {
-            actionBarHeight = context.getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material);
-        }
+        // FIXME: 2016/3/25 R.dimen.abc_action_bar_default_height_material is private in android framework
+        /*if (actionBarHeight == 0) {
+            actionBarHeight = context.getResources()
+                    .getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material);
+        }*/
         return actionBarHeight;
     }
 

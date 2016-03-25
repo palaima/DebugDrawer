@@ -116,7 +116,6 @@ public class LumberYard {
             }
 
             listener.onSave(output);
-
         } catch (IOException e) {
             listener.onError(e.getMessage());
             e.printStackTrace();

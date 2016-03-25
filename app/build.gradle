@@ -22,6 +22,7 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    
     buildTypes {
         release {
             minifyEnabled false
@@ -38,9 +39,11 @@ android {
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
+    
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
     //compile 'com.squareup.okhttp:okhttp:2.7.4'
     compile 'jp.wasabeef:takt:1.0.2'
