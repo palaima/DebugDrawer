@@ -37,8 +37,8 @@ public class LumberYard {
 
     private static final int BUFFER_SIZE = 200;
 
-    private static final DateFormat FILENAME_DATE = new SimpleDateFormat("yyyy-MM-dd hhmm a", Locale.US);
-    private static final DateFormat LOG_DATE_PATTERN = new SimpleDateFormat("MM-dd hh:mm:ss.S", Locale.US);
+    private static final DateFormat FILENAME_DATE = new SimpleDateFormat("yyyy-MM-dd HHmm a", Locale.US);
+    private static final DateFormat LOG_DATE_PATTERN = new SimpleDateFormat("MM-dd HH:mm:ss.S", Locale.US);
 
     private static final String LOG_FILE_END = ".log";
 
@@ -136,9 +136,11 @@ public class LumberYard {
         File dir = getLogDir();
         if (dir != null) {
             File[] files = dir.listFiles();
-            for (File file : files) {
-                if (file.getName().endsWith(LOG_FILE_END)) {
-                    file.delete();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.getName().endsWith(LOG_FILE_END)) {
+                        file.delete();
+                    }
                 }
             }
         }
