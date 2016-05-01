@@ -38,12 +38,12 @@ public class FpsModule implements DebugModule {
         this.program = program.listener(new Audience() {
             @Override
             public void heartbeat(double fps) {
-                if (fps >= 55) {
-                    program.color(0xff00ff00);
+                if (fps >= 56) {
+                    program.color(0xff00ff00); // green
                 } else if (fps < 40) {
-                    program.color(0xff00ffff);
+                    program.color(0xffff0000); // red 
                 } else {
-                    program.color(0xff0000ff);
+                    program.color(0xffffc107); // yellow
                 }
             }
         });
@@ -52,7 +52,7 @@ public class FpsModule implements DebugModule {
     @NonNull
     @Override
     public String getName() {
-        return "Fps Hint";
+        return "Fps";
     }
 
     @Override

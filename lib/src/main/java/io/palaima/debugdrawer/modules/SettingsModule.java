@@ -25,8 +25,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Toast;
 
-import io.palaima.debugdrawer.DebugWidgets;
 import io.palaima.debugdrawer.DebugModule;
+import io.palaima.debugdrawer.DebugWidgets;
 import io.palaima.debugdrawer.R;
 
 public class SettingsModule implements DebugModule {
@@ -46,18 +46,19 @@ public class SettingsModule implements DebugModule {
     @Override
     public DebugWidgets createWidgets(DebugWidgets.DebugWidgetsBuilder builder) {
         return builder
-                .addIconButton("Developer Tools", R.drawable.tool, new View.OnClickListener() {
+                .addIconButton("Wifi", R.drawable.wifi, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // open dev settings
-                        Intent devIntent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
-                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        ResolveInfo resolveInfo = activity.getPackageManager().resolveActivity(devIntent, 0);
-                        if (resolveInfo != null) {
-                            activity.startActivity(devIntent);
-                        } else {
-                            Toast.makeText(activity, "Developer settings not available on device", Toast.LENGTH_SHORT).show();
-                        }
+                        activity.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .addIconButton("App Info", R.drawable.info, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                .setData(Uri.parse("package:" + activity.getPackageName()));
+                        activity.startActivity(intent);
                     }
                 })
                 .addIconButton("Battery", R.drawable.energy, new View.OnClickListener() {
@@ -82,6 +83,20 @@ public class SettingsModule implements DebugModule {
                         activity.startActivity(locationIntent);
                     }
                 })
+                .addIconButton("Developer Tools", R.drawable.tool, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // open dev settings
+                        Intent devIntent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ResolveInfo resolveInfo = activity.getPackageManager().resolveActivity(devIntent, 0);
+                        if (resolveInfo != null) {
+                            activity.startActivity(devIntent);
+                        } else {
+                            Toast.makeText(activity, "Developer settings not available on device", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
                 .addIconButton("Settings", R.drawable.settings, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -91,15 +106,7 @@ public class SettingsModule implements DebugModule {
                         activity.startActivity(settingsIntent);
                     }
                 })
-                .addIconButton("App Info", R.drawable.info, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                .setData(Uri.parse("package:" + activity.getPackageName()));
-                        activity.startActivity(intent);
-                    }
-                })
+
                 .addIconButton("Uninstall", R.drawable.delete, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
