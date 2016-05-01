@@ -25,11 +25,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         OkHttpClient okHttpClient = createOkHttpClientBuilder(this.getApplication()).build();
 
-        debugDrawer = new DebugDrawer.Builder(this)
-                .modules(DebugDrawer.getDefaultModules(this, okHttpClient))
-                .build();
+        if (DebugDrawer.checkActivity(this)) {
+            debugDrawer = new DebugDrawer.Builder(this)
+                    .modules(DebugDrawer.getDefaultModules(this, okHttpClient))
+                    .build();
 
-        debugDrawer.openDrawer();
+            debugDrawer.openDrawer();
+        }
+        
         showDummyLog();
 
         List<String> images = new ArrayList<>();

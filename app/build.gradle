@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "io.palaima.debugdrawer.app"
@@ -33,7 +33,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
-    //compile 'com.squareup.okhttp:okhttp:2.7.4'
     compile 'jp.wasabeef:takt:1.0.2'
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'

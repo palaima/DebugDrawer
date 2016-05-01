@@ -18,6 +18,7 @@ package io.palaima.debugdrawer;
 
 import android.app.Activity;
 import android.os.Build;
+import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
@@ -47,7 +48,7 @@ import okhttp3.OkHttpClient;
 public class DebugDrawer {
 
     private final Builder builder;
-    
+
     private final DrawerLayout drawerLayout;
 
     private ScrollView sliderLayout;
@@ -102,6 +103,13 @@ public class DebugDrawer {
         if (drawerLayout != null && sliderLayout != null) {
             drawerLayout.setDrawerLockMode(lockMode);
         }
+    }
+
+    public static
+    @CheckResult
+    boolean checkActivity(Activity activity) {
+        ViewGroup rootView = (ViewGroup) activity.findViewById(android.R.id.content);
+        return rootView != null && rootView.getChildCount() != 0;
     }
 
     public void destroy() {
