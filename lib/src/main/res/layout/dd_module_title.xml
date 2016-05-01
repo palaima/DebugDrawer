@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView style="@style/Widget.DebugDrawer.Base.Header"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/title_tv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#ffffff"
+    tools:text="title"
+    />
