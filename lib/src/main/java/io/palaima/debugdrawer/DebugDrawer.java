@@ -17,10 +17,8 @@
 package io.palaima.debugdrawer;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.CheckResult;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.view.ContextThemeWrapper;
@@ -34,17 +32,11 @@ import android.widget.GridLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.modules.BuildModule;
-import io.palaima.debugdrawer.modules.DeviceModule;
+import java.util.List;
+
 import io.palaima.debugdrawer.modules.FpsModule;
-import io.palaima.debugdrawer.modules.LogcatModule;
-import io.palaima.debugdrawer.modules.NetworkModule;
-import io.palaima.debugdrawer.modules.OkHttp3Module;
-import io.palaima.debugdrawer.modules.ScalpelModule;
-import io.palaima.debugdrawer.modules.SettingsModule;
 import io.palaima.debugdrawer.util.UIUtils;
 import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
-import jp.wasabeef.takt.Takt;
 import okhttp3.OkHttpClient;
 
 public class DebugDrawer {
@@ -122,33 +114,16 @@ public class DebugDrawer {
         }
     }
 
-    public static DebugModule[] getDefaultModules(Activity activity) {
-        Context context = activity.getApplicationContext();
-
-        return new DebugModule[]{
-                new NetworkModule(context),
-                new FpsModule(Takt.stock(activity.getApplication())),
-                new BuildModule(context),
-                new ScalpelModule(activity),
-                new LogcatModule(activity),
-                new DeviceModule(context),
-                new SettingsModule(activity)
-        };
+    @Deprecated
+    public static List<DebugModule> getDefaultModules(Activity activity) {
+        return new DebugModuleListBuilder(activity.getApplicationContext())
+                .addDefaultModules(activity).build();
     }
 
-    public static DebugModule[] getDefaultModules(Activity activity, OkHttpClient okHttpClient) {
-        Context context = activity.getApplicationContext();
-        
-        return new DebugModule[]{
-                new OkHttp3Module(okHttpClient),
-                new NetworkModule(context),
-                new FpsModule(Takt.stock(activity.getApplication())),
-                new BuildModule(context),
-                new ScalpelModule(activity),
-                new LogcatModule(activity),
-                new DeviceModule(context),
-                new SettingsModule(activity)
-        };
+    @Deprecated
+    public static List<DebugModule> getDefaultModules(Activity activity, OkHttpClient okHttpClient) {
+        return new DebugModuleListBuilder(activity.getApplicationContext())
+                .addDefaultModules(activity, okHttpClient).build();
     }
 
     public static class Builder {
@@ -166,11 +141,9 @@ public class DebugDrawer {
         //the width of the drawer
         private int drawerWidth = -1;
 
-        private DebugModule[] debugModules;
+        private List<DebugModule> debugModules;
 
         private DrawerLayout.DrawerListener onDrawerListener;
-
-        private int sliderBackgroundColorRes = -1;
 
         private ScrimInsetsFrameLayout drawerContentRoot;
 
@@ -211,15 +184,6 @@ public class DebugDrawer {
             return this;
         }
 
-        /**
-         * Set the background color for the Slider from a Resource.
-         * This is the view containing the list.
-         */
-        public Builder backgroundColorRes(@ColorInt int sliderBackgroundColorRes) {
-            this.sliderBackgroundColorRes = sliderBackgroundColorRes;
-            return this;
-        }
-
         public Builder setDrawerListener(DrawerLayout.DrawerListener onDrawerListener) {
             this.onDrawerListener = onDrawerListener;
             return this;
@@ -228,7 +192,7 @@ public class DebugDrawer {
         /**
          * Add a initial DrawerItem or a DrawerItem Array for the Drawer
          */
-        public Builder modules(DebugModule... drawerItems) {
+        public Builder modules(List<DebugModule> drawerItems) {
             this.debugModules = drawerItems;
             return this;
         }
@@ -322,11 +286,6 @@ public class DebugDrawer {
                 params = processDrawerLayoutParams(params);
                 // set the new layout params
                 sliderLayout.setLayoutParams(params);
-            }
-
-            // set the background
-            if (sliderBackgroundColorRes != -1) {
-                sliderLayout.setBackgroundColor(activity.getResources().getColor(sliderBackgroundColorRes));
             }
 
             for (DebugModule module : debugModules) {

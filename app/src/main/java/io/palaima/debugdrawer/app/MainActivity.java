@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.DebugDrawer;
+import io.palaima.debugdrawer.DebugModuleListBuilder;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -27,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (DebugDrawer.checkActivity(this)) {
             debugDrawer = new DebugDrawer.Builder(this)
-                    .modules(DebugDrawer.getDefaultModules(this, okHttpClient))
+                    .modules(new DebugModuleListBuilder(getApplicationContext())
+                                    .addDefaultModules(this, okHttpClient)
+                                    .build())
                     .build();
 
             debugDrawer.openDrawer();
         }
-        
+
         showDummyLog();
 
         List<String> images = new ArrayList<>();
