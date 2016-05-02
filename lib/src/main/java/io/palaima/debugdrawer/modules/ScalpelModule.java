@@ -11,29 +11,15 @@ import android.widget.LinearLayout;
 
 import io.palaima.debugdrawer.DebugModule;
 import io.palaima.debugdrawer.DebugWidgets;
+import io.palaima.debugdrawer.util.LibUtil;
 
 
 public class ScalpelModule implements DebugModule {
 
-    private static final boolean HAS_SCALPEL;
-
-    static {
-        boolean hasDependency;
-
-        try {
-            Class.forName("com.jakewharton.scalpel.ScalpelFrameLayout");
-            hasDependency = true;
-        } catch (ClassNotFoundException e) {
-            hasDependency = false;
-        }
-
-        HAS_SCALPEL = hasDependency;
-    }
-
     private final ScalpelFrameLayout scalpelFrameLayout;
 
     public ScalpelModule(@NonNull Activity activity) {
-        if (!HAS_SCALPEL) {
+        if (!LibUtil.hasDependency("com.jakewharton.scalpel.ScalpelFrameLayout")) {
             throw new RuntimeException("Scalpel dependency is not found");
         }
 
@@ -45,7 +31,7 @@ public class ScalpelModule implements DebugModule {
         ViewGroup rootView = (ViewGroup) activity.findViewById(android.R.id.content);
         ViewGroup contentView = (ViewGroup) rootView.getChildAt(0);
         rootView.removeView(contentView);
-        
+
         rootView.addView(scalpelFrameLayout);
         scalpelFrameLayout.addView(contentView);
 

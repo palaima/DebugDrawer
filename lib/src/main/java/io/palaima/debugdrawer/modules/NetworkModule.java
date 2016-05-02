@@ -30,10 +30,7 @@ public class NetworkModule implements DebugModule {
 
     private NetworkController networkController;
 
-    private Context context;
-
     public NetworkModule(Context context) {
-        this.context = context;
         networkController = NetworkController.newInstance(context);
     }
 

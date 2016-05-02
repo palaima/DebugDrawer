@@ -17,6 +17,7 @@
 package io.palaima.debugdrawer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
@@ -34,6 +35,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import io.palaima.debugdrawer.modules.BuildModule;
+import io.palaima.debugdrawer.modules.DeviceModule;
 import io.palaima.debugdrawer.modules.FpsModule;
 import io.palaima.debugdrawer.modules.LogcatModule;
 import io.palaima.debugdrawer.modules.NetworkModule;
@@ -121,24 +123,30 @@ public class DebugDrawer {
     }
 
     public static DebugModule[] getDefaultModules(Activity activity) {
+        Context context = activity.getApplicationContext();
+
         return new DebugModule[]{
-                new NetworkModule(activity.getApplicationContext()),
+                new NetworkModule(context),
                 new FpsModule(Takt.stock(activity.getApplication())),
-                new BuildModule(activity.getApplicationContext()),
+                new BuildModule(context),
                 new ScalpelModule(activity),
                 new LogcatModule(activity),
+                new DeviceModule(context),
                 new SettingsModule(activity)
         };
     }
 
     public static DebugModule[] getDefaultModules(Activity activity, OkHttpClient okHttpClient) {
+        Context context = activity.getApplicationContext();
+        
         return new DebugModule[]{
                 new OkHttp3Module(okHttpClient),
-                new NetworkModule(activity.getApplicationContext()),
+                new NetworkModule(context),
                 new FpsModule(Takt.stock(activity.getApplication())),
-                new BuildModule(activity.getApplicationContext()),
+                new BuildModule(context),
                 new ScalpelModule(activity),
                 new LogcatModule(activity),
+                new DeviceModule(context),
                 new SettingsModule(activity)
         };
     }

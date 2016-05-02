@@ -4,30 +4,16 @@ import android.support.annotation.NonNull;
 
 import io.palaima.debugdrawer.DebugModule;
 import io.palaima.debugdrawer.DebugWidgets;
+import io.palaima.debugdrawer.util.LibUtil;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 
 public class OkHttp3Module implements DebugModule {
 
-    private static final boolean HAS_OKHTTP3;
-
-    static {
-        boolean hasDependency;
-
-        try {
-            Class.forName("okhttp3.OkHttpClient");
-            hasDependency = true;
-        } catch (ClassNotFoundException e) {
-            hasDependency = false;
-        }
-
-        HAS_OKHTTP3 = hasDependency;
-    }
-
     private final Cache cache;
 
     public OkHttp3Module(@NonNull OkHttpClient client) {
-        if (!HAS_OKHTTP3) {
+        if (!LibUtil.hasDependency("okhttp3.OkHttpClient")) {
             throw new RuntimeException("OkHttp3 dependency is not found");
         }
         this.cache = client.cache();

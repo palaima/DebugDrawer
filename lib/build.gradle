@@ -25,5 +25,5 @@ dependencies {
     provided 'com.squareup.okhttp3:okhttp:3.1.2'
     provided 'jp.wasabeef:takt:1.0.2'
     provided 'com.jakewharton.scalpel:scalpel:1.1.2'
-    provided 'com.github.tianzhijiexian:Logcat:f5336ef076'
+    provided 'com.github.tianzhijiexian:Logcat:1.0.6'
 }

@@ -3,8 +3,9 @@ package io.palaima.debugdrawer.modules;
 import android.support.annotation.NonNull;
 import android.widget.CompoundButton;
 
-import io.palaima.debugdrawer.DebugWidgets;
 import io.palaima.debugdrawer.DebugModule;
+import io.palaima.debugdrawer.DebugWidgets;
+import io.palaima.debugdrawer.util.LibUtil;
 import jp.wasabeef.takt.Audience;
 import jp.wasabeef.takt.Takt;
 
@@ -12,26 +13,11 @@ import jp.wasabeef.takt.Takt;
 public class FpsModule implements DebugModule {
 
     public boolean isShown = false;
-    
-    private static final boolean HAS_TAKT;
-
-    static {
-        boolean hasDependency;
-
-        try {
-            Class.forName("jp.wasabeef.takt.Takt");
-            hasDependency = true;
-        } catch (ClassNotFoundException e) {
-            hasDependency = false;
-        }
-
-        HAS_TAKT = hasDependency;
-    }
 
     private final Takt.Program program;
 
     public FpsModule(@NonNull final Takt.Program program) {
-        if (!HAS_TAKT) {
+        if (!LibUtil.hasDependency("jp.wasabeef.takt.Takt")) {
             throw new RuntimeException("Takt dependency is not found");
         }
 
@@ -76,5 +62,5 @@ public class FpsModule implements DebugModule {
             program.stop();
         }
     }
-    
+
 }

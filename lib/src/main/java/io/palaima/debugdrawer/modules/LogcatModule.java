@@ -7,6 +7,7 @@ import android.view.View;
 
 import io.palaima.debugdrawer.DebugWidgets;
 import io.palaima.debugdrawer.DebugModule;
+import io.palaima.debugdrawer.util.LibUtil;
 import kale.debug.log.ui.LogActivity;
 
 /**
@@ -18,6 +19,10 @@ public class LogcatModule implements DebugModule {
     private Activity activity;
 
     public LogcatModule(Activity activity) {
+        if (!LibUtil.hasDependency("kale.debug.log.ui.LogActivity")) {
+            throw new RuntimeException("Logcat dependency is not found");
+        }
+        
         this.activity = activity;
     }
 
