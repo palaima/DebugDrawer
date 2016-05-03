@@ -93,6 +93,11 @@ public class DebugModuleListBuilder {
         return this;
     }
 
+    public DebugModuleListBuilder addModule(DebugModule module) {
+        moduleList.add(module);
+        return this;
+    }
+
     public List<DebugModule> build() {
         return moduleList;
     }

@@ -114,12 +114,18 @@ public class DebugDrawer {
         }
     }
 
+    /**
+     * Suggest to ues {@link DebugModuleListBuilder#addModule(DebugModule)#builder}
+     */
     @Deprecated
     public static List<DebugModule> getDefaultModules(Activity activity) {
         return new DebugModuleListBuilder(activity.getApplicationContext())
                 .addDefaultModules(activity).build();
     }
 
+    /**
+     * Suggest to ues {@link DebugModuleListBuilder#addDefaultModules(Activity, OkHttpClient)}
+     */
     @Deprecated
     public static List<DebugModule> getDefaultModules(Activity activity, OkHttpClient okHttpClient) {
         return new DebugModuleListBuilder(activity.getApplicationContext())
