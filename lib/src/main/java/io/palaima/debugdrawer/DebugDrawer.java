@@ -37,7 +37,6 @@ import java.util.List;
 import io.palaima.debugdrawer.modules.FpsModule;
 import io.palaima.debugdrawer.util.UIUtils;
 import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
-import okhttp3.OkHttpClient;
 
 public class DebugDrawer {
 
@@ -112,24 +111,6 @@ public class DebugDrawer {
                 ((FpsModule) module).close();
             }
         }
-    }
-
-    /**
-     * Suggest to ues {@link DebugModuleListBuilder#addModule(DebugModule)#builder}
-     */
-    @Deprecated
-    public static List<DebugModule> getDefaultModules(Activity activity) {
-        return new DebugModuleListBuilder(activity.getApplicationContext())
-                .addDefaultModules(activity).build();
-    }
-
-    /**
-     * Suggest to ues {@link DebugModuleListBuilder#addDefaultModules(Activity, OkHttpClient)}
-     */
-    @Deprecated
-    public static List<DebugModule> getDefaultModules(Activity activity, OkHttpClient okHttpClient) {
-        return new DebugModuleListBuilder(activity.getApplicationContext())
-                .addDefaultModules(activity, okHttpClient).build();
     }
 
     public static class Builder {

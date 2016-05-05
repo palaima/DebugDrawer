@@ -1,5 +1,6 @@
 package io.palaima.debugdrawer.app;
 
+import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,16 +8,28 @@ import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.DebugDrawer;
-import io.palaima.debugdrawer.DebugModuleListBuilder;
+import io.palaima.debugdrawer.DebugModule;
+import io.palaima.debugdrawer.modules.ActivityModule;
+import io.palaima.debugdrawer.modules.BuildModule;
+import io.palaima.debugdrawer.modules.DeviceModule;
+import io.palaima.debugdrawer.modules.FpsModule;
+import io.palaima.debugdrawer.modules.LogcatModule;
+import io.palaima.debugdrawer.modules.NetworkModule;
+import io.palaima.debugdrawer.modules.ScalpelModule;
+import io.palaima.debugdrawer.modules.SettingsModule;
+import jp.wasabeef.takt.Takt;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     DebugDrawer debugDrawer;
 
@@ -28,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (DebugDrawer.checkActivity(this)) {
             debugDrawer = new DebugDrawer.Builder(this)
-                    .modules(new DebugModuleListBuilder(getApplicationContext())
-                                    .addDefaultModules(this, okHttpClient)
-                                    .build())
+                    .modules(getDebugModules(this))
                     .build();
 
             debugDrawer.openDrawer();
@@ -48,6 +59,24 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(new ImageAdapter(this, images));
     }
 
+    public DebugDrawer.Builder getDrawerBuilder(Activity activity) {
+        return new DebugDrawer.Builder(activity)
+                .modules(getDebugModules(activity));
+    }
+
+    public List<DebugModule> getDebugModules(Activity activity) {
+        List<DebugModule> list = Arrays.asList(
+                new ActivityModule(getApplicationContext()),
+                new NetworkModule(getApplicationContext()),
+                new FpsModule(Takt.stock(getApplication())),
+                new BuildModule(getApplicationContext()),
+                new ScalpelModule(activity),
+                new LogcatModule(activity),
+                new DeviceModule(getApplicationContext()),
+                new SettingsModule(activity));
+        return new ArrayList<>(list);
+    }
+
     private void showDummyLog() {
         Timber.d("Debug");
         Timber.e("Error");
@@ -56,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         Timber.v("Verbose");
         Timber.wtf("WTF");
     }
+
 
     private static final int DISK_CACHE_SIZE = 30 * 1024 * 1024; // 30 MB
 
