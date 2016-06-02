@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-                                       android:layout_width="match_parent"
-                                       android:layout_height="?attr/actionBarSize"
-                                       android:background="?attr/colorPrimary"
-                                       app:theme="@style/ToolbarStyle"
-                                       app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                                       android:id="@+id/mainToolbar"/>
+    <android.support.v7.widget.Toolbar android:id="@+id/mainToolbar"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ToolbarStyle"
+        />
 
 </FrameLayout>

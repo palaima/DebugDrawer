@@ -1,6 +1,0 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.palaima.debugdrawer.scalpel">
-
-    <application android:allowBackup="true"/>
-
-</manifest>

@@ -1,19 +1,8 @@
 apply plugin: 'com.android.application'
 
-repositories {
-    maven {
-        url "https://oss.sonatype.org/content/repositories/releases"
-    }
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
-    mavenCentral()
-}
-
-
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "io.palaima.debugdrawer.app"
@@ -22,6 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    
     buildTypes {
         release {
             minifyEnabled false
@@ -38,66 +28,19 @@ android {
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
-    //compile 'com.squareup.okhttp:okhttp:2.7.4'
     compile 'jp.wasabeef:takt:1.0.2'
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
-    compile 'com.google.android.gms:play-services-location:8.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
-    /*debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.0'
-    debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
-    releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.0'
-    releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
-    //compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-glide:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-location:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-fps:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
-    compile 'io.palaima.debugdrawer:debugdrawer-base:0.7.0'*/
-
-    /*debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.1-SNAPSHOT'
-    debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.1-SNAPSHOT'
-    releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.1-SNAPSHOT'
-    releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.1-SNAPSHOT'
-    //compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-glide:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-location:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-timber:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-fps:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-actions:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.1-SNAPSHOT'
-    compile 'io.palaima.debugdrawer:debugdrawer-base:0.7.1-SNAPSHOT'*/
-
-    releaseCompile project(':debugdrawer-no-op')
-    releaseCompile project(':debugdrawer-view-no-op')
-    debugCompile project(':debugdrawer')
-    debugCompile project(':debugdrawer-view')
-    compile project(':debugdrawer-base')
-    compile project(':debugdrawer-commons')
-    compile project(':debugdrawer-actions')
-    compile project(':debugdrawer-picasso')
-    compile project(':debugdrawer-okhttp3')
-    //compile project(':debugdrawer-okhttp')
-    compile project(':debugdrawer-scalpel')
-    compile project(':debugdrawer-location')
-    compile project(':debugdrawer-timber')
-    compile project(':debugdrawer-fps')
-    compile project(':debugdrawer-glide')
-
+    debugCompile project(':lib')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+    compile 'com.github.tianzhijiexian:Logcat:1.0.6'
+
 }
 
