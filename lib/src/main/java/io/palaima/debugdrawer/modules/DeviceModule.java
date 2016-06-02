@@ -21,8 +21,12 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 
-import io.palaima.debugdrawer.DebugWidgets;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import io.palaima.debugdrawer.DebugModule;
+import io.palaima.debugdrawer.DebugWidgets;
 
 
 /**
@@ -33,6 +37,8 @@ public class DeviceModule implements DebugModule {
     private String deviceMake;
 
     private String deviceModel;
+
+    private String deviceCpu;
 
     private String deviceResolution;
 
@@ -47,6 +53,12 @@ public class DeviceModule implements DebugModule {
         String densityBucket = getDensityString(displayMetrics);
         deviceMake = truncateAt(Build.MANUFACTURER, 20);
         deviceModel = truncateAt(Build.MODEL, 20);
+        String cpuName = getCpuName();
+        if (cpuName != null) {
+            deviceCpu = cpuName.split(" ")[0];
+        } else {
+            deviceCpu = "unknown";
+        }
         deviceResolution = displayMetrics.heightPixels + "x" + displayMetrics.widthPixels;
         deviceDensity = displayMetrics.densityDpi + "dpi (" + densityBucket + ")";
         systemVersion = Build.VERSION.RELEASE;
@@ -63,12 +75,26 @@ public class DeviceModule implements DebugModule {
     public DebugWidgets createWidgets(DebugWidgets.DebugWidgetsBuilder builder) {
         return builder.addText("OEM", deviceMake)
                 .addText("Device Model", deviceModel)
+                .addText("Cpu", deviceCpu)
                 .addText("Product", Build.PRODUCT)
                 .addText("Resolution", deviceResolution)
                 .addText("Density", deviceDensity)
                 .addText("System Version", systemVersion)
                 .addText("Android API", androidApi)
                 .build();
+    }
+
+    private static String getCpuName() {
+        try {
+            FileReader fr = new FileReader("/proc/cpuinfo");
+            BufferedReader br = new BufferedReader(fr);
+            String text = br.readLine();
+            String[] array = text.split(":\\s+", 2);
+            return array[1];
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String truncateAt(String string, int length) {

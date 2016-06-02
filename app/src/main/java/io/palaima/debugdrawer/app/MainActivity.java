@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,15 +28,12 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-
     DebugDrawer debugDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        OkHttpClient okHttpClient = createOkHttpClientBuilder(this.getApplication()).build();
 
         if (DebugDrawer.checkActivity(this)) {
             debugDrawer = new DebugDrawer.Builder(this)
@@ -47,18 +43,8 @@ public class MainActivity extends AppCompatActivity {
             debugDrawer.openDrawer();
         }
 
-        showDummyLog();
-
-        List<String> images = new ArrayList<>();
-        for (int i = 1; i < 30; i++) {
-            images.add("http://lorempixel.com/400/200/sports/" + i);
-        }
-
-        ListView listView = (ListView) findViewById(R.id.image_list);
-        assert listView != null;
-        listView.setAdapter(new ImageAdapter(this, images));
     }
-
+    
     public DebugDrawer.Builder getDrawerBuilder(Activity activity) {
         return new DebugDrawer.Builder(activity)
                 .modules(getDebugModules(activity));
