@@ -12,8 +12,9 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.StatsSnapshot;
 
 import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class PicassoModule implements DebugModule {
+public class PicassoModule extends DebugModuleAdapter {
 
     private static final boolean HAS_PICASSO;
 
@@ -88,21 +89,6 @@ public class PicassoModule implements DebugModule {
         refresh();
     }
 
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
     private void refresh() {
         StatsSnapshot snapshot = picasso.getSnapshot();
         String size = getSizeString(snapshot.size);
@@ -117,16 +103,6 @@ public class PicassoModule implements DebugModule {
         transformedLabel.setText(String.valueOf(snapshot.transformedBitmapCount));
         transformedTotalLabel.setText(getSizeString(snapshot.totalTransformedBitmapSize));
         transformedAverageLabel.setText(getSizeString(snapshot.averageTransformedBitmapSize));
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 
     private static String getSizeString(long bytes) {

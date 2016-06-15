@@ -13,9 +13,9 @@ import com.bumptech.glide.load.engine.cache.MemoryCache;
 
 import java.lang.reflect.Field;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class GlideModule implements DebugModule {
+public class GlideModule extends DebugModuleAdapter {
 
     private static final boolean HAS_GLIDE;
 
@@ -92,24 +92,8 @@ public class GlideModule implements DebugModule {
         refresh();
     }
 
-    @Override public void onClosed() {
-
-    }
-
     @Override public void onResume() {
         refresh();
-    }
-
-    @Override public void onPause() {
-
-    }
-
-    @Override public void onStart() {
-
-    }
-
-    @Override public void onStop() {
-
     }
 
     private void refresh() {
