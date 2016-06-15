@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 Mantas Palaima
+ * Copyright (C) 2016 Oleg Godovykh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class DeviceModule implements DebugModule {
+public class DeviceModule extends DebugModuleAdapter {
 
     private String deviceMake;
     private String deviceModel;
@@ -100,35 +101,5 @@ public class DeviceModule implements DebugModule {
         deviceReleaseLabel.setText(deviceRelease);
 
         return view;
-    }
-
-    @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }

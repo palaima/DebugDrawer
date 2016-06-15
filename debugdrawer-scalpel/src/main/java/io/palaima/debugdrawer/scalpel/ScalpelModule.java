@@ -13,9 +13,9 @@ import android.widget.Switch;
 
 import com.jakewharton.scalpel.ScalpelFrameLayout;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class ScalpelModule implements DebugModule {
+public class ScalpelModule extends DebugModuleAdapter {
 
     private static final boolean HAS_SCALPEL;
 
@@ -83,35 +83,5 @@ public class ScalpelModule implements DebugModule {
         });
 
         return view;
-    }
-
-    @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }
