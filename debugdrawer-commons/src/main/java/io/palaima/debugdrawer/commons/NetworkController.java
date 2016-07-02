@@ -28,7 +28,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
