@@ -28,6 +28,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -59,6 +60,10 @@ final class NetworkController {
         if (instance == null)
             instance = new NetworkController(context);
         return instance;
+    }
+
+    private static boolean hasBlueBoothPermission(Context context) {
+        return context.checkCallingOrSelfPermission(Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
@@ -141,11 +146,7 @@ final class NetworkController {
      * @return True if bluetooth is enabled
      */
     public boolean isBluetoothEnabled() {
-        return isBluetoothAvailable() && hasBlueBoothPermission() && bluetoothAdapter.isEnabled();
-    }
-
-    private boolean hasBlueBoothPermission() {
-        return context.checkCallingOrSelfPermission(Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED;
+        return isBluetoothAvailable() && hasBlueBoothPermission(context) && bluetoothAdapter.isEnabled();
     }
 
     /**
@@ -214,7 +215,7 @@ final class NetworkController {
                 final NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent(
                     (wifiInfo != null) ? wifiInfo.getState() : NetworkInfo.State.UNKNOWN,
                     (mobileInfo != null) ? mobileInfo.getState() : NetworkInfo.State.UNKNOWN,
-                    (bluetoothInfo != null) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
+                    (bluetoothInfo != null && hasBlueBoothPermission(context)) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
 
                 listener.post(networkChangeEvent);
             }
