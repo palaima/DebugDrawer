@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 import io.palaima.debugdrawer.base.DebugModule;
 
 public class DebugDrawer {
-
+    private static final DebugDrawer INSTANCE = new DebugDrawer(null);
 
     private DebugDrawer(Builder builder) {
 
@@ -58,8 +58,6 @@ public class DebugDrawer {
 
     /**
      * Enable or disable interaction with all drawers.
-     *
-     * @return
      */
     public void setDrawerLockMode(int lockMode) {
 
@@ -197,7 +195,7 @@ public class DebugDrawer {
          * @return
          */
         public DebugDrawer build() {
-            return new DebugDrawer(this);
+            return DebugDrawer.INSTANCE;
         }
     }
 }
