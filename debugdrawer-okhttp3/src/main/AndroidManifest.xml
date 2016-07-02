@@ -2,6 +2,6 @@
     package="io.palaima.debugdrawer.okhttp3"
     >
 
-    <application android:allowBackup="true" />
+    <application />
 
 </manifest>
