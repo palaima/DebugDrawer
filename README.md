@@ -178,31 +178,31 @@ repositories {
 
 You could use `DebugDrawer` or `DebugView` depending on your needs
 
-#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java)) 
+#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java))
 
 ```java
 
     private DebugDrawer debugDrawer;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ...
-        
+        //...
+
         SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
             @Override
             public void onCheckedChanged(boolean value) {
                 Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
             }
         });
-    
+
         ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
             @Override
             public void onClick() {
                 Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
             }
         });
-    
+
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
             Arrays.asList("First", "Second", "Third"),
             new SpinnerAction.OnItemSelectedListener<String>() {
@@ -211,7 +211,7 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
                 }
             }
         );
-        
+
         debugDrawer = new DebugDrawer.Builder(this)
             .modules(
                 new ActionsModule(switchAction, buttonAction, spinnerAction),
@@ -240,13 +240,13 @@ If you use `NetworkModule`, `LocationModule`, `FpsModule` or your own which is h
         super.onStart();
         debugDrawer.onStart();
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();
         debugDrawer.onResume();
     }
-    
+
      @Override
     protected void onPause() {
         super.onPause();
@@ -271,10 +271,10 @@ Application class example:
         @Override
         public void onCreate() {
             super.onCreate();
-    
+
             LumberYard lumberYard = LumberYard.getInstance(this);
             lumberYard.cleanUp();
-    
+
             Timber.plant(lumberYard.tree());
             Timber.plant(new Timber.DebugTree());
         }
@@ -290,36 +290,36 @@ Module must implement `DebugModule` interface
 ```java
 
     public interface DebugModule {
-    
+
         /**
          * Creates module view
          */
         @NonNull View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent);
-    
+
         /**
          * Override this method if you need to refresh
          * some information  when drawer is opened
          */
         void onOpened();
-    
+
         /**
          * Override this method if you need to stop
          * some actions  when drawer is closed
          */
         void onClosed();
-    
+
         /**
          * Override this method if you need to start
          * some processes
          */
         void onResume();
-    
+
         /**
          * Override this method if you need to do
          * some clean up
          */
         void onPause();
-    
+
         /**
          * Override this method if you need to start
          * some processes that would be killed when
@@ -327,7 +327,7 @@ Module must implement `DebugModule` interface
          * E.g. register receivers
          */
         void onStart();
-    
+
         /**
          * Override this method if you need to do
          * some clean up when activity goes to foreground.
