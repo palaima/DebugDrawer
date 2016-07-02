@@ -48,7 +48,9 @@ public class NetworkModule implements DebugModule {
         wifi = (Switch) view.findViewById(R.id.dd_debug_network_wifi);
         mobile = (Switch) view.findViewById(R.id.dd_debug_network_mobile);
         // In JellyBean 4.2, mobile network settings are only accessible from system apps
-        mobile.setEnabled(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1);
+        boolean mobileToggleAvailable = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1;
+        mobile.setVisibility(mobileToggleAvailable ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.dd_debug_network_mobile_label).setVisibility(mobileToggleAvailable ? View.VISIBLE : View.GONE);
         bluetooth = (Switch) view.findViewById(R.id.dd_debug_network_bluetooth);
 
         networkController = NetworkController.newInstance(context);
