@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 import okhttp3.OkHttpClient;
 
-public class OkHttp3Module implements DebugModule {
+public class OkHttp3Module extends DebugModuleAdapter {
 
     private static final boolean HAS_OKHTTP3;
 
@@ -83,31 +83,6 @@ public class OkHttp3Module implements DebugModule {
     @Override
     public void onOpened() {
         refresh();
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 
     private static String sizeString(long bytes) {

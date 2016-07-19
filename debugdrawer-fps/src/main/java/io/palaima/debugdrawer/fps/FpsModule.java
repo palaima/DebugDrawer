@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 import jp.wasabeef.takt.Takt;
 
-public class FpsModule implements DebugModule {
+public class FpsModule extends DebugModuleAdapter {
 
     private static final boolean HAS_TAKT;
 
@@ -60,16 +60,6 @@ public class FpsModule implements DebugModule {
     }
 
     @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
     public void onResume() {
         if (isChecked) {
             program.play();
@@ -81,15 +71,5 @@ public class FpsModule implements DebugModule {
         if (isChecked) {
             program.stop();
         }
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }

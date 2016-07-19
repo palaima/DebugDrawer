@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class OkHttpModule implements DebugModule {
+public class OkHttpModule extends DebugModuleAdapter {
 
     private static final boolean HAS_OKHTTP;
 
@@ -84,31 +84,6 @@ public class OkHttpModule implements DebugModule {
     @Override
     public void onOpened() {
         refresh();
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 
     private static String sizeString(long bytes) {
