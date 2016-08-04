@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import io.palaima.debugdrawer.base.DebugModule;
 import okhttp3.OkHttpClient;
 
@@ -45,7 +47,8 @@ public class OkHttp3Module implements DebugModule {
         this.client = client;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp3, parent, false);
 
@@ -57,23 +60,30 @@ public class OkHttp3Module implements DebugModule {
 
         okHttpCacheMaxSizeView.setText(sizeString(maxSize()));
 
+        view.findViewById(R.id.dd_debug_okhttp_cache_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearCache();
+                refresh();
+            }
+        });
+
         refresh();
         return view;
     }
-
 
 
     private void refresh() {
         int writeTotal = writeSuccessCount() + writeAbortCount();
         int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
         okHttpCacheWriteErrorView.setText(
-            new StringBuilder().append(writeAbortCount())
-                .append(" / ")
-                .append(writeTotal)
-                .append(" (")
-                .append(percentage)
-                .append("%)")
-                .toString()
+                new StringBuilder().append(writeAbortCount())
+                        .append(" / ")
+                        .append(writeTotal)
+                        .append(" (")
+                        .append(percentage)
+                        .append("%)")
+                        .toString()
         );
         okHttpCacheRequestCountView.setText(String.valueOf(requestCount()));
         okHttpCacheNetworkCountView.setText(String.valueOf(networkCount()));
@@ -111,7 +121,7 @@ public class OkHttp3Module implements DebugModule {
     }
 
     private static String sizeString(long bytes) {
-        String[] units = new String[] { "B", "KB", "MB", "GB" };
+        String[] units = new String[]{"B", "KB", "MB", "GB"};
         int unit = 0;
         while (bytes >= 1024) {
             bytes /= 1024;
@@ -142,5 +152,13 @@ public class OkHttp3Module implements DebugModule {
 
     private int hitCount() {
         return client.cache().hitCount();
+    }
+
+    private void clearCache() {
+        try {
+            client.cache().evictAll();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
