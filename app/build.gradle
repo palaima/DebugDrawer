@@ -12,7 +12,7 @@ repositories {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.0'
+    buildToolsVersion '24.0.1'
 
     defaultConfig {
         applicationId "io.palaima.debugdrawer.app"
@@ -38,15 +38,15 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
-    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     //compile 'com.squareup.okhttp:okhttp:2.7.4'
     compile 'jp.wasabeef:takt:1.0.2'
-    compile 'com.jakewharton.timber:timber:4.1.0'
+    compile 'com.jakewharton.timber:timber:4.2.0'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
-    compile 'com.google.android.gms:play-services-location:9.2.0'
+    compile 'com.google.android.gms:play-services-location:9.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     /*debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.0'
