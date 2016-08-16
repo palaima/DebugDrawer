@@ -48,7 +48,7 @@ public class OkHttpModule extends DebugModuleAdapter {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp, parent, false);
 
         okHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
         okHttpCacheWriteErrorView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
@@ -65,8 +65,8 @@ public class OkHttpModule extends DebugModuleAdapter {
 
 
     private void refresh() {
-        int writeTotal = writeSuccessCount() + writeAbortCount();
-        int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
+        final int writeTotal = writeSuccessCount() + writeAbortCount();
+        final int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
         okHttpCacheWriteErrorView.setText(
             new StringBuilder().append(writeAbortCount())
                 .append(" / ")
@@ -87,7 +87,7 @@ public class OkHttpModule extends DebugModuleAdapter {
     }
 
     private static String sizeString(long bytes) {
-        String[] units = new String[] { "B", "KB", "MB", "GB" };
+        final String[] units = new String[] { "B", "KB", "MB", "GB" };
         int unit = 0;
         while (bytes >= 1024) {
             bytes /= 1024;

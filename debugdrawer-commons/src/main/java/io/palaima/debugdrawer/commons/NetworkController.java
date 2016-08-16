@@ -29,17 +29,18 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.Nullable;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 final class NetworkController {
 
-    public enum BluetoothState {
+    enum BluetoothState {
         On, Off, Turning_On, Turning_Off, Unknown
     }
 
-    public interface OnNetworkChangedListener {
+    interface OnNetworkChangedListener {
         void onChanged(NetworkChangeEvent event);
     }
 
@@ -51,11 +52,11 @@ final class NetworkController {
 
     private NetworkReceiver receiver;
 
-    private transient Context context;
+    private WeakReference<Context> contextRef;
 
     private OnNetworkChangedListener onNetworkChangedListener;
 
-    public static NetworkController newInstance(Context context) {
+    static NetworkController newInstance(Context context) {
         if (instance == null)
             instance = new NetworkController(context);
         return instance;
@@ -72,20 +73,20 @@ final class NetworkController {
      * @param context
      */
     private NetworkController(Context context) {
-        this.context = context.getApplicationContext();
-        wifiManager = (WifiManager) this.context.getSystemService(Context.WIFI_SERVICE);
-        connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        contextRef = new WeakReference<>(context.getApplicationContext());
+        wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
-    public void setOnNetworkChangedListener(OnNetworkChangedListener listener) {
+    void setOnNetworkChangedListener(OnNetworkChangedListener listener) {
         onNetworkChangedListener = listener;
     }
 
     /**
      * True if WiFi enabled
      */
-    public boolean isWifiEnabled() {
+    boolean isWifiEnabled() {
         return wifiManager.isWifiEnabled();
     }
 
@@ -94,16 +95,15 @@ final class NetworkController {
      *
      * @param enabled
      */
-    public void setWifiEnabled(boolean enabled) {
+    void setWifiEnabled(boolean enabled) {
         wifiManager.setWifiEnabled(enabled);
     }
 
     /**
      * True if mobile network enabled
      */
-    public boolean isMobileNetworkEnabled() {
-        final NetworkInfo info = connectivityManager.getNetworkInfo(
-            ConnectivityManager.TYPE_MOBILE);
+    boolean isMobileNetworkEnabled() {
+        final NetworkInfo info = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         return (info != null && info.isConnected());
     }
 
@@ -114,7 +114,7 @@ final class NetworkController {
      *
      * @param enabled
      */
-    public boolean setMobileNetworkEnabled(boolean enabled) {
+    boolean setMobileNetworkEnabled(boolean enabled) {
         try {
             final Class conmanClass = Class.forName(connectivityManager.getClass().getName());
             final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
@@ -125,27 +125,27 @@ final class NetworkController {
             setMobileDataEnabledMethod.setAccessible(true);
             setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
             return true;
-        } catch (ClassNotFoundException e) {
-        } catch (InvocationTargetException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (IllegalAccessException e) {
-        } catch (NoSuchFieldException e) {
         }
+        catch (ClassNotFoundException e) {}
+        catch (InvocationTargetException e) {}
+        catch (NoSuchMethodException e) {}
+        catch (IllegalAccessException e) {}
+        catch (NoSuchFieldException e) {}
         return false;
     }
 
     /**
      * @return True if bluetooth adapter is not null
      */
-    public boolean isBluetoothAvailable() {
+    boolean isBluetoothAvailable() {
         return bluetoothAdapter != null;
     }
 
     /**
      * @return True if bluetooth is enabled
      */
-    public boolean isBluetoothEnabled() {
-        return isBluetoothAvailable() && hasBlueBoothPermission(context) && bluetoothAdapter.isEnabled();
+    boolean isBluetoothEnabled() {
+        return contextRef.get() != null && isBluetoothAvailable() && hasBlueBoothPermission(contextRef.get()) && bluetoothAdapter.isEnabled();
     }
 
     /**
@@ -154,7 +154,7 @@ final class NetworkController {
      *
      * @param enabled
      */
-    public boolean setBluetoothEnabled(boolean enabled) {
+    boolean setBluetoothEnabled(boolean enabled) {
         return isBluetoothAvailable() && (enabled ? bluetoothAdapter.enable()
             : bluetoothAdapter.disable());
     }
@@ -163,18 +163,20 @@ final class NetworkController {
     /**
      * Unregister network state broadcast receiver
      */
-    public void unregisterReceiver() {
+    void unregisterReceiver() {
         try {
-            context.unregisterReceiver(receiver);
-        } catch (IllegalArgumentException e) {
-        }
+            final Context context = contextRef.get();
+            if (context != null) {
+                context.unregisterReceiver(receiver);
+            }
+        } catch (IllegalArgumentException e) {}
     }
 
     /**
      * Register network state broadcast receiver
      */
-    public void registerReceiver() {
-        if (receiver == null)
+    void registerReceiver() {
+        if (receiver == null) {
             receiver = new NetworkReceiver(new Listener() {
                 @Override
                 public void post(NetworkChangeEvent event) {
@@ -183,10 +185,14 @@ final class NetworkController {
                     }
                 }
             });
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        context.registerReceiver(receiver, filter);
+        }
+        final Context context = contextRef.get();
+        if (context != null) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+            context.registerReceiver(receiver, filter);
+        }
     }
 
     /**
@@ -195,7 +201,7 @@ final class NetworkController {
      * a NetworkChangeEvent using listener
      * <p/>
      */
-    public static class NetworkReceiver extends BroadcastReceiver {
+    static class NetworkReceiver extends BroadcastReceiver {
 
         @Nullable private final Listener listener;
 
@@ -205,11 +211,11 @@ final class NetworkController {
 
         @Override public void onReceive(Context context, Intent intent) {
             if (listener != null) {
-                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-                NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-                NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-                BluetoothAdapter bluetoothInfo = BluetoothAdapter.getDefaultAdapter();
+                final NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                final NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                final BluetoothAdapter bluetoothInfo = BluetoothAdapter.getDefaultAdapter();
 
                 final NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent(
                     (wifiInfo != null) ? wifiInfo.getState() : NetworkInfo.State.UNKNOWN,
@@ -242,20 +248,19 @@ final class NetworkController {
         }
     }
 
-    public static class NetworkChangeEvent {
-        public final NetworkInfo.State wifiState;
-        public final NetworkInfo.State mobileState;
-        public final BluetoothState    bluetoothState;
+    static class NetworkChangeEvent {
+        final NetworkInfo.State wifiState;
+        final NetworkInfo.State mobileState;
+        final BluetoothState    bluetoothState;
 
-        public NetworkChangeEvent(NetworkInfo.State wifiState, NetworkInfo.State mobileState, BluetoothState bluetoothState) {
+        NetworkChangeEvent(NetworkInfo.State wifiState, NetworkInfo.State mobileState, BluetoothState bluetoothState) {
             this.wifiState = wifiState;
             this.mobileState = mobileState;
             this.bluetoothState = bluetoothState;
         }
     }
 
-    public interface Listener {
+    interface Listener {
         void post(NetworkChangeEvent event);
     }
-
 }

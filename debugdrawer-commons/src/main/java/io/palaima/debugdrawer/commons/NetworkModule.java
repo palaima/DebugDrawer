@@ -17,7 +17,6 @@
 
 package io.palaima.debugdrawer.commons;
 
-import android.content.Context;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -31,30 +30,24 @@ import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
 public class NetworkModule extends DebugModuleAdapter {
 
-    private final Context context;
-
     private NetworkController networkController;
 
     private Switch wifi;
     private Switch mobile;
     private Switch bluetooth;
 
-    public NetworkModule(Context context) {
-        this.context = context.getApplicationContext();
-    }
-
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_network, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_network, parent, false);
         wifi = (Switch) view.findViewById(R.id.dd_debug_network_wifi);
         mobile = (Switch) view.findViewById(R.id.dd_debug_network_mobile);
         // In JellyBean 4.2, mobile network settings are only accessible from system apps
-        boolean mobileToggleAvailable = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1;
+        final boolean mobileToggleAvailable = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1;
         mobile.setVisibility(mobileToggleAvailable ? View.VISIBLE : View.GONE);
         view.findViewById(R.id.dd_debug_network_mobile_label).setVisibility(mobileToggleAvailable ? View.VISIBLE : View.GONE);
         bluetooth = (Switch) view.findViewById(R.id.dd_debug_network_bluetooth);
 
-        networkController = NetworkController.newInstance(context);
+        networkController = NetworkController.newInstance(parent.getContext());
 
         wifi.setChecked(networkController.isWifiEnabled());
         wifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

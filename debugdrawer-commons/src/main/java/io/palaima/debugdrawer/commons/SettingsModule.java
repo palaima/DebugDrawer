@@ -34,8 +34,6 @@ import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
 public class SettingsModule extends DebugModuleAdapter implements View.OnClickListener {
 
-    private final Context context;
-
     private View      developerTitle;
     private ImageView developer;
     private View      batteryTitle;
@@ -49,13 +47,9 @@ public class SettingsModule extends DebugModuleAdapter implements View.OnClickLi
     private View      locationTitle;
     private ImageView location;
 
-    public SettingsModule(Context context) {
-        this.context = context;
-    }
-
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_settings, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_settings, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
@@ -89,6 +83,7 @@ public class SettingsModule extends DebugModuleAdapter implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        final Context context = v.getContext();
         if (v == developer || v == developerTitle) {
             // open dev settings
             Intent devIntent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);

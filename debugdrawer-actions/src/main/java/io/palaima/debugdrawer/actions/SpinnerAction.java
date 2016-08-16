@@ -41,18 +41,20 @@ public class SpinnerAction<T> implements Action {
         this.listener = listener;
         if (initialSelectedPosition >= 0 && initialSelectedPosition < values.size()) {
             this.selectedPosition = initialSelectedPosition;
+        } else {
+            throw new IllegalStateException("initial selected position is out of bounds");
         }
     }
 
     @Override
     public View getView(LinearLayout view) {
-        Context context = view.getContext();
-        Resources resources = context.getResources();
+        final Context context = view.getContext();
+        final Resources resources = context.getResources();
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
 
-        Spinner spinner = new Spinner(context);
+        final Spinner spinner = new Spinner(context);
         spinner.setLayoutParams(layoutParams);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -69,7 +71,7 @@ public class SpinnerAction<T> implements Action {
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.dd_debug_drawer_module_actions_spinner_item, titles);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.dd_debug_drawer_module_actions_spinner_item, titles);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -111,7 +113,7 @@ public class SpinnerAction<T> implements Action {
     }
 
     private static <T> List<String> getTitles(List<T> values) {
-        List<String> titles = new ArrayList<>(values.size());
+        final List<String> titles = new ArrayList<>(values.size());
         for (T value : values) {
             titles.add(value.toString());
         }

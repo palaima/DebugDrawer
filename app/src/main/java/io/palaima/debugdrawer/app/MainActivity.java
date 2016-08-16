@@ -73,28 +73,29 @@ public class MainActivity extends AppCompatActivity {
                 @Override public void onItemSelected(String value) {
                     Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
                 }
-            }
+            },
+            1
         );
 
         debugDrawer = new DebugDrawer.Builder(this).modules(
             new GlideModule(Glide.get(this)),
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
-            new LocationModule(this),
+            new LocationModule(),
             new ScalpelModule(this),
             new TimberModule(),
             new OkHttp3Module(okHttpClient),
-            new DeviceModule(this),
-            new BuildModule(this),
-            new NetworkModule(this),
-            new SettingsModule(this)
+            new DeviceModule(),
+            new BuildModule(),
+            new NetworkModule(),
+            new SettingsModule()
         ).build();
 
         showDummyLog();
 
         List<String> images = new ArrayList<>();
-        for (int i = 1; i < 30; i++) {
-            images.add("http://lorempixel.com/400/200/sports/" + i);
+        for (int i = 0; i < 30; i++) {
+            images.add("https://unsplash.it/200/100?image=" + i);
         }
 
         ListView listView = (ListView) findViewById(R.id.image_list);

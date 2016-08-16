@@ -26,23 +26,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
+
 import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
 public class BuildModule extends DebugModuleAdapter {
 
-    private final Context context;
+    private WeakReference<Context> context;
 
     private TextView codeLabel;
     private TextView nameLabel;
     private TextView packageLabel;
 
-    public BuildModule(Context context) {
-        this.context = context;
-    }
-
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_build, parent, false);
+
+        if (context == null) {
+            context = new WeakReference<>(parent.getContext());
+        }
+
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_build, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
@@ -62,10 +65,13 @@ public class BuildModule extends DebugModuleAdapter {
 
     private void refresh() {
         try {
-            final PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            codeLabel.setText(String.valueOf(info.versionCode));
-            nameLabel.setText(info.versionName);
-            packageLabel.setText(info.packageName);
+            final Context context = this.context.get();
+            if (context != null) {
+                final PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                codeLabel.setText(String.valueOf(info.versionCode));
+                nameLabel.setText(info.versionName);
+                packageLabel.setText(info.packageName);
+            }
         } catch (PackageManager.NameNotFoundException e) {}
     }
 }

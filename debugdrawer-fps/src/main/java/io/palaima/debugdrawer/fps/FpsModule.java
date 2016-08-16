@@ -42,8 +42,8 @@ public class FpsModule extends DebugModuleAdapter {
     @Override
     @NonNull
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_item_fps, parent, false);
-        Switch showSwitch = (Switch) view.findViewById(R.id.dd_debug_fps);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_item_fps, parent, false);
+        final Switch showSwitch = (Switch) view.findViewById(R.id.dd_debug_fps);
         showSwitch.setOnCheckedChangeListener(
             new CompoundButton.OnCheckedChangeListener() {
                 @Override

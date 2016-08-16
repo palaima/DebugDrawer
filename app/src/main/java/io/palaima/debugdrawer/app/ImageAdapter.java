@@ -1,6 +1,7 @@
 package io.palaima.debugdrawer.app;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,13 @@ public class ImageAdapter extends ArrayAdapter<String> {
         super(context, 0, images);
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NonNull @Override
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         String url = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.image_item, parent, false);
         }
-        Glide.with(convertView.getContext()).load(url).into((ImageView)convertView.findViewById(R.id.image));
+        Glide.with(convertView.getContext()).load(url).into((ImageView) convertView.findViewById(R.id.image));
         return convertView;
     }
 }
