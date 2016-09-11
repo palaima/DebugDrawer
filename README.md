@@ -230,37 +230,7 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
     }
 ```
 
-### 2. Lifecycle
-If you use `NetworkModule`, `LocationModule`, `FpsModule` or your own which is hooked with BroadcastReceivers you must call `onStart`/`onStop`, `onResume`/`onPause` in your activity
-
-```java
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        debugDrawer.onStart();
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        debugDrawer.onResume();
-    }
-    
-     @Override
-    protected void onPause() {
-        super.onPause();
-        debugDrawer.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        debugDrawer.onStop();
-    }
-```
-
-### 3. `TimberModule`
+### 2. `TimberModule`
 Don't forget to plant needed log trees in Application class. Tree that is used by `TimberModule` stored in `LumberYard` class.
 
 Application class example:
