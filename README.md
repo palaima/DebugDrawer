@@ -139,6 +139,12 @@ dependencies {
    compile 'io.palaima.debugdrawer:debugdrawer-location:0.7.0'
 }
 ```
+Google Location library required
+```gradle
+dependencies {
+   compile 'com.google.android.gms:play-services-location:x.x.x'
+}
+```
 
 `TimberModule`
 [Timber](https://github.com/JakeWharton/timber) library required
