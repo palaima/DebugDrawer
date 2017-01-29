@@ -165,8 +165,8 @@ public class NetworkModule extends DebugModuleAdapter {
                     || event.mobileState == NetworkInfo.State.CONNECTING);
             }
             if (bluetooth != null) {
-                bluetooth.setChecked(event.bluetoothState == NetworkController.BluetoothState.On
-                    || event.bluetoothState == NetworkController.BluetoothState.Turning_On);
+                bluetooth.setChecked(event.bluetoothState == NetworkController.BluetoothState.ON
+                    || event.bluetoothState == NetworkController.BluetoothState.TURNING_ON);
             }
         }
     };

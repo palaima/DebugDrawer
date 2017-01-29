@@ -26,18 +26,14 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.support.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 final class NetworkController {
 
     enum BluetoothState {
-        On, Off, Turning_On, Turning_Off, Unknown
+        ON, OFF, TURNING_ON, TURNING_OFF, UNKNOWN
     }
 
     interface OnNetworkChangedListener {
@@ -81,7 +77,8 @@ final class NetworkController {
             if (context != null) {
                 context.unregisterReceiver(receiver);
             }
-        } catch (IllegalArgumentException e) {}
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     /**
@@ -119,13 +116,15 @@ final class NetworkController {
      */
     static class NetworkReceiver extends BroadcastReceiver {
 
-        @Nullable private final Listener listener;
+        @Nullable
+        private final Listener listener;
 
         public NetworkReceiver(@Nullable Listener listener) {
             this.listener = listener;
         }
 
-        @Override public void onReceive(Context context, Intent intent) {
+        @Override
+        public void onReceive(Context context, Intent intent) {
             if (listener != null) {
                 final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -136,7 +135,7 @@ final class NetworkController {
                 final NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent(
                     (wifiInfo != null) ? wifiInfo.getState() : NetworkInfo.State.UNKNOWN,
                     (mobileInfo != null) ? mobileInfo.getState() : NetworkInfo.State.UNKNOWN,
-                    (bluetoothInfo != null && hasBluetoothPermission(context)) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
+                    (bluetoothInfo != null && hasBluetoothPermission(context)) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.UNKNOWN);
 
                 listener.post(networkChangeEvent);
             }
@@ -151,23 +150,23 @@ final class NetworkController {
         private BluetoothState getBluetoothState(int state) {
             switch (state) {
                 case BluetoothAdapter.STATE_ON:
-                    return BluetoothState.On;
+                    return BluetoothState.ON;
                 case BluetoothAdapter.STATE_OFF:
-                    return BluetoothState.Off;
+                    return BluetoothState.OFF;
                 case BluetoothAdapter.STATE_TURNING_ON:
-                    return BluetoothState.Turning_On;
+                    return BluetoothState.TURNING_ON;
                 case BluetoothAdapter.STATE_TURNING_OFF:
-                    return BluetoothState.Turning_Off;
+                    return BluetoothState.TURNING_OFF;
             }
 
-            return BluetoothState.Unknown;
+            return BluetoothState.UNKNOWN;
         }
     }
 
     static class NetworkChangeEvent {
         final NetworkInfo.State wifiState;
         final NetworkInfo.State mobileState;
-        final BluetoothState    bluetoothState;
+        final BluetoothState bluetoothState;
 
         NetworkChangeEvent(NetworkInfo.State wifiState, NetworkInfo.State mobileState, BluetoothState bluetoothState) {
             this.wifiState = wifiState;

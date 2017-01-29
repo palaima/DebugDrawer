@@ -66,28 +66,28 @@ public class DebugDrawer {
     /**
      * Calls modules {@link DebugModule#onResume()} method
      */
-    public void onResume() {
+    void onResume() {
 
     }
 
     /**
      * Calls modules {@link DebugModule#onPause()} method
      */
-    public void onPause() {
+    void onPause() {
 
     }
 
     /**
      * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
-    public void onStart() {
+    void onStart() {
 
     }
 
     /**
      * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
-    public void onStop() {
+    void onStop() {
 
     }
 

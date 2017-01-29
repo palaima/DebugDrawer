@@ -30,7 +30,6 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
 import io.palaima.debugdrawer.base.DebugModule;
-import io.palaima.debugdrawer.util.DebugDrawerLifecycleCallbacks;
 import io.palaima.debugdrawer.util.UIUtils;
 import io.palaima.debugdrawer.view.DebugView;
 import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
@@ -104,28 +103,28 @@ public class DebugDrawer {
     /**
      * Calls modules {@link DebugModule#onResume()} method
      */
-    public void onResume() {
+    void onResume() {
         debugView.onResume();
     }
 
     /**
      * Calls modules {@link DebugModule#onPause()} method
      */
-    public void onPause() {
+    void onPause() {
         debugView.onPause();
     }
 
     /**
      * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
-    public void onStart() {
+    void onStart() {
         debugView.onStart();
     }
 
     /**
      * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
-    public void onStop() {
+    void onStop() {
         debugView.onStop();
     }
 
