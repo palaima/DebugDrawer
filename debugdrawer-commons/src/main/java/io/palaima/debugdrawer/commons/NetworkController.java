@@ -46,13 +46,9 @@ final class NetworkController {
 
     private static NetworkController instance;
 
-    private WifiManager         wifiManager;
-    private ConnectivityManager connectivityManager;
-    private BluetoothAdapter    bluetoothAdapter;
+    private final WeakReference<Context> contextRef;
 
     private NetworkReceiver receiver;
-
-    private WeakReference<Context> contextRef;
 
     private OnNetworkChangedListener onNetworkChangedListener;
 
@@ -60,10 +56,6 @@ final class NetworkController {
         if (instance == null)
             instance = new NetworkController(context);
         return instance;
-    }
-
-    private static boolean hasBlueBoothPermission(Context context) {
-        return context.checkCallingOrSelfPermission(Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
@@ -74,91 +66,11 @@ final class NetworkController {
      */
     private NetworkController(Context context) {
         contextRef = new WeakReference<>(context.getApplicationContext());
-        wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
     void setOnNetworkChangedListener(OnNetworkChangedListener listener) {
         onNetworkChangedListener = listener;
     }
-
-    /**
-     * True if WiFi enabled
-     */
-    boolean isWifiEnabled() {
-        return wifiManager.isWifiEnabled();
-    }
-
-    /**
-     * Set WiFi state
-     *
-     * @param enabled
-     */
-    void setWifiEnabled(boolean enabled) {
-        wifiManager.setWifiEnabled(enabled);
-    }
-
-    /**
-     * True if mobile network enabled
-     */
-    boolean isMobileNetworkEnabled() {
-        final NetworkInfo info = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        return (info != null && info.isConnected());
-    }
-
-    /**
-     * http://stackoverflow.com/questions/11555366/enable-disable-data-connection-in-android-programmatically
-     * Try to enabled/disable mobile network state using reflection.
-     * Returns true if succeeded
-     *
-     * @param enabled
-     */
-    boolean setMobileNetworkEnabled(boolean enabled) {
-        try {
-            final Class conmanClass = Class.forName(connectivityManager.getClass().getName());
-            final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
-            iConnectivityManagerField.setAccessible(true);
-            final Object iConnectivityManager = iConnectivityManagerField.get(connectivityManager);
-            final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
-            final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
-            setMobileDataEnabledMethod.setAccessible(true);
-            setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
-            return true;
-        }
-        catch (ClassNotFoundException e) {}
-        catch (InvocationTargetException e) {}
-        catch (NoSuchMethodException e) {}
-        catch (IllegalAccessException e) {}
-        catch (NoSuchFieldException e) {}
-        return false;
-    }
-
-    /**
-     * @return True if bluetooth adapter is not null
-     */
-    boolean isBluetoothAvailable() {
-        return bluetoothAdapter != null;
-    }
-
-    /**
-     * @return True if bluetooth is enabled
-     */
-    boolean isBluetoothEnabled() {
-        return contextRef.get() != null && isBluetoothAvailable() && hasBlueBoothPermission(contextRef.get()) && bluetoothAdapter.isEnabled();
-    }
-
-    /**
-     * Try to enable/disabled bluetooth. Returns false if immediate
-     * error occurs
-     *
-     * @param enabled
-     */
-    boolean setBluetoothEnabled(boolean enabled) {
-        return isBluetoothAvailable() && (enabled ? bluetoothAdapter.enable()
-            : bluetoothAdapter.disable());
-    }
-
 
     /**
      * Unregister network state broadcast receiver
@@ -195,6 +107,10 @@ final class NetworkController {
         }
     }
 
+    private static boolean hasBluetoothPermission(Context context) {
+        return context.checkCallingOrSelfPermission(Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED;
+    }
+
     /**
      * Receiver that handles wifi, mobile networks and
      * Bluetooth connectivity change intents and sends
@@ -220,7 +136,7 @@ final class NetworkController {
                 final NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent(
                     (wifiInfo != null) ? wifiInfo.getState() : NetworkInfo.State.UNKNOWN,
                     (mobileInfo != null) ? mobileInfo.getState() : NetworkInfo.State.UNKNOWN,
-                    (bluetoothInfo != null && hasBlueBoothPermission(context)) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
+                    (bluetoothInfo != null && hasBluetoothPermission(context)) ? getBluetoothState(bluetoothInfo.getState()) : BluetoothState.Unknown);
 
                 listener.post(networkChangeEvent);
             }
