@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import java.io.IOException;
+
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 import okhttp3.OkHttpClient;
 
-public class OkHttp3Module implements DebugModule {
+public class OkHttp3Module extends DebugModuleAdapter {
 
     private static final boolean HAS_OKHTTP3;
 
@@ -47,7 +49,7 @@ public class OkHttp3Module implements DebugModule {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp3, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp3, parent, false);
 
         okHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
         okHttpCacheWriteErrorView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
@@ -57,15 +59,19 @@ public class OkHttp3Module implements DebugModule {
 
         okHttpCacheMaxSizeView.setText(sizeString(maxSize()));
 
+        view.findViewById(R.id.dd_debug_okhttp_cache_clear).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                clearCache();
+            }
+        });
+
         refresh();
         return view;
     }
 
-
-
     private void refresh() {
-        int writeTotal = writeSuccessCount() + writeAbortCount();
-        int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
+        final int writeTotal = writeSuccessCount() + writeAbortCount();
+        final int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
         okHttpCacheWriteErrorView.setText(
             new StringBuilder().append(writeAbortCount())
                 .append(" / ")
@@ -85,39 +91,12 @@ public class OkHttp3Module implements DebugModule {
         refresh();
     }
 
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    private static String sizeString(long bytes) {
-        String[] units = new String[] { "B", "KB", "MB", "GB" };
-        int unit = 0;
-        while (bytes >= 1024) {
-            bytes /= 1024;
-            unit += 1;
+    private void clearCache() {
+        try {
+            client.cache().evictAll();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return bytes + units[unit];
     }
 
     private long maxSize() {
@@ -142,5 +121,15 @@ public class OkHttp3Module implements DebugModule {
 
     private int hitCount() {
         return client.cache().hitCount();
+    }
+
+    private static String sizeString(long bytes) {
+        final String[] units = new String[]{"B", "KB", "MB", "GB"};
+        int unit = 0;
+        while (bytes >= 1024) {
+            bytes /= 1024;
+            unit += 1;
+        }
+        return bytes + units[unit];
     }
 }

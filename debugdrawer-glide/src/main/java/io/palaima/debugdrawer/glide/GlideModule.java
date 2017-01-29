@@ -13,9 +13,9 @@ import com.bumptech.glide.load.engine.cache.MemoryCache;
 
 import java.lang.reflect.Field;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class GlideModule implements DebugModule {
+public class GlideModule extends DebugModuleAdapter {
 
     private static final boolean HAS_GLIDE;
 
@@ -49,8 +49,8 @@ public class GlideModule implements DebugModule {
         this.glide = glide;
 
         try {
-            Class<?> glideClass = glide.getClass();
-            Field field = glideClass.getDeclaredField("memoryCache");
+            final Class<?> glideClass = glide.getClass();
+            final Field field = glideClass.getDeclaredField("memoryCache");
             field.setAccessible(true);
             this.memoryCache = (MemoryCache) field.get(glide);
         } catch (Throwable t) {
@@ -59,7 +59,7 @@ public class GlideModule implements DebugModule {
     }
 
     @NonNull @Override public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_item_glide, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_item_glide, parent, false);
 
         poolSizeLabel = (TextView) view.findViewById(R.id.dd_debug_glide_pool_size);
         memCacheCurrentLabel = (TextView) view.findViewById(R.id.dd_debug_glide_memcache_current);
@@ -92,32 +92,16 @@ public class GlideModule implements DebugModule {
         refresh();
     }
 
-    @Override public void onClosed() {
-
-    }
-
     @Override public void onResume() {
         refresh();
     }
 
-    @Override public void onPause() {
-
-    }
-
-    @Override public void onStart() {
-
-    }
-
-    @Override public void onStop() {
-
-    }
-
     private void refresh() {
-        BitmapPool pool = glide.getBitmapPool();
+        final BitmapPool pool = glide.getBitmapPool();
 
-        String total = getSizeString(pool.getMaxSize());
-        String memCacheCurrent = getSizeString(memoryCache.getCurrentSize());
-        String memCacheMax = getSizeString(memoryCache.getMaxSize());
+        final String total = getSizeString(pool.getMaxSize());
+        final String memCacheCurrent = getSizeString(memoryCache.getCurrentSize());
+        final String memCacheMax = getSizeString(memoryCache.getMaxSize());
 
         poolSizeLabel.setText(total);
         memCacheCurrentLabel.setText(memCacheCurrent);
@@ -125,7 +109,7 @@ public class GlideModule implements DebugModule {
     }
 
     private static String getSizeString(long bytes) {
-        String[] units = new String[] { "B", "KB", "MB", "GB" };
+        final String[] units = new String[] { "B", "KB", "MB", "GB" };
         int unit = 0;
         while (bytes >= 1024) {
             bytes /= 1024;

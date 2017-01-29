@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2014 LemonLabs
  * Copyright (C) 2015 Mantas Palaima
+ * Copyright (C) 2016 Oleg Godovykh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +30,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class SettingsModule implements DebugModule, View.OnClickListener {
-
-    private final Context context;
+public class SettingsModule extends DebugModuleAdapter implements View.OnClickListener {
 
     private View      developerTitle;
     private ImageView developer;
@@ -48,13 +47,9 @@ public class SettingsModule implements DebugModule, View.OnClickListener {
     private View      locationTitle;
     private ImageView location;
 
-    public SettingsModule(Context context) {
-        this.context = context;
-    }
-
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_settings, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_settings, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
@@ -87,37 +82,8 @@ public class SettingsModule implements DebugModule, View.OnClickListener {
     }
 
     @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
     public void onClick(View v) {
+        final Context context = v.getContext();
         if (v == developer || v == developerTitle) {
             // open dev settings
             Intent devIntent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);

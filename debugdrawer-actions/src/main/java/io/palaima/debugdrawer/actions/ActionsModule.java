@@ -25,10 +25,10 @@ public class ActionsModule implements DebugModule {
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dd_debug_drawer_module_actions, parent, false);
+        final LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dd_debug_drawer_module_actions, parent, false);
 
         if (actions.isEmpty()) {
-            TextView noActionsLabel = new TextView(parent.getContext());
+            final TextView noActionsLabel = new TextView(parent.getContext());
             noActionsLabel.setTextColor(parent.getResources().getColor(android.R.color.white));
             noActionsLabel.setText("No actions added");
             view.addView(noActionsLabel);

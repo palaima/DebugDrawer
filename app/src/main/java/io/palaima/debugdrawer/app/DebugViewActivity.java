@@ -89,14 +89,14 @@ public class DebugViewActivity extends AppCompatActivity {
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
             new PicassoModule(picasso),
-            new LocationModule(this),
+            new LocationModule(),
             new ScalpelModule(this),
             new TimberModule(),
             new OkHttp3Module(okHttpClient),
-            new DeviceModule(this),
-            new BuildModule(this),
-            new NetworkModule(this),
-            new SettingsModule(this)
+            new DeviceModule(),
+            new BuildModule(),
+            new NetworkModule(),
+            new SettingsModule()
         );
 
         showDummyLog();

@@ -38,6 +38,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -61,8 +62,10 @@ public class LocationModule implements DebugModule {
         HAS_LOCATION = hasDependency;
     }
 
-    private transient final Context         context;
-    private final           LocationRequest locationRequest;
+
+    private final LocationRequest locationRequest;
+
+    private WeakReference<Context> contextRef;
 
     private boolean hasPermission;
 
@@ -83,41 +86,45 @@ public class LocationModule implements DebugModule {
 
     private boolean opened;
 
-    public LocationModule(Context context) {
-        this(context, true);
+    public LocationModule() {
+        this(true);
     }
 
     /**
-     * @param context                   context
      * @param locationRequestsAvailable defines if location should be updated every 10 seconds
      */
-    public LocationModule(Context context, boolean locationRequestsAvailable) {
-        this(context, HAS_LOCATION && locationRequestsAvailable ? new LocationRequest()
+    public LocationModule(boolean locationRequestsAvailable) {
+        this(HAS_LOCATION && locationRequestsAvailable ? new LocationRequest()
             .setInterval(TimeUnit.SECONDS.toMillis(10))
             .setFastestInterval(TimeUnit.SECONDS.toMillis(5))
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
     }
 
-    public LocationModule(Context context, long interval, long fastestInterval) {
-        this(context, HAS_LOCATION ? new LocationRequest()
+    public LocationModule(long interval, long fastestInterval) {
+        this(HAS_LOCATION ? new LocationRequest()
             .setInterval(interval)
             .setFastestInterval(fastestInterval)
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) : null);
     }
 
-    public LocationModule(@NonNull Context context, LocationRequest locationRequest) {
+    public LocationModule(LocationRequest locationRequest) {
         if (!HAS_LOCATION) {
             throw new RuntimeException("Google Play location dependency is not found");
         }
-        this.context = context.getApplicationContext();
         this.locationRequest = locationRequest;
     }
 
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        if (contextRef == null) {
+            contextRef = new WeakReference<>(parent.getContext());
+        }
+
+        final Context context = contextRef.get();
+
         checkPermission();
-        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        boolean available = api.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
+        final GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        final boolean available = api.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
         if (available && hasPermission) {
             locationController = LocationController.newInstance(context);
             if (locationRequest != null) {
@@ -126,7 +133,7 @@ public class LocationModule implements DebugModule {
         }
 
         if (locationController != null && hasPermission) {
-            View view = inflater.inflate(R.layout.dd_debug_drawer_module_location, parent, false);
+            final View view = inflater.inflate(R.layout.dd_debug_drawer_module_location, parent, false);
             latitude = (TextView) view.findViewById(R.id.dd_debug_location_latitude);
             longitude = (TextView) view.findViewById(R.id.dd_debug_location_longitude);
             accuracy = (TextView) view.findViewById(R.id.dd_debug_location_accuracy);
@@ -150,12 +157,12 @@ public class LocationModule implements DebugModule {
             updateLastLocation();
             return view;
         } else if (!hasPermission) {
-            TextView errorText = new TextView(context);
+            final TextView errorText = new TextView(context);
             errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
             errorText.setText(R.string.dd_debug_drawer_location_no_permission);
             return errorText;
         } else {
-            TextView errorText = new TextView(context);
+            final TextView errorText = new TextView(context);
             errorText.setTextAppearance(context, R.style.Widget_DebugDrawer_Base_Header);
             errorText.setText(R.string.dd_debug_drawer_location_google_play_unavailable);
             return errorText;
@@ -186,7 +193,7 @@ public class LocationModule implements DebugModule {
 
     private void updateLastLocation() {
         if (locationController != null) {
-            Location lastLocation = locationController.getLastLocation();
+            final Location lastLocation = locationController.getLastLocation();
             updateLocation(lastLocation);
         }
     }
@@ -198,8 +205,8 @@ public class LocationModule implements DebugModule {
             longitude.setText(String.valueOf(location.getLongitude()));
             accuracy.setText(String.valueOf(location.getAccuracy()) + "m");
 
-            Date date = new Date(location.getTime());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            final Date date = new Date(location.getTime());
+            final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             time.setText(sdf.format(date));
             provider.setText(location.getProvider());
         } else {
@@ -229,8 +236,8 @@ public class LocationModule implements DebugModule {
     private void openMaps(Context context) {
         try {
             if (location != null) {
-                String uri = "geo:" + location.getLatitude() + "," + location.getLongitude();
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+                final String uri = "geo:" + location.getLatitude() + "," + location.getLongitude();
+                final Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else {
@@ -242,7 +249,10 @@ public class LocationModule implements DebugModule {
     }
 
     private void checkPermission() {
-        hasPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED;
+        final Context context = contextRef.get();
+        if (context != null) {
+            hasPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+        }
     }
 }

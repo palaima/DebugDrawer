@@ -1,5 +1,7 @@
 # Android Debug Drawer
 
+[![Join the chat at https://gitter.im/palaima/DebugDrawer](https://badges.gitter.im/palaima/DebugDrawer.svg)](https://gitter.im/palaima/DebugDrawer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Debug%20Drawer-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1892)
 
 Faster development with Debug Drawer
@@ -178,31 +180,31 @@ repositories {
 
 You could use `DebugDrawer` or `DebugView` depending on your needs
 
-#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java)) 
+#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java))
 
 ```java
 
     private DebugDrawer debugDrawer;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ...
-        
+        //...
+
         SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
             @Override
             public void onCheckedChanged(boolean value) {
                 Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
             }
         });
-    
+
         ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
             @Override
             public void onClick() {
                 Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
             }
         });
-    
+
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
             Arrays.asList("First", "Second", "Third"),
             new SpinnerAction.OnItemSelectedListener<String>() {
@@ -211,7 +213,7 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
                 }
             }
         );
-        
+
         debugDrawer = new DebugDrawer.Builder(this)
             .modules(
                 new ActionsModule(switchAction, buttonAction, spinnerAction),
@@ -231,6 +233,7 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
 ```
 
 ### 2. `TimberModule`
+
 Don't forget to plant needed log trees in Application class. Tree that is used by `TimberModule` stored in `LumberYard` class.
 
 Application class example:
@@ -241,10 +244,10 @@ Application class example:
         @Override
         public void onCreate() {
             super.onCreate();
-    
+
             LumberYard lumberYard = LumberYard.getInstance(this);
             lumberYard.cleanUp();
-    
+
             Timber.plant(lumberYard.tree());
             Timber.plant(new Timber.DebugTree());
         }
@@ -260,36 +263,36 @@ Module must implement `DebugModule` interface
 ```java
 
     public interface DebugModule {
-    
+
         /**
          * Creates module view
          */
         @NonNull View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent);
-    
+
         /**
          * Override this method if you need to refresh
          * some information  when drawer is opened
          */
         void onOpened();
-    
+
         /**
          * Override this method if you need to stop
          * some actions  when drawer is closed
          */
         void onClosed();
-    
+
         /**
          * Override this method if you need to start
          * some processes
          */
         void onResume();
-    
+
         /**
          * Override this method if you need to do
          * some clean up
          */
         void onPause();
-    
+
         /**
          * Override this method if you need to start
          * some processes that would be killed when
@@ -297,7 +300,7 @@ Module must implement `DebugModule` interface
          * E.g. register receivers
          */
         void onStart();
-    
+
         /**
          * Override this method if you need to do
          * some clean up when activity goes to foreground.

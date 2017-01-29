@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 Mantas Palaima
+ * Copyright (C) 2016 Oleg Godovykh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +17,13 @@
 
 package io.palaima.debugdrawer.commons;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -26,11 +32,13 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
-public class NetworkModule implements DebugModule {
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-    private final Context context;
+public class NetworkModule extends DebugModuleAdapter {
 
     private NetworkController networkController;
 
@@ -38,71 +46,60 @@ public class NetworkModule implements DebugModule {
     private Switch mobile;
     private Switch bluetooth;
 
-    public NetworkModule(Context context) {
-        this.context = context.getApplicationContext();
-    }
-
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_network, parent, false);
+        final Context context = parent.getContext().getApplicationContext();
+        final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_network, parent, false);
+
         wifi = (Switch) view.findViewById(R.id.dd_debug_network_wifi);
         mobile = (Switch) view.findViewById(R.id.dd_debug_network_mobile);
         // In JellyBean 4.2, mobile network settings are only accessible from system apps
-        mobile.setEnabled(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1);
+        final boolean mobileToggleAvailable = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1;
+        mobile.setVisibility(mobileToggleAvailable ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.dd_debug_network_mobile_label).setVisibility(mobileToggleAvailable ? View.VISIBLE : View.GONE);
         bluetooth = (Switch) view.findViewById(R.id.dd_debug_network_bluetooth);
 
         networkController = NetworkController.newInstance(context);
 
-        wifi.setChecked(networkController.isWifiEnabled());
+        wifi.setChecked(wifiManager.isWifiEnabled());
         wifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-                networkController.setWifiEnabled(isChecked);
+                wifiManager.setWifiEnabled(isChecked);
             }
         });
 
-        mobile.setChecked(networkController.isMobileNetworkEnabled());
+        mobile.setChecked(isMobileNetworkEnabled(connectivityManager));
         mobile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-                networkController.setMobileNetworkEnabled(isChecked);
+                setMobileNetworkEnabled(connectivityManager, isChecked);
             }
         });
 
-        if (networkController.isBluetoothAvailable()) {
-            bluetooth.setChecked(networkController.isBluetoothEnabled());
+        if (bluetoothAdapter != null) {
+            bluetooth.setChecked(hasBluetoothPermission(context) && bluetoothAdapter.isEnabled());
             bluetooth.setOnCheckedChangeListener(
-                    new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-                            networkController.setBluetoothEnabled(isChecked);
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                        if (isChecked) {
+                            bluetoothAdapter.enable();
+                        } else {
+                            bluetoothAdapter.disable();
                         }
-                    });
+                    }
+                });
         } else {
             bluetooth.setEnabled(false);
         }
 
         return view;
-    }
-
-    @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
     }
 
     @Override
@@ -115,6 +112,45 @@ public class NetworkModule implements DebugModule {
     public void onStart() {
         networkController.setOnNetworkChangedListener(onNetworkChangedListener);
         networkController.registerReceiver();
+    }
+
+    /**
+     * True if mobile network enabled
+     */
+    private boolean isMobileNetworkEnabled(ConnectivityManager connectivityManager) {
+        final NetworkInfo info = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        return (info != null && info.isConnected());
+    }
+
+    /**
+     * http://stackoverflow.com/questions/11555366/enable-disable-data-connection-in-android-programmatically
+     * Try to enabled/disable mobile network state using reflection.
+     * Returns true if succeeded
+     *
+     * @param enabled
+     */
+    private boolean setMobileNetworkEnabled(ConnectivityManager connectivityManager, boolean enabled) {
+        try {
+            final Class conmanClass = Class.forName(connectivityManager.getClass().getName());
+            final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+            iConnectivityManagerField.setAccessible(true);
+            final Object iConnectivityManager = iConnectivityManagerField.get(connectivityManager);
+            final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+            final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+            setMobileDataEnabledMethod.setAccessible(true);
+            setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
+            return true;
+        } catch (ClassNotFoundException e) {
+        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException e) {
+        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException e) {
+        }
+        return false;
+    }
+
+    private boolean hasBluetoothPermission(Context context) {
+        return context.checkCallingOrSelfPermission(Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_GRANTED;
     }
 
     private NetworkController.OnNetworkChangedListener onNetworkChangedListener = new NetworkController.OnNetworkChangedListener() {

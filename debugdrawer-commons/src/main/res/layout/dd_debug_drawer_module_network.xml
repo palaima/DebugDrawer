@@ -27,6 +27,7 @@
         />
 
     <TextView
+        android:id="@+id/dd_debug_network_mobile_label"
         android:layout_gravity="start|center_vertical"
         android:text="Mobile"
         style="@style/Widget.DebugDrawer.Base.RowTitle"

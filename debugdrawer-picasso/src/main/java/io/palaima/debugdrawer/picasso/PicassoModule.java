@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.StatsSnapshot;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class PicassoModule implements DebugModule {
+public class PicassoModule extends DebugModuleAdapter {
 
     private static final boolean HAS_PICASSO;
 
@@ -56,7 +56,7 @@ public class PicassoModule implements DebugModule {
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
-        View view = inflater.inflate(R.layout.dd_debug_drawer_item_picasso, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_item_picasso, parent, false);
         indicatorView = (Switch) view.findViewById(R.id.dd_debug_picasso_indicators);
         cacheLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_cache_size);
         cacheHitsLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_cache_hit);
@@ -88,26 +88,11 @@ public class PicassoModule implements DebugModule {
         refresh();
     }
 
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
     private void refresh() {
-        StatsSnapshot snapshot = picasso.getSnapshot();
-        String size = getSizeString(snapshot.size);
-        String total = getSizeString(snapshot.maxSize);
-        int percentage = (int) ((1f * snapshot.size / snapshot.maxSize) * 100);
+        final StatsSnapshot snapshot = picasso.getSnapshot();
+        final String size = getSizeString(snapshot.size);
+        final String total = getSizeString(snapshot.maxSize);
+        final int percentage = (int) ((1f * snapshot.size / snapshot.maxSize) * 100);
         cacheLabel.setText(size + " / " + total + " (" + percentage + "%)");
         cacheHitsLabel.setText(String.valueOf(snapshot.cacheHits));
         cacheMissesLabel.setText(String.valueOf(snapshot.cacheMisses));
@@ -119,18 +104,8 @@ public class PicassoModule implements DebugModule {
         transformedAverageLabel.setText(getSizeString(snapshot.averageTransformedBitmapSize));
     }
 
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
     private static String getSizeString(long bytes) {
-        String[] units = new String[] { "B", "KB", "MB", "GB" };
+        final String[] units = new String[] { "B", "KB", "MB", "GB" };
         int unit = 0;
         while (bytes >= 1024) {
             bytes /= 1024;

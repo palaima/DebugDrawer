@@ -12,17 +12,20 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class SwitchAction implements Action {
 
     private final String   name;
-    @Nullable private final Listener listener;
+    private final Listener listener;
     private final boolean  shouldEmitFirstValue;
 
-    private Context context;
-    private Switch  switchButton;
+    private WeakReference<Context> contextRef;
+
+    private Switch switchButton;
 
     public SwitchAction(String name, @Nullable Listener listener) {
         this.name = name;
@@ -38,21 +41,24 @@ public class SwitchAction implements Action {
 
     @Override
     public View getView(LinearLayout linearLayout) {
+        final Context context = linearLayout.getContext();
+        final Resources resources = linearLayout.getResources();
 
-        context = linearLayout.getContext();
-        Resources resources = context.getResources();
+        if (contextRef == null) {
+            contextRef = new WeakReference<>(context);
+        }
 
-        LinearLayout.LayoutParams viewGroupLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        final LinearLayout.LayoutParams viewGroupLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         viewGroupLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
 
-        LinearLayout viewGroup = new LinearLayout(context);
+        final LinearLayout viewGroup = new LinearLayout(context);
         viewGroup.setLayoutParams(viewGroupLayoutParams);
         viewGroup.setOrientation(LinearLayout.HORIZONTAL);
 
-        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+        final LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         textViewLayoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.dd_spacing_big);
 
-        TextView textView = new TextView(context);
+        final TextView textView = new TextView(context);
         textView.setLayoutParams(textViewLayoutParams);
         textView.setText(name);
         textView.setTextColor(context.getResources().getColor(android.R.color.white));
@@ -90,7 +96,7 @@ public class SwitchAction implements Action {
 
     @Override
     public void onStart() {
-        boolean isChecked = readValue();
+        final boolean isChecked = readValue();
 
         switchButton.setOnCheckedChangeListener(null);
         switchButton.setChecked(isChecked);
@@ -133,7 +139,7 @@ public class SwitchAction implements Action {
     }
 
     private SharedPreferences getPreferences() {
-        return context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        return contextRef.get().getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     public interface Listener {

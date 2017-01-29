@@ -20,13 +20,13 @@ public class ButtonAction implements Action {
 
     @Override
     public View getView(LinearLayout linearLayout) {
-        Context context = linearLayout.getContext();
-        Resources resources = context.getResources();
+        final Context context = linearLayout.getContext();
+        final Resources resources = context.getResources();
 
-        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        final LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         buttonLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
 
-        Button button = new Button(context);
+        final Button button = new Button(context);
         button.setLayoutParams(buttonLayoutParams);
         button.setText(name);
         button.setOnClickListener(new View.OnClickListener() {
