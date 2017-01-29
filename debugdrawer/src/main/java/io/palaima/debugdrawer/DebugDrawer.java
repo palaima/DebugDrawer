@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
 import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.util.DebugDrawerLifecycleCallbacks;
 import io.palaima.debugdrawer.util.UIUtils;
 import io.palaima.debugdrawer.view.DebugView;
 import io.palaima.debugdrawer.view.ScrimInsetsFrameLayout;
@@ -398,6 +399,9 @@ public class DebugDrawer {
 
             //create the result object
             DebugDrawer result = new DebugDrawer(this);
+
+            //register a lifecycle callback for start, stop, pause and resume events
+            activity.getApplication().registerActivityLifecycleCallbacks(new DebugDrawerLifecycleCallbacks(activity, result));
 
             //forget the reference to the activity
             activity = null;
