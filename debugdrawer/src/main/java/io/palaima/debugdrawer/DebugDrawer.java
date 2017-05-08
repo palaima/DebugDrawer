@@ -29,6 +29,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
+import java.util.ArrayList;
+
 import io.palaima.debugdrawer.base.DebugModule;
 import io.palaima.debugdrawer.util.UIUtils;
 import io.palaima.debugdrawer.view.DebugView;
@@ -298,9 +300,14 @@ public class DebugDrawer {
             drawerLayout = (DrawerLayout) activity.getLayoutInflater()
                     .inflate(R.layout.dd_debug_drawer, rootView, false);
 
-            //get the content view
-            View contentView = rootView.getChildAt(0);
-            boolean alreadyInflated = contentView instanceof DrawerLayout;
+            //if the first content view is our DrawerLayout than the DebugDrawer has already been inflated
+            boolean alreadyInflated = rootView.getChildAt(0).getId() == R.id.dd_drawer_layout;
+
+            //store the original content views
+            ArrayList<View> originalContentViews = new ArrayList<>(rootView.getChildCount());
+            for(int i = 0; i <  rootView.getChildCount(); i++){
+                originalContentViews.add(rootView.getChildAt(i));
+            }
 
             //get the drawer root
             drawerContentRoot = (ScrimInsetsFrameLayout) drawerLayout.getChildAt(0);
@@ -308,7 +315,9 @@ public class DebugDrawer {
             //only add the new layout if it wasn't done before
             if (!alreadyInflated) {
                 // remove the contentView
-                rootView.removeView(contentView);
+                for(View contentView: originalContentViews){
+                    rootView.removeView(contentView);
+                }
             } else {
                 //if it was already inflated we have to clean up again
                 rootView.removeAllViews();
@@ -320,8 +329,10 @@ public class DebugDrawer {
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
 
-            //add the contentView to the drawer content frameLayout
-            drawerContentRoot.addView(contentView, layoutParamsContentView);
+            //add the original content Views to the drawer content frameLayout
+            for(View contentView: originalContentViews){
+                drawerContentRoot.addView(contentView, layoutParamsContentView);
+            }
 
             //add the drawerLayout to the root
             rootView.addView(drawerLayout, new ViewGroup.LayoutParams(
