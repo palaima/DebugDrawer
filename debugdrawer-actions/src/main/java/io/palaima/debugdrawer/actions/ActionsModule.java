@@ -14,8 +14,10 @@ import io.palaima.debugdrawer.base.DebugModule;
 
 public class ActionsModule implements DebugModule {
     private final List<Action> actions = new ArrayList<>();
+    private final String title;
 
-    public ActionsModule(Action... actions) {
+    public ActionsModule(String title, Action... actions) {
+        this.title = title;
         if (actions != null) {
             for (int i = 0; i < actions.length; i++) {
                 this.actions.add(actions[i]);
@@ -23,9 +25,14 @@ public class ActionsModule implements DebugModule {
         }
     }
 
+    public ActionsModule(Action... actions) {
+        this("Actions", actions);
+    }
+
     @NonNull @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         final LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dd_debug_drawer_module_actions, parent, false);
+        ((TextView) view.findViewById(R.id.dd_debug_actions_title)).setText(title);
 
         if (actions.isEmpty()) {
             final TextView noActionsLabel = new TextView(parent.getContext());
