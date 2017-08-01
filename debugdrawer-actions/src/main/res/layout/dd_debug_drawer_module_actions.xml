@@ -9,9 +9,10 @@
         tools:ignore="UselessParent">
 
     <TextView
+            android:id="@+id/dd_debug_actions_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Actions"
+            tools:text="Actions"
             style="@style/Widget.DebugDrawer.Base.Header"
             />
 

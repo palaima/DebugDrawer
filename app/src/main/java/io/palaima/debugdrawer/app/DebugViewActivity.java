@@ -86,7 +86,7 @@ public class DebugViewActivity extends AppCompatActivity {
         debugView = (DebugView) findViewById(R.id.debug_view);
 
         debugView.modules(
-            new ActionsModule(switchAction, buttonAction, spinnerAction),
+            new ActionsModule("Sample actions", switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
             new PicassoModule(picasso),
             new LocationModule(),
