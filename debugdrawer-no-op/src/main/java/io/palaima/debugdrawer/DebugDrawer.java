@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.StyleRes;
 import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 
@@ -120,6 +121,10 @@ public class DebugDrawer {
          * Set the gravity for the drawer. START, LEFT | RIGHT, END
          */
         public Builder gravity(int gravity) {
+            return this;
+        }
+
+        public Builder withTheme(@StyleRes int themeRes) {
             return this;
         }
 
