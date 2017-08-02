@@ -2,6 +2,7 @@ package io.palaima.debugdrawer.actions;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,15 +48,11 @@ public class SpinnerAction<T> implements Action {
     }
 
     @Override
-    public View getView(LinearLayout view) {
-        final Context context = view.getContext();
-        final Resources resources = context.getResources();
+    public View getView(LayoutInflater inflater, LinearLayout parent) {
+        final Context context = parent.getContext();
 
-        final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
 
-        final Spinner spinner = new Spinner(context);
-        spinner.setLayoutParams(layoutParams);
+        final Spinner spinner = (Spinner) inflater.inflate(R.layout.dd_debug_drawer_module_actions_spinner, parent, false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

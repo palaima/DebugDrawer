@@ -1,103 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:columnCount="2"
-    tools:ignore="UselessParent">
+    android:orientation="vertical"
+    android:padding="12dp">
+
 
     <TextView
-        android:layout_columnSpan="2"
-        android:layout_width="0dp"
-        android:layout_gravity="start|fill_horizontal"
-        android:text="Settings"
+        android:id="@+id/textView"
         style="@style/Widget.DebugDrawer.Base.Header"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:text="Settings" />
 
-    <TextView
-        android:id="@+id/dd_debug_settings_developer_title"
-        android:layout_gravity="start|center_vertical"
-        android:text="Developer"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <ImageView
+
+    <LinearLayout
         android:id="@+id/dd_debug_settings_developer"
-        android:layout_width="0dp"
-        android:layout_gravity="start|center|fill_horizontal"
-        style="@style/Widget.DebugDrawer.Base.RowValue"
-        android:src="@drawable/dd_ic_developer_mode_white_24dp"
-        />
+        style="@style/Widget.DebugDrawer.Settings.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/dd_debug_settings_batery_title"
-        android:layout_gravity="start|center_vertical"
-        android:text="Battery"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <ImageView
+        <ImageView
+            style="@style/Widget.DebugDrawer.Settings.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dd_ic_developer_mode_black_24dp" />
+
+        <TextView
+            style="@style/Widget.DebugDrawer.Settings.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Developer" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/dd_debug_settings_batery"
-        android:layout_width="0dp"
-        android:layout_gravity="start|center|fill_horizontal"
-        style="@style/Widget.DebugDrawer.Base.RowValue"
-        android:src="@drawable/dd_ic_battery_unknown_white_24dp"
-        />
+        style="@style/Widget.DebugDrawer.Settings.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/dd_debug_location_settings_title"
-        android:layout_gravity="start|center_vertical"
-        android:text="Location"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <ImageView
+        <ImageView
+            style="@style/Widget.DebugDrawer.Settings.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dd_ic_battery_charging_full_black_24dp" />
+
+        <TextView
+            style="@style/Widget.DebugDrawer.Settings.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Battery" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/dd_debug_location_settings"
-        android:layout_width="0dp"
-        android:layout_gravity="start|center|fill_horizontal"
-        style="@style/Widget.DebugDrawer.Base.RowValue"
-        android:src="@drawable/dd_ic_location_on_white_24dp"
-        />
+        style="@style/Widget.DebugDrawer.Settings.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/dd_debug_settings_settings_title"
-        android:layout_gravity="start|center_vertical"
-        android:text="Settings"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <ImageView
+        <ImageView
+            style="@style/Widget.DebugDrawer.Settings.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dd_ic_location_on_black_24dp" />
+
+        <TextView
+            style="@style/Widget.DebugDrawer.Settings.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/dd_debug_settings_settings"
-        android:layout_width="0dp"
-        android:layout_gravity="start|center|fill_horizontal"
-        style="@style/Widget.DebugDrawer.Base.RowValue"
-        android:src="@drawable/dd_ic_settings_white_24dp"
-        />
+        style="@style/Widget.DebugDrawer.Settings.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/dd_debug_settings_info_title"
-        android:layout_gravity="start|center_vertical"
-        android:text="App info"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <ImageView
+        <ImageView
+            style="@style/Widget.DebugDrawer.Settings.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dd_ic_settings_black_24dp" />
+
+        <TextView
+            style="@style/Widget.DebugDrawer.Settings.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/dd_debug_settings_info"
-        android:layout_width="0dp"
-        android:layout_gravity="start|center|fill_horizontal"
-        style="@style/Widget.DebugDrawer.Base.RowValue"
-        android:src="@drawable/dd_ic_info_outline_white_24dp"
-        />
+        style="@style/Widget.DebugDrawer.Settings.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/dd_debug_settings_delete_title"
-        android:layout_gravity="start|center_vertical"
-        android:text="Uninstall"
-        style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
-    <ImageView
+        <ImageView
+            style="@style/Widget.DebugDrawer.Settings.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dd_ic_info_outline_black_24dp" />
+
+        <TextView
+            style="@style/Widget.DebugDrawer.Settings.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="App info" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/dd_debug_settings_delete"
-        android:layout_width="0dp"
-        android:layout_gravity="start|center|fill_horizontal"
-        style="@style/Widget.DebugDrawer.Base.RowValue"
-        android:src="@drawable/dd_ic_delete_white_24dp"
-        />
+        style="@style/Widget.DebugDrawer.Settings.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</GridLayout>
+        <ImageView
+            style="@style/Widget.DebugDrawer.Settings.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dd_ic_delete_black_24dp" />
+
+        <TextView
+            style="@style/Widget.DebugDrawer.Settings.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uninstall" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -34,7 +34,7 @@ public class ActionsModule implements DebugModule {
             view.addView(noActionsLabel);
         } else {
             for (Action action : actions) {
-                view.addView(action.getView(view));
+                view.addView(action.getView(inflater, view));
             }
         }
 

@@ -16,8 +16,7 @@
         <io.palaima.debugdrawer.view.DebugView
             android:id="@+id/debug_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ee212121"/>
+            android:layout_height="wrap_content" />
 
     </ScrollView>
 
