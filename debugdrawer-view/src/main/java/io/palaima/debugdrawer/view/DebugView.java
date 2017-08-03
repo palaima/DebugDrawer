@@ -1,6 +1,8 @@
 package io.palaima.debugdrawer.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -12,18 +14,22 @@ public class DebugView extends LinearLayout {
     private DebugModule[] drawerItems;
 
     public DebugView(Context context) {
-        super(context);
-        setOrientation(VERTICAL);
+        this(context, null);
     }
 
-    public DebugView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setOrientation(VERTICAL);
+    public DebugView(Context context, AttributeSet attrSet) {
+        this(context, attrSet, 0);
     }
 
-    public DebugView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public DebugView(Context context, AttributeSet attrSet, int defStyleAttr) {
+        super(context, attrSet, defStyleAttr);
         setOrientation(VERTICAL);
+
+        int[] attrs = { android.R.attr.windowBackground };
+        TypedArray a = context.obtainStyledAttributes(attrSet, attrs);
+        Drawable windowBackground = a.getDrawable(0);
+        a.recycle();
+        setBackgroundDrawable(windowBackground);
     }
 
     /**

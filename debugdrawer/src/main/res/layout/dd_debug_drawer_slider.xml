@@ -8,8 +8,7 @@
     android:elevation="8dp"
     android:orientation="vertical"
     android:layout_marginRight="@dimen/dd_debug_drawer_margin"
-    android:layout_marginEnd="@dimen/dd_debug_drawer_margin"
-    android:background="#ee212121">
+    android:layout_marginEnd="@dimen/dd_debug_drawer_margin">
 
         <io.palaima.debugdrawer.view.DebugView
             android:id="@+id/dd_debug_view"

@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -40,36 +41,20 @@ public class SwitchAction implements Action {
     }
 
     @Override
-    public View getView(LinearLayout linearLayout) {
-        final Context context = linearLayout.getContext();
-        final Resources resources = linearLayout.getResources();
+    public View getView(LayoutInflater inflater, LinearLayout parent) {
+        final Context context = parent.getContext();
 
         if (contextRef == null) {
             contextRef = new WeakReference<>(context);
         }
 
-        final LinearLayout.LayoutParams viewGroupLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        viewGroupLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
+        View viewGroup = inflater.inflate(R.layout.dd_debug_drawer_module_actions_switch, parent, false);
 
-        final LinearLayout viewGroup = new LinearLayout(context);
-        viewGroup.setLayoutParams(viewGroupLayoutParams);
-        viewGroup.setOrientation(LinearLayout.HORIZONTAL);
-
-        final LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        textViewLayoutParams.rightMargin = resources.getDimensionPixelSize(R.dimen.dd_spacing_big);
-
-        final TextView textView = new TextView(context);
-        textView.setLayoutParams(textViewLayoutParams);
+        final TextView textView = (TextView) viewGroup.findViewById(R.id.action_switch_name);
         textView.setText(name);
-        textView.setTextColor(context.getResources().getColor(android.R.color.white));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.dd_font_normal));
-        textView.setGravity(Gravity.CENTER_VERTICAL);
 
-        switchButton = new Switch(context);
+        switchButton = (Switch) viewGroup.findViewById(R.id.action_switch_switch);
         switchButton.setOnCheckedChangeListener(switchListener);
-
-        viewGroup.addView(textView);
-        viewGroup.addView(switchButton);
 
         return viewGroup;
     }

@@ -17,13 +17,17 @@
 package io.palaima.debugdrawer;
 
 import android.app.Activity;
+import android.content.ContextWrapper;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.StyleRes;
 import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -140,6 +144,8 @@ public class DebugDrawer {
 
         private int drawerGravity = Gravity.END;
 
+        private int themeRes;
+
         //the width of the drawer
         private int drawerWidth = -1;
 
@@ -193,6 +199,11 @@ public class DebugDrawer {
          */
         public Builder gravity(int gravity) {
             this.drawerGravity = gravity;
+            return this;
+        }
+
+        public Builder withTheme(@StyleRes int themeRes) {
+            this.themeRes = themeRes;
             return this;
         }
 
@@ -295,7 +306,11 @@ public class DebugDrawer {
             }
 
 
-            drawerLayout = (DrawerLayout) activity.getLayoutInflater()
+            LayoutInflater layoutInflater = activity.getLayoutInflater();
+            if (themeRes > 0) {
+                layoutInflater = layoutInflater.cloneInContext(new ContextThemeWrapper(activity, themeRes));
+            }
+            drawerLayout = (DrawerLayout) layoutInflater
                     .inflate(R.layout.dd_debug_drawer, rootView, false);
 
             //get the content view
