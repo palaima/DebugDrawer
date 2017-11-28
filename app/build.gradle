@@ -11,13 +11,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "io.palaima.debugdrawer.app"
-        minSdkVersion 16
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdkVersion16
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -38,8 +38,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "com.android.support:support-v4:$rootProject.ext.supportVersion"
+    compile "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     //compile 'com.squareup.okhttp:okhttp:2.7.4'
