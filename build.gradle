@@ -23,7 +23,26 @@ allprojects {
     }
 }
 
-apply from: rootProject.file('dependencies.gradle')
+ext {
+    minSdkVersion = 15
+    minSdkVersion16 = 16
+    compileSdkVersion = 27
+    targetSdkVersion = 27
+    buildToolsVersion = '27.0.1'
+
+    supportVersion = '27.0.1'
+    butterknifeVersion = '8.4.0'
+    glideVersion = '3.7.0'
+    picassoVersion = '2.5.2'
+    picasso2Okhttp3Downloader = '1.0.2'
+    playServiceVersion = '11.6.0'
+    timberVersion = '4.6.0'
+    okhttpVersion = '3.4.1'
+    okhttp2Version = '2.7.0'
+    scalpelVersion = '1.1.2'
+    taktVersion = '1.0.2'
+    leakCanaryVersion = '1.5.4'
+}
 
 if (JavaVersion.current().isJava8Compatible()) {
     allprojects {
