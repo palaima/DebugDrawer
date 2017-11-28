@@ -19,9 +19,9 @@ android {
 }
 
 dependencies {
-    compile project(':debugdrawer-base')
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    provided 'com.jakewharton.timber:timber:4.2.0'
+    implementation project(':debugdrawer-base')
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
+    compileOnly "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

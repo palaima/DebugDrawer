@@ -19,8 +19,8 @@ android {
 }
 
 dependencies {
-    compile project(':debugdrawer-base')
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    implementation project(':debugdrawer-base')
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

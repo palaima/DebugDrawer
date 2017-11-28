@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile project(':debugdrawer-base')
+    implementation project(':debugdrawer-base')
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

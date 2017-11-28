@@ -7,49 +7,14 @@ ext {
 
     supportVersion = '27.0.1'
     butterknifeVersion = '8.4.0'
+    glideVersion = '3.7.0'
     picassoVersion = '2.5.2'
-    leakCanaryVersion = '1.5'
-    rxJavaVersion = '1.2.1'
-    rxJava2Version = '2.0.1'
-    rxLifecycleVersion = '0.8.0'
-    rxLifecycle2Version = '2.0'
-    autodisposeVersion = '0.2.0'
-    archComponentsVersion = '1.0.0-alpha3'
-    junitVersion = '4.11'
-    roboelectricVersion = '3.0'
-    lintVersion = '25.2.0'
-
-    supportV4 = "com.android.support:support-v4:$supportVersion"
-    supportDesign = "com.android.support:design:$supportVersion"
-    supportAnnotations = "com.android.support:support-annotations:$supportVersion"
-    supportAppCompat = "com.android.support:appcompat-v7:$supportVersion"
-
-    butterknife = "com.jakewharton:butterknife:$butterknifeVersion"
-    butterknifeCompiler = "com.jakewharton:butterknife-compiler:$butterknifeVersion"
-
-    picasso = "com.squareup.picasso:picasso:$picassoVersion"
-
-    leakCanary = "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-    leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-
-    rxJava = "io.reactivex:rxjava:$rxJavaVersion"
-    rxJava2 = "io.reactivex.rxjava2:rxjava:$rxJava2Version"
-
-    rxLifecycle = "com.trello:rxlifecycle:$rxLifecycleVersion"
-    rxLifecycleAndroid = "com.trello:rxlifecycle-android:$rxLifecycleVersion"
-
-    rxLifecycle2 = "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycle2Version"
-    rxLifecycleAndroid2 = "com.trello.rxlifecycle2:rxlifecycle-android:$rxLifecycle2Version"
-
-    autodispose = "com.uber.autodispose:autodispose:$autodisposeVersion"
-
-    archComopnentsLifecycle = "android.arch.lifecycle:runtime:$archComponentsVersion"
-
-    junit = "junit:junit:$junitVersion"
-    roboelectric = "org.robolectric:robolectric:$roboelectricVersion"
-
-    lintapi = "com.android.tools.lint:lint-api:$lintVersion"
-    lintchecks = "com.android.tools.lint:lint-checks:$lintVersion"
-    lint = "com.android.tools.lint:lint:$lintVersion"
-    lintTests = "com.android.tools.lint:lint-tests:$lintVersion"
+    picasso2Okhttp3Downloader = '1.0.2'
+    playServiceVersion = '11.6.0'
+    timberVersion = '4.6.0'
+    okhttpVersion = '3.4.1'
+    okhttp2Version = '2.7.0'
+    scalpelVersion = '1.1.2'
+    taktVersion = '1.0.2'
+    leakCanaryVersion = '1.5.4'
 }
