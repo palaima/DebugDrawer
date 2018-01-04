@@ -161,8 +161,7 @@ dependencies {
 
 
 `LogsModule`
-[Lynx](https://github.com/pedrovgs/Lynx) library required
-[Chuck](https://github.com/jgilfelt/chuck) library required
+[Lynx](https://github.com/pedrovgs/Lynx) & [Chuck](https://github.com/jgilfelt/chuck) libraries required
 ```gradle
 dependencies {
    implementation 'io.palaima.debugdrawer:debugdrawer-logs:0.8.0'
