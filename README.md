@@ -46,7 +46,7 @@ Faster development with Debug Drawer
 
 `TimberModule` - log viewer with sharing feature (requires extra dependency). Thanks [AntonyGolovin](https://github.com/AntonyGolovin) for contributing.
 
-![](./images/log.png)
+![](./images/timber.png)
 
 `ActionsModule` - any context dependent action (`ButtonAction`, `SwitchAction`, `SpinnerAction`)
 
