@@ -8,8 +8,6 @@ Faster development with Debug Drawer
 
 ## Features
 
-Currently 13 modules exist:
-
 `DeviceModule` - common information about your device
 
 ![](./images/device.png)
@@ -78,30 +76,30 @@ Add Gradle dependencies:
 #### `DebugDrawer`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.8.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.8.0'
+   debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.8.0'
+   releaseImplementation 'io.palaima.debugdrawer:debugdrawer-no-op:0.8.0'
 }
 ```
 
 #### `DebugView`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.8.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.8.0'
+   debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.8.0'
+   releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.8.0'
 }
 ```
 
 `BuildModule`, `DeviceModule`, `SettingsModule`, `NetworkModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.8.0'
 }
 ```
 
 `ActionsModule` - `ButtonAction`, `SwitchAction`, `SpinnerAction`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.8.0'
 }
 ```
 
@@ -109,8 +107,8 @@ dependencies {
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.8.0'
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-okhttp:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.8.0'
 }
 ```
 
@@ -118,7 +116,7 @@ dependencies {
 [Picasso](https://github.com/square/picasso) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-picasso:0.8.0'
 }
 ```
 
@@ -126,7 +124,7 @@ dependencies {
 [Glide](https://github.com/bumptech/glide) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-glide:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-glide:0.8.0'
 }
 ```
 
@@ -134,14 +132,14 @@ dependencies {
 [Scalpel](https://github.com/JakeWharton/scalpel) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-scalpel:0.8.0'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-location:0.8.0'
 }
 ```
 
@@ -149,7 +147,7 @@ dependencies {
 [Timber](https://github.com/JakeWharton/timber) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-timber:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.8.0'
 }
 ```
 
@@ -157,7 +155,7 @@ dependencies {
 [Takt](https://github.com/wasabeef/Takt) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-fps:0.8.0'
 }
 ```
 
@@ -167,7 +165,7 @@ dependencies {
 [Chuck](https://github.com/jgilfelt/chuck) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-logs:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-logs:0.8.0'
 }
 ```
 
@@ -175,7 +173,7 @@ dependencies {
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-network-quality:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-network-quality:0.8.0'
 }
 ```
 
@@ -261,7 +259,7 @@ Application class example:
 
 ## Creating and Publishing Your Own Module
 
-Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.8.0'` to your dependencies
+Add `implementation 'io.palaima.debugdrawer:debugdrawer-base:0.8.0'` to your dependencies
 
 Module must implement `DebugModule` interface or extend `DebugModuleAdapter` if you do not need lifecycle hooks
 
