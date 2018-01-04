@@ -58,7 +58,7 @@ Faster development with Debug Drawer
 
 `LogsModule` - Logcat and OkHttp network calls interceptor (requires extra dependency). Credits [Sloy](https://github.com/Sloy)
 
-![](./images/logs_http.png)
+![](./images/logs.png)
 
 `NetworkQualityModule` - Error/delay rate managing for network calls (requires extra dependency). Credits [Sloy](https://github.com/Sloy)
 
