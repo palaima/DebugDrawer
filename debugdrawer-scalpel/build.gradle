@@ -24,4 +24,17 @@ dependencies {
     compileOnly "com.jakewharton.scalpel:scalpel:$rootProject.ext.scalpelVersion"
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+ext {
+    ARTIFACT_ID = 'debugdrawer-scalpel'
+    DESCRIPTION = 'Debug Drawer Scalpel Module'
+}
+
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    artifactId = ARTIFACT_ID
+    desc = DESCRIPTION
+    userOrg = "$rootProject.ext.DEVELOPER_ID"
+    groupId = "$rootProject.ext.GROUP_NAME"
+    publishVersion = "$rootProject.ext.VERSION_NAME"
+    website = "$rootProject.ext.SITE_URL"
+}

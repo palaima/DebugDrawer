@@ -47,20 +47,22 @@ public class OkHttp3Module extends DebugModuleAdapter {
         this.client = client;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp3, parent, false);
 
-        okHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
-        okHttpCacheWriteErrorView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
-        okHttpCacheRequestCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_request_count);
-        okHttpCacheNetworkCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_network_count);
-        okHttpCacheHitCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_hit_count);
+        okHttpCacheMaxSizeView = view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
+        okHttpCacheWriteErrorView = view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
+        okHttpCacheRequestCountView = view.findViewById(R.id.dd_debug_okhttp_cache_request_count);
+        okHttpCacheNetworkCountView = view.findViewById(R.id.dd_debug_okhttp_cache_network_count);
+        okHttpCacheHitCountView = view.findViewById(R.id.dd_debug_okhttp_cache_hit_count);
 
         okHttpCacheMaxSizeView.setText(sizeString(maxSize()));
 
         view.findViewById(R.id.dd_debug_okhttp_cache_clear).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 clearCache();
             }
         });

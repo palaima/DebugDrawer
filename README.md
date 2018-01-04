@@ -1,12 +1,10 @@
 # Android Debug Drawer
 
-[![Join the chat at https://gitter.im/palaima/DebugDrawer](https://badges.gitter.im/palaima/DebugDrawer.svg)](https://gitter.im/palaima/DebugDrawer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Debug%20Drawer-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1892)
 
 Faster development with Debug Drawer
 
-![](./images/all.png)
+![](./images/debug_drawer.gif)
 
 ## Features
 
@@ -60,8 +58,15 @@ Currently 13 modules exist:
 
 ![](./images/fps.png)
 
+`LogsModule` - Logcat and OkHttp network calls interceptor (requires extra dependency). Credits [Sloy](https://github.com/Sloy)
+
+![](./images/logs_http.png)
+
+`NetworkQualityModule` - Error/delay rate managing for network calls (requires extra dependency). Credits [Sloy](https://github.com/Sloy)
+
+![](./images/network_quality.png)
+
 ## TODO
-- Network delay/error adapters
 - Take screenshot feature
 
 You are always welcome to suggest modules!
@@ -73,30 +78,30 @@ Add Gradle dependencies:
 #### `DebugDrawer`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.0'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.8.0'
+   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.8.0'
 }
 ```
 
 #### `DebugView`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
+   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.8.0'
+   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.8.0'
 }
 ```
 
 `BuildModule`, `DeviceModule`, `SettingsModule`, `NetworkModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.8.0'
 }
 ```
 
 `ActionsModule` - `ButtonAction`, `SwitchAction`, `SpinnerAction`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.8.0'
 }
 ```
 
@@ -104,8 +109,8 @@ dependencies {
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.0'
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.8.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.8.0'
 }
 ```
 
@@ -113,7 +118,7 @@ dependencies {
 [Picasso](https://github.com/square/picasso) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.8.0'
 }
 ```
 
@@ -121,7 +126,7 @@ dependencies {
 [Glide](https://github.com/bumptech/glide) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-glide:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-glide:0.8.0'
 }
 ```
 
@@ -129,14 +134,14 @@ dependencies {
 [Scalpel](https://github.com/JakeWharton/scalpel) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.8.0'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-location:0.8.0'
 }
 ```
 
@@ -144,7 +149,7 @@ dependencies {
 [Timber](https://github.com/JakeWharton/timber) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-timber:0.8.0'
 }
 ```
 
@@ -152,25 +157,25 @@ dependencies {
 [Takt](https://github.com/wasabeef/Takt) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.7.0'
+   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.8.0'
 }
 ```
 
-You can try the SNAPSHOT version:
 
+`LogsModule`
+[Lynx](https://github.com/pedrovgs/Lynx) library required
+[Chuck](https://github.com/jgilfelt/chuck) library required
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.1-SNAPSHOT'
-   ...
+   compile 'io.palaima.debugdrawer:debugdrawer-logs:0.8.0'
 }
 ```
-Make sure to add the snapshot repository:
 
+`NetworkQualityModule`
+[OkHttp](https://github.com/square/okhttp) library required
 ```gradle
-repositories {
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+dependencies {
+   compile 'io.palaima.debugdrawer:debugdrawer-network-quality:0.8.0'
 }
 ```
 
@@ -256,9 +261,9 @@ Application class example:
 
 ## Creating and Publishing Your Own Module
 
-Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.7.0'` to your dependencies
+Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.8.0'` to your dependencies
 
-Module must implement `DebugModule` interface
+Module must implement `DebugModule` interface or extend `DebugModuleAdapter` if you do not need lifecycle hooks
 
 ```java
 

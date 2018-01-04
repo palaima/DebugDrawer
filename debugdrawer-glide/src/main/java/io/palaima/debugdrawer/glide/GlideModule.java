@@ -32,14 +32,16 @@ public class GlideModule extends DebugModuleAdapter {
         HAS_GLIDE = hasDependency;
     }
 
-    @NonNull private final Glide       glide;
-    @NonNull private final MemoryCache memoryCache;
+    @NonNull
+    private final Glide glide;
+    @NonNull
+    private final MemoryCache memoryCache;
 
     private TextView poolSizeLabel;
     private TextView memCacheCurrentLabel;
     private TextView memCacheMaxLabel;
-    private Button   memCacheClearButton;
-    private Button   diskCacheClearButton;
+    private Button memCacheClearButton;
+    private Button diskCacheClearButton;
 
     public GlideModule(@NonNull Glide glide) {
         if (!HAS_GLIDE) {
@@ -58,26 +60,31 @@ public class GlideModule extends DebugModuleAdapter {
         }
     }
 
-    @NonNull @Override public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+    @NonNull
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.dd_debug_drawer_item_glide, parent, false);
 
-        poolSizeLabel = (TextView) view.findViewById(R.id.dd_debug_glide_pool_size);
-        memCacheCurrentLabel = (TextView) view.findViewById(R.id.dd_debug_glide_memcache_current);
-        memCacheMaxLabel = (TextView) view.findViewById(R.id.dd_debug_glide_memcache_max);
-        memCacheClearButton = (Button) view.findViewById(R.id.dd_button_clear_memcache);
-        diskCacheClearButton = (Button) view.findViewById(R.id.dd_button_clear_diskcache);
+        poolSizeLabel = view.findViewById(R.id.dd_debug_glide_pool_size);
+        memCacheCurrentLabel = view.findViewById(R.id.dd_debug_glide_memcache_current);
+        memCacheMaxLabel = view.findViewById(R.id.dd_debug_glide_memcache_max);
+        memCacheClearButton = view.findViewById(R.id.dd_button_clear_memcache);
+        diskCacheClearButton = view.findViewById(R.id.dd_button_clear_diskcache);
 
         memCacheClearButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 glide.clearMemory();
                 refresh();
             }
         });
 
         diskCacheClearButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 new Thread(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         // Needs to be called on a background thread
                         glide.clearDiskCache();
                     }
@@ -88,11 +95,13 @@ public class GlideModule extends DebugModuleAdapter {
         return view;
     }
 
-    @Override public void onOpened() {
+    @Override
+    public void onOpened() {
         refresh();
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         refresh();
     }
 
@@ -109,7 +118,7 @@ public class GlideModule extends DebugModuleAdapter {
     }
 
     private static String getSizeString(long bytes) {
-        final String[] units = new String[] { "B", "KB", "MB", "GB" };
+        final String[] units = new String[]{"B", "KB", "MB", "GB"};
         int unit = 0;
         while (bytes >= 1024) {
             bytes /= 1024;

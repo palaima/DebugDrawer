@@ -1,12 +1,7 @@
 apply plugin: 'com.android.application'
 
 repositories {
-    maven {
-        url "https://oss.sonatype.org/content/repositories/releases"
-    }
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    jcenter()
     mavenCentral()
 }
 
@@ -16,10 +11,11 @@ android {
 
     defaultConfig {
         applicationId "io.palaima.debugdrawer.app"
-        minSdkVersion rootProject.ext.minSdkVersion16
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -47,22 +43,29 @@ dependencies {
     implementation "com.jakewharton.scalpel:scalpel:$rootProject.ext.scalpelVersion"
     implementation "com.google.android.gms:play-services-location:$rootProject.ext.playServiceVersion"
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+    implementation "com.github.pedrovgs:lynx:$rootProject.ext.lynxVersion"
+    debugImplementation "com.readystatesoftware.chuck:library:$rootProject.ext.chukVersion"
+    releaseImplementation "com.readystatesoftware.chuck:library-no-op:$rootProject.ext.chukVersion"
 
-    /*debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.7.0'
-    debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
-    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.0'
-    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
-    //implementation 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-glide:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-location:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-fps:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
-    implementation 'io.palaima.debugdrawer:debugdrawer-base:0.7.0'*/
+    /*
+    debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.7.3'
+    debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.7.3'
+    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.3'
+    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.3'
+    //implementation 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-glide:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-location:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-fps:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-logs:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-network-quality:0.7.3'
+    implementation 'io.palaima.debugdrawer:debugdrawer-base:0.7.3'
+    */
 
     /*debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.7.1-SNAPSHOT'
     debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.7.1-SNAPSHOT'
@@ -95,6 +98,8 @@ dependencies {
     implementation project(':debugdrawer-timber')
     implementation project(':debugdrawer-fps')
     implementation project(':debugdrawer-glide')
+    implementation project(':debugdrawer-logs')
+    implementation project(':debugdrawer-network-quality')
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakCanaryVersion"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakCanaryVersion"

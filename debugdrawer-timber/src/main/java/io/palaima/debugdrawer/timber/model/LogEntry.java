@@ -3,7 +3,7 @@ package io.palaima.debugdrawer.timber.model;
 import android.util.Log;
 
 public class LogEntry {
-    private final int    level;
+    private final int level;
     private final String tag;
     private final String message;
     private final String timeStamp;

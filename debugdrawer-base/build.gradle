@@ -20,6 +20,20 @@ android {
 
 dependencies {
     implementation "com.android.support:support-annotations:$rootProject.ext.supportVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+ext {
+    ARTIFACT_ID = 'debugdrawer-base'
+    DESCRIPTION = 'Debug Drawer Base Module'
+}
+
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    artifactId = ARTIFACT_ID
+    desc = DESCRIPTION
+    userOrg = "$rootProject.ext.DEVELOPER_ID"
+    groupId = "$rootProject.ext.GROUP_NAME"
+    publishVersion = "$rootProject.ext.VERSION_NAME"
+    website = "$rootProject.ext.SITE_URL"
+}

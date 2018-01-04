@@ -18,7 +18,7 @@ public final class Intents {
             return true;
         } else {
             Toast.makeText(context, "There are no applications available to handle this action",
-                    Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show();
             return false;
         }
     }

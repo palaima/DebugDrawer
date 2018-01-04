@@ -53,31 +53,32 @@ public class PicassoModule extends DebugModuleAdapter {
         this.picasso = picasso;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
         final View view = inflater.inflate(R.layout.dd_debug_drawer_item_picasso, parent, false);
-        indicatorView = (Switch) view.findViewById(R.id.dd_debug_picasso_indicators);
-        cacheLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_cache_size);
-        cacheHitsLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_cache_hit);
-        cacheMissesLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_cache_miss);
-        decodedLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_decoded);
-        decodedTotalLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_decoded_total);
-        decodedAverageLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_decoded_avg);
-        transformedLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_transformed);
-        transformedTotalLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_transformed_total);
-        transformedAverageLabel = (TextView) view.findViewById(R.id.dd_debug_picasso_transformed_avg);
+        indicatorView = view.findViewById(R.id.dd_debug_picasso_indicators);
+        cacheLabel = view.findViewById(R.id.dd_debug_picasso_cache_size);
+        cacheHitsLabel = view.findViewById(R.id.dd_debug_picasso_cache_hit);
+        cacheMissesLabel = view.findViewById(R.id.dd_debug_picasso_cache_miss);
+        decodedLabel = view.findViewById(R.id.dd_debug_picasso_decoded);
+        decodedTotalLabel = view.findViewById(R.id.dd_debug_picasso_decoded_total);
+        decodedAverageLabel = view.findViewById(R.id.dd_debug_picasso_decoded_avg);
+        transformedLabel = view.findViewById(R.id.dd_debug_picasso_transformed);
+        transformedTotalLabel = view.findViewById(R.id.dd_debug_picasso_transformed_total);
+        transformedAverageLabel = view.findViewById(R.id.dd_debug_picasso_transformed_avg);
 
 
         picasso.setIndicatorsEnabled(picasso.areIndicatorsEnabled());
         indicatorView.setChecked(picasso.areIndicatorsEnabled());
         indicatorView.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-                        picasso.setIndicatorsEnabled(isChecked);
-                    }
-                });
+            new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                    picasso.setIndicatorsEnabled(isChecked);
+                }
+            });
 
         refresh();
         return view;
@@ -105,7 +106,7 @@ public class PicassoModule extends DebugModuleAdapter {
     }
 
     private static String getSizeString(long bytes) {
-        final String[] units = new String[] { "B", "KB", "MB", "GB" };
+        final String[] units = new String[]{"B", "KB", "MB", "GB"};
         int unit = 0;
         while (bytes >= 1024) {
             bytes /= 1024;

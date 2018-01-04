@@ -26,7 +26,8 @@ public interface DebugModule {
     /**
      * Creates module view
      */
-    @NonNull View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent);
+    @NonNull
+    View onCreateView(@NonNull final LayoutInflater inflater, @NonNull final ViewGroup parent);
 
     /**
      * Override this method if you need to refresh

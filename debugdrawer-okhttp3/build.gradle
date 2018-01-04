@@ -24,4 +24,17 @@ dependencies {
     compileOnly "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+ext {
+    ARTIFACT_ID = 'debugdrawer-okhttp3'
+    DESCRIPTION = 'Debug Drawer OkHttp3 Module'
+}
+
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    artifactId = ARTIFACT_ID
+    desc = DESCRIPTION
+    userOrg = "$rootProject.ext.DEVELOPER_ID"
+    groupId = "$rootProject.ext.GROUP_NAME"
+    publishVersion = "$rootProject.ext.VERSION_NAME"
+    website = "$rootProject.ext.SITE_URL"
+}

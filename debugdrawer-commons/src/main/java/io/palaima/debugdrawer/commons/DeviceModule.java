@@ -29,18 +29,19 @@ import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
 public class DeviceModule extends DebugModuleAdapter {
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.dd_debug_drawer_module_device, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
-        final TextView deviceMakeLabel = (TextView) view.findViewById(R.id.dd_debug_device_make);
-        final TextView deviceModelLabel = (TextView) view.findViewById(R.id.dd_debug_device_model);
-        final TextView deviceResolutionLabel = (TextView) view.findViewById(R.id.dd_debug_device_resolution);
-        final TextView deviceDensityLabel = (TextView) view.findViewById(R.id.dd_debug_device_density);
-        final TextView deviceReleaseLabel = (TextView) view.findViewById(R.id.dd_debug_device_release);
-        final TextView deviceApiLabel = (TextView) view.findViewById(R.id.dd_debug_device_api);
+        final TextView deviceMakeLabel = view.findViewById(R.id.dd_debug_device_make);
+        final TextView deviceModelLabel = view.findViewById(R.id.dd_debug_device_model);
+        final TextView deviceResolutionLabel = view.findViewById(R.id.dd_debug_device_resolution);
+        final TextView deviceDensityLabel = view.findViewById(R.id.dd_debug_device_density);
+        final TextView deviceReleaseLabel = view.findViewById(R.id.dd_debug_device_release);
+        final TextView deviceApiLabel = view.findViewById(R.id.dd_debug_device_api);
 
         final DisplayMetrics displayMetrics = parent.getContext().getResources().getDisplayMetrics();
         final String densityBucket = getDensityString(displayMetrics);

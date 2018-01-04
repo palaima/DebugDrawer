@@ -100,7 +100,7 @@ public class LumberYard {
 
         if (dir == null) {
             listener.onError("Can't save logs. External storage is not mounted. " +
-                    "Check android.permission.WRITE_EXTERNAL_STORAGE permission");
+                "Check android.permission.WRITE_EXTERNAL_STORAGE permission");
             return;
         }
 

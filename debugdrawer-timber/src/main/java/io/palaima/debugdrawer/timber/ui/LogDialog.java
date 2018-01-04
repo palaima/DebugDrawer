@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import io.palaima.debugdrawer.timber.R;
 import io.palaima.debugdrawer.timber.data.LumberYard;
 import io.palaima.debugdrawer.timber.model.LogEntry;
 import io.palaima.debugdrawer.timber.util.Intents;
@@ -24,7 +25,7 @@ public class LogDialog extends AlertDialog {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     public LogDialog(Context context) {
-        super(context);
+        super(context, R.style.Theme_AppCompat);
 
         adapter = new LogAdapter();
 
@@ -77,25 +78,24 @@ public class LogDialog extends AlertDialog {
     @Override
     protected void onStop() {
         super.onStop();
-
         LumberYard.getInstance(getContext()).setOnLogListener(null);
     }
 
     private void share() {
         LumberYard.getInstance(getContext())
-                .save(new LumberYard.OnSaveLogListener() {
-                    @Override
-                    public void onSave(File file) {
-                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                        sendIntent.setType("text/plain");
-                        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                        Intents.maybeStartActivity(getContext(), sendIntent);
-                    }
+            .save(new LumberYard.OnSaveLogListener() {
+                @Override
+                public void onSave(File file) {
+                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    sendIntent.setType("text/plain");
+                    sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                    Intents.maybeStartActivity(getContext(), sendIntent);
+                }
 
-                    @Override
-                    public void onError(String message) {
-                        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-                    }
-                });
+                @Override
+                public void onError(String message) {
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                }
+            });
     }
 }
