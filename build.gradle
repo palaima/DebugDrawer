@@ -7,7 +7,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.novoda:bintray-release:0.8.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -39,119 +40,61 @@ allprojects {
     }
 }
 
-ext {
-    minSdkVersion = 16
-    compileSdkVersion = 27
-    targetSdkVersion = 27
-    buildToolsVersion = '27.0.1'
 
-    supportVersion = '27.0.2'
-    butterknifeVersion = '8.4.0'
-    glideVersion = '3.7.0'
-    picassoVersion = '2.5.2'
-    picasso2Okhttp3Downloader = '1.0.2'
-    playServiceVersion = '11.8.0'
-    timberVersion = '4.6.0'
-    okhttpVersion = '3.4.1'
-    okhttp2Version = '2.7.0'
-    scalpelVersion = '1.1.2'
-    taktVersion = '1.0.2'
-    leakCanaryVersion = '1.5.4'
-    lynxVersion = '1.1.0'
-    chukVersion = '1.1.0'
+allprojects {
+    def properties = new Properties()
+    properties.load(new FileInputStream(new File(rootDir, "version.properties")))
+    def major = properties['version.major'] as int
+    def minor = properties['version.minor'] as int
+    def patch = properties['version.patch'] as int
+    def suffix = properties['version.suffix']?.toString()?.trim() ?: ""
+    def snapshot = properties['version.snapshot'].toBoolean()
 
-    VERSION_NAME = '0.7.5'
-    VERSION_CODE = 21
+    ext.libraryVersion = "$major.$minor.$patch" + (suffix.isAllWhitespace() ? '' : "-$suffix") + (snapshot ? '-RC' : '')
+    ext.group = 'io.palaima.debugdrawer'
+    ext.override = snapshot
 
-    SITE_URL = 'https://github.com/palaima/DebugDrawer'
-    GIT_URL = 'git@github.com\\:palaima/DebugDrawer.git'
-    GROUP_NAME = 'io.palaima.debugdrawer'
-    COMPILE_SDK = compileSdkVersion
-    BUILD_TOOLS = buildToolsVersion
+    ext.dryRun = properties['version.dryRun'].toBoolean()
+    ext.publish = properties['version.publish'].toBoolean()
 
-    MODULES_NAMES = [
-            'debugdrawer',
-            'debugdrawer-actions',
-            'debugdrawer-base',
-            'debugdrawer-commons',
-            'debugdrawer-fps',
-            'debugdrawer-glide',
-            'debugdrawer-location',
-            'debugdrawer-logs',
-            'debugdrawer-network-quality',
-            'debugdrawer-no-op',
-            'debugdrawer-okhttp',
-            'debugdrawer-okhttp3',
-            'debugdrawer-picasso',
-            'debugdrawer-scalpel',
-            'debugdrawer-timber',
-            'debugdrawer-view',
-            'debugdrawer-view-no-op'
-    ]
+    ext.minSdkVersion = 16
+    ext.compileSdkVersion = 27
+    ext.targetSdkVersion = 27
+    ext.buildToolsVersion = '27.0.1'
 
-    LICENSE = 'The Apache Software License, Version 2.0'
+    ext.supportVersion = '27.0.2'
+    ext.butterknifeVersion = '8.4.0'
+    ext.glideVersion = '3.7.0'
+    ext.picassoVersion = '2.5.2'
+    ext.picasso2Okhttp3Downloader = '1.0.2'
+    ext.playServiceVersion = '11.8.0'
+    ext.timberVersion = '4.6.0'
+    ext.okhttpVersion = '3.4.1'
+    ext.okhttp2Version = '2.7.0'
+    ext.scalpelVersion = '1.1.2'
+    ext.taktVersion = '1.0.2'
+    ext.leakCanaryVersion = '1.5.4'
+    ext.lynxVersion = '1.1.0'
+    ext.chukVersion = '1.1.0'
 
-    DEVELOPER_ID = 'palaima'
-    DEVELOPER_NAME = 'Mantas Palaima'
-    DEVELOPER_EMAIL = 'palaima.mantas@gmail.com'
+    ext.bintrayRepo = snapshot ? 'snapshots' : 'maven'
+    ext.orgName = 'palaima'
 
-    IS_UPLOADING = project.getGradle().startParameter.taskNames.any { it.contains('bintrayUpload') }
+    ext.publishedGroupId = 'io.palaima.debugdrawer'
 
-}
+    ext.siteUrl = 'https://github.com/palaima/DebugDrawer'
+    ext.gitUrl = 'https://github.com/palaima/DebugDrawer.git'
 
-subprojects {
-    group = GROUP_NAME
-    version = VERSION_NAME
+    ext.developerId = 'palaima'
+    ext.developerName = 'Mantas Palaima'
+    ext.developerEmail = 'palaima.mantas@gmail.com'
 
-    if (IS_UPLOADING && project.name in MODULES_NAMES) {
-        println project.name
-        apply plugin: 'maven'
+    ext.licenseName = 'The Apache Software License, Version 2.0'
+    ext.licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    ext.allLicenses = ["Apache-2.0"]
 
-        gradle.taskGraph.whenReady { taskGraph ->
-            def pomTask = taskGraph.getAllTasks().find {
-                it.path == ":$project.name:generatePomFileForReleasePublication"
-            }
-
-            if (pomTask == null)
-                return
-
-            pomTask.doLast {
-                file("build/publications/maven/pom-default.xml").delete()
-                println 'Overriding pom-file to make sure we can sync to maven central!'
-                pom {
-                    //noinspection GroovyAssignabilityCheck
-                    project {
-                        name "$project.name"
-                        artifactId ARTIFACT_ID
-                        packaging 'aar'
-                        description DESCRIPTION
-                        url SITE_URL
-                        version VERSION_NAME
-
-                        scm {
-                            url GIT_URL
-                            connection GIT_URL
-                            developerConnection GIT_URL
-                        }
-
-                        licenses {
-                            license {
-                                name LICENSE
-                            }
-                        }
-
-                        developers {
-                            developer {
-                                id DEVELOPER_ID
-                                name DEVELOPER_NAME
-                                email DEVELOPER_EMAIL
-                            }
-                        }
-                    }
-                }.writeTo("build/publications/maven/pom-default.xml")
-            }
-        }
-    }
+    ext.githubRepo = 'palaima/DebugDrawer'
+    ext.githubReleaseNotesFile = 'README.md'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
