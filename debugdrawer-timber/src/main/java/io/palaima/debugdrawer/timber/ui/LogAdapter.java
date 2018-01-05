@@ -6,24 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import io.palaima.debugdrawer.timber.R;
-import io.palaima.debugdrawer.timber.model.LogEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.palaima.debugdrawer.timber.R;
+import io.palaima.debugdrawer.timber.model.LogEntry;
+
 public class LogAdapter extends BaseAdapter {
-    private List<LogEntry> mLogEntries = Collections.emptyList();
+    private List<LogEntry> logEntries = Collections.emptyList();
 
     @Override
     public int getCount() {
-        return mLogEntries.size();
+        return logEntries.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mLogEntries.get(position);
+        return logEntries.get(position);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class LogAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.dd_item_log_entry, parent, false);
@@ -44,45 +45,45 @@ public class LogAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        LogEntry logEntry = mLogEntries.get(position);
+        LogEntry logEntry = logEntries.get(position);
         viewHolder.fillData(logEntry);
 
         return convertView;
     }
 
     public void setLogs(List<LogEntry> logs) {
-        mLogEntries = new ArrayList<>(logs);
+        logEntries = new ArrayList<>(logs);
     }
 
     public void addLog(LogEntry logEntry) {
-        mLogEntries.add(logEntry);
+        logEntries.add(logEntry);
 
         notifyDataSetChanged();
     }
 
     static class ViewHolder {
 
-        View mRootView;
-        TextView mLogLevelTextView;
-        TextView mLogTagTextView;
-        TextView mLogMessageTextView;
+        private final View rootView;
+        private final TextView logLevelTextView;
+        private final TextView logTagTextView;
+        private final TextView logMessageTextView;
 
         ViewHolder(View view) {
-            mRootView = view;
-            mLogLevelTextView = (TextView) view.findViewById(R.id.dd_text_log_level);
-            mLogTagTextView = (TextView) view.findViewById(R.id.dd_text_log_tag);
-            mLogMessageTextView = (TextView) view.findViewById(R.id.dd_text_log_message);
+            rootView = view;
+            logLevelTextView = view.findViewById(R.id.dd_text_log_level);
+            logTagTextView = view.findViewById(R.id.dd_text_log_tag);
+            logMessageTextView = view.findViewById(R.id.dd_text_log_message);
         }
 
         void fillData(LogEntry entry) {
-            mRootView.setBackgroundResource(backgroundForLevel(entry.getLevel()));
-            mLogLevelTextView.setText(entry.displayLevel());
-            mLogTagTextView.setText(String.format("%s %s", entry.getTimeStamp(), entry.getTag()));
-            mLogMessageTextView.setText(entry.getMessage());
+            rootView.setBackgroundResource(backgroundForLevel(entry.getLevel()));
+            logLevelTextView.setText(entry.displayLevel());
+            logTagTextView.setText(String.format("%s %s", entry.getTimeStamp(), entry.getTag()));
+            logMessageTextView.setText(entry.getMessage());
         }
     }
 
-    public static int backgroundForLevel(int level) {
+    static int backgroundForLevel(int level) {
         switch (level) {
             case Log.VERBOSE:
             case Log.DEBUG:

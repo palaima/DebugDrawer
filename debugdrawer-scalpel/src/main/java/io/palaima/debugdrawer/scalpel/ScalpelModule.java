@@ -33,7 +33,7 @@ public class ScalpelModule extends DebugModuleAdapter {
     }
 
     private final Context context;
-    private ViewGroup     rootView;
+    private ViewGroup rootView;
 
     public ScalpelModule(@NonNull Activity activity) {
         if (!HAS_SCALPEL) {
@@ -43,7 +43,8 @@ public class ScalpelModule extends DebugModuleAdapter {
         rootView = (ViewGroup) activity.findViewById(android.R.id.content);
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
         final ViewGroup contentView = (ViewGroup) rootView.getChildAt(0);
@@ -60,21 +61,21 @@ public class ScalpelModule extends DebugModuleAdapter {
         scalpelFrameLayout.addView(contentRelativeView);
 
         final View view = inflater.inflate(R.layout.dd_debug_drawer_item_scalpel, parent, false);
-        final Switch debugEnableScalpel = (Switch) view.findViewById(R.id.dd_debug_enable_scalpel);
+        final Switch debugEnableScalpel = view.findViewById(R.id.dd_debug_enable_scalpel);
         debugEnableScalpel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setLayerInteractionEnabled(isChecked);
             }
         });
-        final Switch debugDisableGraphics = (Switch) view.findViewById(R.id.dd_debug_disable_graphics);
+        final Switch debugDisableGraphics = view.findViewById(R.id.dd_debug_disable_graphics);
         debugDisableGraphics.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setDrawViews(!isChecked);
             }
         });
-        final Switch debugShowIds = (Switch) view.findViewById(R.id.dd_debug_show_ids);
+        final Switch debugShowIds = view.findViewById(R.id.dd_debug_show_ids);
         debugShowIds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

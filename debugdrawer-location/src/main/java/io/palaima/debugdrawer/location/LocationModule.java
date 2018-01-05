@@ -114,7 +114,8 @@ public class LocationModule implements DebugModule {
         this.locationRequest = locationRequest;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         if (contextRef == null) {
             contextRef = new WeakReference<>(parent.getContext());

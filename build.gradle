@@ -3,9 +3,11 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0-beta3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.novoda:bintray-release:0.8.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -13,11 +15,142 @@ buildscript {
 }
 
 allprojects {
-    version = VERSION_NAME
-    group = GROUP
 
     repositories {
         jcenter()
+        google()
+    }
+
+    configurations.all {
+        resolutionStrategy.force "com.android.support:support-compat:$supportVersion"
+        resolutionStrategy.force "com.android.support:support-core-ui:$supportVersion"
+        resolutionStrategy.force "com.android.support:support-core-utils:$supportVersion"
+        resolutionStrategy.force "com.android.support:support-annotations:$supportVersion"
+        resolutionStrategy.force "com.android.support:support-v4:$supportVersion"
+        resolutionStrategy.force "com.android.support:appcompat-v7:$supportVersion"
+        resolutionStrategy.force "com.android.support:support-v13:$supportVersion"
+        resolutionStrategy.force "com.android.support:cardview-v7:$supportVersion"
+        resolutionStrategy.force "com.android.support:design:$supportVersion"
+        resolutionStrategy.force "com.android.support:percent:$supportVersion"
+        resolutionStrategy.force "com.android.support:palette-v7:$supportVersion"
+        resolutionStrategy.force "com.android.support:recyclerview-v7:$supportVersion"
+        resolutionStrategy.force "com.android.support:customtabs:$supportVersion"
+        resolutionStrategy.force "com.android.support:animated-vector-drawable:$supportVersion"
+    }
+}
+
+ext {
+    minSdkVersion = 16
+    compileSdkVersion = 27
+    targetSdkVersion = 27
+    buildToolsVersion = '27.0.1'
+
+    supportVersion = '27.0.2'
+    butterknifeVersion = '8.4.0'
+    glideVersion = '3.7.0'
+    picassoVersion = '2.5.2'
+    picasso2Okhttp3Downloader = '1.0.2'
+    playServiceVersion = '11.8.0'
+    timberVersion = '4.6.0'
+    okhttpVersion = '3.4.1'
+    okhttp2Version = '2.7.0'
+    scalpelVersion = '1.1.2'
+    taktVersion = '1.0.2'
+    leakCanaryVersion = '1.5.4'
+    lynxVersion = '1.1.0'
+    chukVersion = '1.1.0'
+
+    VERSION_NAME = '0.7.5'
+    VERSION_CODE = 21
+
+    SITE_URL = 'https://github.com/palaima/DebugDrawer'
+    GIT_URL = 'git@github.com\\:palaima/DebugDrawer.git'
+    GROUP_NAME = 'io.palaima.debugdrawer'
+    COMPILE_SDK = compileSdkVersion
+    BUILD_TOOLS = buildToolsVersion
+
+    MODULES_NAMES = [
+            'debugdrawer',
+            'debugdrawer-actions',
+            'debugdrawer-base',
+            'debugdrawer-commons',
+            'debugdrawer-fps',
+            'debugdrawer-glide',
+            'debugdrawer-location',
+            'debugdrawer-logs',
+            'debugdrawer-network-quality',
+            'debugdrawer-no-op',
+            'debugdrawer-okhttp',
+            'debugdrawer-okhttp3',
+            'debugdrawer-picasso',
+            'debugdrawer-scalpel',
+            'debugdrawer-timber',
+            'debugdrawer-view',
+            'debugdrawer-view-no-op'
+    ]
+
+    LICENSE = 'The Apache Software License, Version 2.0'
+
+    DEVELOPER_ID = 'palaima'
+    DEVELOPER_NAME = 'Mantas Palaima'
+    DEVELOPER_EMAIL = 'palaima.mantas@gmail.com'
+
+    IS_UPLOADING = project.getGradle().startParameter.taskNames.any { it.contains('bintrayUpload') }
+
+}
+
+subprojects {
+    group = GROUP_NAME
+    version = VERSION_NAME
+
+    if (IS_UPLOADING && project.name in MODULES_NAMES) {
+        println project.name
+        apply plugin: 'maven'
+
+        gradle.taskGraph.whenReady { taskGraph ->
+            def pomTask = taskGraph.getAllTasks().find {
+                it.path == ":$project.name:generatePomFileForReleasePublication"
+            }
+
+            if (pomTask == null)
+                return
+
+            pomTask.doLast {
+                file("build/publications/maven/pom-default.xml").delete()
+                println 'Overriding pom-file to make sure we can sync to maven central!'
+                pom {
+                    //noinspection GroovyAssignabilityCheck
+                    project {
+                        name "$project.name"
+                        artifactId ARTIFACT_ID
+                        packaging 'aar'
+                        description DESCRIPTION
+                        url SITE_URL
+                        version VERSION_NAME
+
+                        scm {
+                            url GIT_URL
+                            connection GIT_URL
+                            developerConnection GIT_URL
+                        }
+
+                        licenses {
+                            license {
+                                name LICENSE
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id DEVELOPER_ID
+                                name DEVELOPER_NAME
+                                email DEVELOPER_EMAIL
+                            }
+                        }
+                    }
+                }.writeTo("build/publications/maven/pom-default.xml")
+            }
+        }
     }
 }
 
@@ -28,3 +161,4 @@ if (JavaVersion.current().isJava8Compatible()) {
         }
     }
 }
+

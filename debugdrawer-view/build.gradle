@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -19,7 +19,20 @@ android {
 }
 
 dependencies {
-    compile project(':debugdrawer-base')
+    implementation project(':debugdrawer-base')
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+ext {
+    ARTIFACT_ID = 'debugdrawer-view'
+    DESCRIPTION = 'Debug Drawer View'
+}
+
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    artifactId = ARTIFACT_ID
+    desc = DESCRIPTION
+    userOrg = "$rootProject.ext.DEVELOPER_ID"
+    groupId = "$rootProject.ext.GROUP_NAME"
+    publishVersion = "$rootProject.ext.VERSION_NAME"
+    website = "$rootProject.ext.SITE_URL"
+}

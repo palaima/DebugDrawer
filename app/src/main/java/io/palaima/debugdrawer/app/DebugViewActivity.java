@@ -25,6 +25,8 @@ import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
+import io.palaima.debugdrawer.logs.LogsModule;
+import io.palaima.debugdrawer.network.quality.NetworkQualityModule;
 import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
 import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
@@ -37,11 +39,11 @@ import timber.log.Timber;
 
 public class DebugViewActivity extends AppCompatActivity {
 
-    private Toolbar   toolbar;
+    private Toolbar toolbar;
     private DebugView debugView;
 
     private OkHttpClient okHttpClient;
-    private Picasso      picasso;
+    private Picasso picasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,22 +79,25 @@ public class DebugViewActivity extends AppCompatActivity {
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
             Arrays.asList("First", "Second", "Third"),
             new SpinnerAction.OnItemSelectedListener<String>() {
-                @Override public void onItemSelected(String value) {
+                @Override
+                public void onItemSelected(String value) {
                     Toast.makeText(DebugViewActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
                 }
             }
         );
 
-        debugView = (DebugView) findViewById(R.id.debug_view);
+        debugView = findViewById(R.id.debug_view);
 
         debugView.modules(
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
             new PicassoModule(picasso),
             new LocationModule(),
+            new LogsModule(),
             new ScalpelModule(this),
             new TimberModule(),
             new OkHttp3Module(okHttpClient),
+            new NetworkQualityModule(this),
             new DeviceModule(),
             new BuildModule(),
             new NetworkModule(),
@@ -111,12 +116,14 @@ public class DebugViewActivity extends AppCompatActivity {
         Timber.wtf("WTF");
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         debugView.onResume();
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
         debugView.onPause();
     }
@@ -133,8 +140,8 @@ public class DebugViewActivity extends AppCompatActivity {
         debugView.onStop();
     }
 
-    protected Toolbar setupToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.mainToolbar);
+    private Toolbar setupToolBar() {
+        toolbar = findViewById(R.id.mainToolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
@@ -150,6 +157,8 @@ public class DebugViewActivity extends AppCompatActivity {
 
         return new OkHttpClient.Builder()
             .cache(cache)
+            .addInterceptor(LogsModule.chuckInterceptor(app))
+            .addInterceptor(NetworkQualityModule.interceptor(app))
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS);

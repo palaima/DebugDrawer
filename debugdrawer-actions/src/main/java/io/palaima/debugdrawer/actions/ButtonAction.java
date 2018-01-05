@@ -1,16 +1,14 @@
 package io.palaima.debugdrawer.actions;
 
-import android.content.Context;
-import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 public class ButtonAction implements Action {
 
-    private final String   name;
+    private final String name;
     private final Listener listener;
 
     public ButtonAction(String name, Listener listener) {
@@ -19,15 +17,8 @@ public class ButtonAction implements Action {
     }
 
     @Override
-    public View getView(LinearLayout linearLayout) {
-        final Context context = linearLayout.getContext();
-        final Resources resources = context.getResources();
-
-        final LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        buttonLayoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
-
-        final Button button = new Button(context);
-        button.setLayoutParams(buttonLayoutParams);
+    public View getView(@NonNull final LayoutInflater inflater, @NonNull final LinearLayout parent) {
+        final Button button = (Button) inflater.inflate(R.layout.dd_debug_drawer_module_actions_button, parent, false);
         button.setText(name);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

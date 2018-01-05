@@ -1,7 +1,8 @@
 package io.palaima.debugdrawer.actions;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,8 +12,6 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 public class SpinnerAction<T> implements Action {
 
     public interface OnItemSelectedListener<T> {
@@ -21,8 +20,8 @@ public class SpinnerAction<T> implements Action {
 
     private final static int SPINNER_DEFAULT_POSITION = 0;
 
-    private final List<String>              titles;
-    private final List<T>                   values;
+    private final List<String> titles;
+    private final List<T> values;
     private final OnItemSelectedListener<T> listener;
 
     private int selectedPosition = SPINNER_DEFAULT_POSITION;
@@ -47,15 +46,9 @@ public class SpinnerAction<T> implements Action {
     }
 
     @Override
-    public View getView(LinearLayout view) {
-        final Context context = view.getContext();
-        final Resources resources = context.getResources();
-
-        final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
-
-        final Spinner spinner = new Spinner(context);
-        spinner.setLayoutParams(layoutParams);
+    public View getView(@NonNull final LayoutInflater inflater, @NonNull final LinearLayout parent) {
+        final Context context = parent.getContext();
+        final Spinner spinner = (Spinner) inflater.inflate(R.layout.dd_debug_drawer_module_actions_spinner, parent, false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

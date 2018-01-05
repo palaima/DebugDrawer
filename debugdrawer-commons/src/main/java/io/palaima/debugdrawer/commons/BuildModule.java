@@ -38,7 +38,8 @@ public class BuildModule extends DebugModuleAdapter {
     private TextView nameLabel;
     private TextView packageLabel;
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
         if (context == null) {
@@ -49,9 +50,9 @@ public class BuildModule extends DebugModuleAdapter {
         view.setClickable(false);
         view.setEnabled(false);
 
-        codeLabel = (TextView) view.findViewById(R.id.dd_debug_build_code);
-        nameLabel = (TextView) view.findViewById(R.id.dd_debug_build_name);
-        packageLabel = (TextView) view.findViewById(R.id.dd_debug_build_package);
+        codeLabel = view.findViewById(R.id.dd_debug_build_code);
+        nameLabel = view.findViewById(R.id.dd_debug_build_name);
+        packageLabel = view.findViewById(R.id.dd_debug_build_package);
 
         refresh();
 
@@ -72,6 +73,7 @@ public class BuildModule extends DebugModuleAdapter {
                 nameLabel.setText(info.versionName);
                 packageLabel.setText(info.packageName);
             }
-        } catch (PackageManager.NameNotFoundException e) {}
+        } catch (PackageManager.NameNotFoundException e) {
+        }
     }
 }

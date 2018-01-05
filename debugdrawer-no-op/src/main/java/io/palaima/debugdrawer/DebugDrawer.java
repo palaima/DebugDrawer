@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.StyleRes;
 import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 
@@ -179,6 +180,10 @@ public class DebugDrawer {
         }
 
         public Builder setDrawerListener(DrawerLayout.DrawerListener onDrawerListener) {
+            return this;
+        }
+
+        public Builder withTheme(@StyleRes int themeRes) {
             return this;
         }
 
