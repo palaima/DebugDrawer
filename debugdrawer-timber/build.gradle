@@ -25,16 +25,10 @@ dependencies {
 }
 
 ext {
-    ARTIFACT_ID = 'debugdrawer-timber'
-    DESCRIPTION = 'Debug Drawer Timber Module'
+    libraryName = 'Debug Drawer Timber Module'
+    artifact = 'debugdrawer-timber'
+    libraryDescription = 'Android Debug Drawer Timber Module'
 }
 
-apply plugin: 'com.novoda.bintray-release'
-publish {
-    artifactId = ARTIFACT_ID
-    desc = DESCRIPTION
-    userOrg = "$rootProject.ext.DEVELOPER_ID"
-    groupId = "$rootProject.ext.GROUP_NAME"
-    publishVersion = "$rootProject.ext.VERSION_NAME"
-    website = "$rootProject.ext.SITE_URL"
-}
+apply from: rootProject.file('gradle/install-v1.gradle')
+apply from: rootProject.file('gradle/bintray-android-v1.gradle')
