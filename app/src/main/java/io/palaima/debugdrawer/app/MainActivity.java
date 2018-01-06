@@ -30,6 +30,8 @@ import io.palaima.debugdrawer.commons.SettingsModule;
 import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.glide.GlideModule;
 import io.palaima.debugdrawer.location.LocationModule;
+import io.palaima.debugdrawer.logs.LogsModule;
+import io.palaima.debugdrawer.network.quality.NetworkQualityModule;
 import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import io.palaima.debugdrawer.timber.TimberModule;
@@ -40,8 +42,7 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar     toolbar;
-    private DebugDrawer debugDrawer;
+    private Toolbar toolbar;
 
     private OkHttpClient okHttpClient;
 
@@ -70,34 +71,38 @@ public class MainActivity extends AppCompatActivity {
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
             Arrays.asList("First", "Second", "Third"),
             new SpinnerAction.OnItemSelectedListener<String>() {
-                @Override public void onItemSelected(String value) {
+                @Override
+                public void onItemSelected(String value) {
                     Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
                 }
-            }
+            },
+            1
         );
 
-        debugDrawer = new DebugDrawer.Builder(this).modules(
+        new DebugDrawer.Builder(this).modules(
             new GlideModule(Glide.get(this)),
             new ActionsModule(switchAction, buttonAction, spinnerAction),
             new FpsModule(Takt.stock(getApplication())),
-            new LocationModule(this),
+            new LocationModule(),
+            new LogsModule(),
             new ScalpelModule(this),
             new TimberModule(),
             new OkHttp3Module(okHttpClient),
-            new DeviceModule(this),
-            new BuildModule(this),
-            new NetworkModule(this),
-            new SettingsModule(this)
-        ).build();
+            new NetworkQualityModule(this),
+            new DeviceModule(),
+            new BuildModule(),
+            new NetworkModule(),
+            new SettingsModule()
+        ).withTheme(R.style.Theme_AppCompat).build();
 
         showDummyLog();
 
         List<String> images = new ArrayList<>();
-        for (int i = 1; i < 30; i++) {
-            images.add("http://lorempixel.com/400/200/sports/" + i);
+        for (int i = 0; i < 30; i++) {
+            images.add("https://unsplash.it/200/100?image=" + i);
         }
 
-        ListView listView = (ListView) findViewById(R.id.image_list);
+        ListView listView = findViewById(R.id.image_list);
         listView.setAdapter(new ImageAdapter(this, images));
     }
 
@@ -108,28 +113,6 @@ public class MainActivity extends AppCompatActivity {
         Timber.i("Info");
         Timber.v("Verbose");
         Timber.wtf("WTF");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        debugDrawer.onStart();
-    }
-
-    @Override protected void onResume() {
-        super.onResume();
-        debugDrawer.onResume();
-    }
-
-    @Override protected void onPause() {
-        super.onPause();
-        debugDrawer.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        debugDrawer.onStop();
     }
 
     @Override
@@ -156,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected Toolbar setupToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.mainToolbar);
+        toolbar = findViewById(R.id.mainToolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
@@ -172,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
         return new OkHttpClient.Builder()
             .cache(cache)
+            .addInterceptor(LogsModule.chuckInterceptor(app))
+            .addInterceptor(NetworkQualityModule.interceptor(app))
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS);

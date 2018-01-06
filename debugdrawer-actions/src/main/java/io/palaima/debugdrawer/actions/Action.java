@@ -1,11 +1,13 @@
 package io.palaima.debugdrawer.actions;
 
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
 public interface Action {
 
-    View getView(LinearLayout view);
+    View getView(@NonNull final LayoutInflater inflater, @NonNull final LinearLayout parent);
 
     void onOpened();
 

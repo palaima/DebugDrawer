@@ -1,22 +1,19 @@
 package io.palaima.debugdrawer.app;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import com.squareup.leakcanary.LeakCanary;
 
 import io.palaima.debugdrawer.timber.data.LumberYard;
 import timber.log.Timber;
 
-
-/**
- * @author Niklas Baudy (https://github.com/vanniktech)
- * @since 01/07/15
- */
 public class DebugDrawerApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         LeakCanary.install(this);
 
         LumberYard lumberYard = LumberYard.getInstance(this);

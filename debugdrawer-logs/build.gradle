@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "com.android.support:support-annotations:$rootProject.ext.supportVersion"
+    implementation project(':debugdrawer-base')
+
+    compileOnly "com.github.pedrovgs:lynx:$rootProject.ext.lynxVersion"
+    compileOnly "com.readystatesoftware.chuck:library:$rootProject.ext.chukVersion"
+}
+
+ext {
+    libraryName = 'Debug Drawer Logs Module'
+    artifact = 'debugdrawer-logs'
+    libraryDescription = 'Android Debug Drawer Logs Module'
+}
+
+apply from: rootProject.file('gradle/install-v1.gradle')
+apply from: rootProject.file('gradle/bintray-android-v1.gradle')

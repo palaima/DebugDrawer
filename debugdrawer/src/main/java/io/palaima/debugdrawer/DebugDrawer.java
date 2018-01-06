@@ -21,13 +21,20 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.StyleRes;
 import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.palaima.debugdrawer.base.DebugModule;
 import io.palaima.debugdrawer.util.UIUtils;
@@ -39,7 +46,7 @@ public class DebugDrawer {
     private final DrawerLayout drawerLayout;
 
     private ScrollView sliderLayout;
-    private DebugView  debugView;
+    private DebugView debugView;
 
     private int drawerGravity;
 
@@ -103,28 +110,28 @@ public class DebugDrawer {
     /**
      * Calls modules {@link DebugModule#onResume()} method
      */
-    public void onResume() {
+    void onResume() {
         debugView.onResume();
     }
 
     /**
      * Calls modules {@link DebugModule#onPause()} method
      */
-    public void onPause() {
+    void onPause() {
         debugView.onPause();
     }
 
     /**
      * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
-    public void onStart() {
+    void onStart() {
         debugView.onStart();
     }
 
     /**
      * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
-    public void onStop() {
+    void onStop() {
         debugView.onStop();
     }
 
@@ -154,6 +161,8 @@ public class DebugDrawer {
         private Drawable sliderBackgroundDrawable;
 
         private int sliderBackgroundDrawableRes = -1;
+
+        private int themeRes = -1;
 
         private DebugView debugView;
 
@@ -212,7 +221,7 @@ public class DebugDrawer {
                 throw new RuntimeException("please pass an activity first to use this call");
             }
             this.drawerWidth = (int) TypedValue.applyDimension(1, drawerWidthDp,
-                    activity.getResources().getDisplayMetrics());
+                activity.getResources().getDisplayMetrics());
             return this;
         }
 
@@ -271,6 +280,11 @@ public class DebugDrawer {
             return this;
         }
 
+        public Builder withTheme(@StyleRes int themeRes) {
+            this.themeRes = themeRes;
+            return this;
+        }
+
         /**
          * Add a initial DrawerItem or a DrawerItem Array for the Drawer
          */
@@ -291,16 +305,23 @@ public class DebugDrawer {
 
             if (rootView == null || rootView.getChildCount() == 0) {
                 throw new RuntimeException(
-                        "You have to set your layout for this activity with setContentView() first.");
+                    "You have to set your layout for this activity with setContentView() first.");
             }
 
+            LayoutInflater layoutInflater = activity.getLayoutInflater();
+            if (themeRes > 0) {
+                layoutInflater = layoutInflater.cloneInContext(new ContextThemeWrapper(activity, themeRes));
+            }
+            drawerLayout = (DrawerLayout) layoutInflater
+                .inflate(R.layout.dd_debug_drawer, rootView, false);
 
-            drawerLayout = (DrawerLayout) activity.getLayoutInflater()
-                    .inflate(R.layout.dd_debug_drawer, rootView, false);
+            final boolean alreadyInflated = rootView.getChildAt(0).getId() == R.id.dd_drawer_layout;
 
-            //get the content view
-            View contentView = rootView.getChildAt(0);
-            boolean alreadyInflated = contentView instanceof DrawerLayout;
+            //store the original content views
+            final List<View> originalContentViews = new ArrayList<>(rootView.getChildCount());
+            for (int i = 0; i < rootView.getChildCount(); i++) {
+                originalContentViews.add(rootView.getChildAt(i));
+            }
 
             //get the drawer root
             drawerContentRoot = (ScrimInsetsFrameLayout) drawerLayout.getChildAt(0);
@@ -308,37 +329,41 @@ public class DebugDrawer {
             //only add the new layout if it wasn't done before
             if (!alreadyInflated) {
                 // remove the contentView
-                rootView.removeView(contentView);
+                for (View contentView : originalContentViews) {
+                    rootView.removeView(contentView);
+                }
             } else {
                 //if it was already inflated we have to clean up again
                 rootView.removeAllViews();
             }
 
             //create the layoutParams to use for the contentView
-            FrameLayout.LayoutParams layoutParamsContentView = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+            final FrameLayout.LayoutParams layoutParamsContentView = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
             );
 
-            //add the contentView to the drawer content frameLayout
-            drawerContentRoot.addView(contentView, layoutParamsContentView);
+            //add the original content Views to the drawer content frameLayout
+            for (View contentView : originalContentViews) {
+                drawerContentRoot.addView(contentView, layoutParamsContentView);
+            }
 
             //add the drawerLayout to the root
             rootView.addView(drawerLayout, new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
             ));
 
-            drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            final DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
                 @Override
-                public void onDrawerSlide(View drawerView, float slideOffset) {
+                public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                     if (onDrawerListener != null) {
                         onDrawerListener.onDrawerSlide(drawerView, slideOffset);
                     }
                 }
 
                 @Override
-                public void onDrawerOpened(View drawerView) {
+                public void onDrawerOpened(@NonNull View drawerView) {
                     if (onDrawerListener != null) {
                         onDrawerListener.onDrawerOpened(drawerView);
                     }
@@ -350,7 +375,7 @@ public class DebugDrawer {
                 }
 
                 @Override
-                public void onDrawerClosed(View drawerView) {
+                public void onDrawerClosed(@NonNull View drawerView) {
                     if (onDrawerListener != null) {
                         onDrawerListener.onDrawerClosed(drawerView);
                     }
@@ -365,10 +390,30 @@ public class DebugDrawer {
                 public void onDrawerStateChanged(int newState) {
 
                 }
+            };
+
+            rootView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+
+                @Override
+                public void onViewAttachedToWindow(View view) {
+                    if (drawerLayout != null) {
+                        drawerLayout.addDrawerListener(listener);
+                    }
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View view) {
+                    if (drawerLayout != null) {
+                        drawerLayout.removeDrawerListener(listener);
+                    }
+                    if (rootView != null) {
+                        rootView.removeOnAttachStateChangeListener(this);
+                    }
+                }
             });
 
-            sliderLayout = (ScrollView) drawerLayout.findViewById(R.id.dd_slider_layout);
-            debugView = (DebugView) sliderLayout.findViewById(R.id.dd_debug_view);
+            sliderLayout = drawerLayout.findViewById(R.id.dd_slider_layout);
+            debugView = sliderLayout.findViewById(R.id.dd_debug_view);
 
             // get the layout params
             DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) sliderLayout.getLayoutParams();
@@ -397,7 +442,10 @@ public class DebugDrawer {
             debugView.modules(drawerItems);
 
             //create the result object
-            DebugDrawer result = new DebugDrawer(this);
+            final DebugDrawer result = new DebugDrawer(this);
+
+            //register a lifecycle callback for start, stop, pause and resume events
+            activity.getApplication().registerActivityLifecycleCallbacks(new DebugDrawerLifecycleCallbacks(activity, result));
 
             //forget the reference to the activity
             activity = null;

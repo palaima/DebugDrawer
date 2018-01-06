@@ -20,13 +20,14 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.StyleRes;
 import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 
 import io.palaima.debugdrawer.base.DebugModule;
 
 public class DebugDrawer {
-
+    private static final DebugDrawer INSTANCE = new DebugDrawer(null);
 
     private DebugDrawer(Builder builder) {
 
@@ -58,8 +59,6 @@ public class DebugDrawer {
 
     /**
      * Enable or disable interaction with all drawers.
-     *
-     * @return
      */
     public void setDrawerLockMode(int lockMode) {
 
@@ -68,28 +67,28 @@ public class DebugDrawer {
     /**
      * Calls modules {@link DebugModule#onResume()} method
      */
-    public void onResume() {
+    void onResume() {
 
     }
 
     /**
      * Calls modules {@link DebugModule#onPause()} method
      */
-    public void onPause() {
+    void onPause() {
 
     }
 
     /**
      * Starts all modules and calls their {@link DebugModule#onStart()} method
      */
-    public void onStart() {
+    void onStart() {
 
     }
 
     /**
      * Removes all modules and calls their {@link DebugModule#onStop()} method
      */
-    public void onStop() {
+    void onStop() {
 
     }
 
@@ -184,6 +183,10 @@ public class DebugDrawer {
             return this;
         }
 
+        public Builder withTheme(@StyleRes int themeRes) {
+            return this;
+        }
+
         /**
          * Add a initial DrawerItem or a DrawerItem Array  for the Drawer
          */
@@ -197,7 +200,7 @@ public class DebugDrawer {
          * @return
          */
         public DebugDrawer build() {
-            return new DebugDrawer(this);
+            return DebugDrawer.INSTANCE;
         }
     }
 }

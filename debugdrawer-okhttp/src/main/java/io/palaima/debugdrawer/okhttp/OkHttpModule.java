@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class OkHttpModule implements DebugModule {
+public class OkHttpModule extends DebugModuleAdapter {
 
     private static final boolean HAS_OKHTTP;
 
@@ -46,15 +46,16 @@ public class OkHttpModule implements DebugModule {
         this.client = client;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp, parent, false);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_okhttp, parent, false);
 
-        okHttpCacheMaxSizeView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
-        okHttpCacheWriteErrorView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
-        okHttpCacheRequestCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_request_count);
-        okHttpCacheNetworkCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_network_count);
-        okHttpCacheHitCountView = (TextView) view.findViewById(R.id.dd_debug_okhttp_cache_hit_count);
+        okHttpCacheMaxSizeView = view.findViewById(R.id.dd_debug_okhttp_cache_max_size);
+        okHttpCacheWriteErrorView = view.findViewById(R.id.dd_debug_okhttp_cache_write_error);
+        okHttpCacheRequestCountView = view.findViewById(R.id.dd_debug_okhttp_cache_request_count);
+        okHttpCacheNetworkCountView = view.findViewById(R.id.dd_debug_okhttp_cache_network_count);
+        okHttpCacheHitCountView = view.findViewById(R.id.dd_debug_okhttp_cache_hit_count);
 
         okHttpCacheMaxSizeView.setText(sizeString(maxSize()));
 
@@ -63,10 +64,9 @@ public class OkHttpModule implements DebugModule {
     }
 
 
-
     private void refresh() {
-        int writeTotal = writeSuccessCount() + writeAbortCount();
-        int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
+        final int writeTotal = writeSuccessCount() + writeAbortCount();
+        final int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
         okHttpCacheWriteErrorView.setText(
             new StringBuilder().append(writeAbortCount())
                 .append(" / ")
@@ -86,33 +86,8 @@ public class OkHttpModule implements DebugModule {
         refresh();
     }
 
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-    }
-
     private static String sizeString(long bytes) {
-        String[] units = new String[] { "B", "KB", "MB", "GB" };
+        final String[] units = new String[]{"B", "KB", "MB", "GB"};
         int unit = 0;
         while (bytes >= 1024) {
             bytes /= 1024;

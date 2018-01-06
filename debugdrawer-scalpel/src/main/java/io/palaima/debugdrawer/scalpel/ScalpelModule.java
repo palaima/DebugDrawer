@@ -13,9 +13,9 @@ import android.widget.Switch;
 
 import com.jakewharton.scalpel.ScalpelFrameLayout;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class ScalpelModule implements DebugModule {
+public class ScalpelModule extends DebugModuleAdapter {
 
     private static final boolean HAS_SCALPEL;
 
@@ -33,7 +33,7 @@ public class ScalpelModule implements DebugModule {
     }
 
     private final Context context;
-    private ViewGroup     rootView;
+    private ViewGroup rootView;
 
     public ScalpelModule(@NonNull Activity activity) {
         if (!HAS_SCALPEL) {
@@ -43,12 +43,13 @@ public class ScalpelModule implements DebugModule {
         rootView = (ViewGroup) activity.findViewById(android.R.id.content);
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
 
-        ViewGroup contentView = (ViewGroup) rootView.getChildAt(0);
-        ViewGroup scrimInsets = (ViewGroup) contentView.getChildAt(0);
-        View contentRelativeView = scrimInsets.getChildAt(0);
+        final ViewGroup contentView = (ViewGroup) rootView.getChildAt(0);
+        final ViewGroup scrimInsets = (ViewGroup) contentView.getChildAt(0);
+        final View contentRelativeView = scrimInsets.getChildAt(0);
 
         scrimInsets.removeView(contentRelativeView);
 
@@ -59,22 +60,22 @@ public class ScalpelModule implements DebugModule {
         scrimInsets.addView(scalpelFrameLayout);
         scalpelFrameLayout.addView(contentRelativeView);
 
-        View view = inflater.inflate(R.layout.dd_debug_drawer_item_scalpel, parent, false);
-        Switch debugEnableScalpel = (Switch) view.findViewById(R.id.dd_debug_enable_scalpel);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_item_scalpel, parent, false);
+        final Switch debugEnableScalpel = view.findViewById(R.id.dd_debug_enable_scalpel);
         debugEnableScalpel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setLayerInteractionEnabled(isChecked);
             }
         });
-        Switch debugDisableGraphics = (Switch) view.findViewById(R.id.dd_debug_disable_graphics);
+        final Switch debugDisableGraphics = view.findViewById(R.id.dd_debug_disable_graphics);
         debugDisableGraphics.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scalpelFrameLayout.setDrawViews(!isChecked);
             }
         });
-        Switch debugShowIds = (Switch) view.findViewById(R.id.dd_debug_show_ids);
+        final Switch debugShowIds = view.findViewById(R.id.dd_debug_show_ids);
         debugShowIds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -83,35 +84,5 @@ public class ScalpelModule implements DebugModule {
         });
 
         return view;
-    }
-
-    @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }

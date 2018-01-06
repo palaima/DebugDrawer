@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 Mantas Palaima
+ * Copyright (C) 2016 Oleg Godovykh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +17,6 @@
 
 package io.palaima.debugdrawer.commons;
 
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
@@ -25,36 +25,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
-public class DeviceModule implements DebugModule {
+public class DeviceModule extends DebugModuleAdapter {
 
-    private String deviceMake;
-    private String deviceModel;
-    private String deviceResolution;
-    private String deviceDensity;
-    private String deviceRelease;
-    private String deviceApi;
+    @NonNull
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_device, parent, false);
+        view.setClickable(false);
+        view.setEnabled(false);
 
-    private TextView deviceMakeLabel;
-    private TextView deviceModelLabel;
-    private TextView deviceResolutionLabel;
-    private TextView deviceDensityLabel;
-    private TextView deviceReleaseLabel;
-    private TextView deviceApiLabel;
+        final TextView deviceMakeLabel = view.findViewById(R.id.dd_debug_device_make);
+        final TextView deviceModelLabel = view.findViewById(R.id.dd_debug_device_model);
+        final TextView deviceResolutionLabel = view.findViewById(R.id.dd_debug_device_resolution);
+        final TextView deviceDensityLabel = view.findViewById(R.id.dd_debug_device_density);
+        final TextView deviceReleaseLabel = view.findViewById(R.id.dd_debug_device_release);
+        final TextView deviceApiLabel = view.findViewById(R.id.dd_debug_device_api);
 
-    public DeviceModule(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        String densityBucket = getDensityString(displayMetrics);
-        deviceMake = truncateAt(Build.MANUFACTURER, 20);
-        deviceModel = truncateAt(Build.MODEL, 20);
-        deviceResolution = displayMetrics.heightPixels + "x" + displayMetrics.widthPixels;
-        deviceDensity = displayMetrics.densityDpi + "dpi (" + densityBucket + ")";
-        deviceRelease = Build.VERSION.RELEASE;
-        deviceApi = String.valueOf(Build.VERSION.SDK_INT);
+        final DisplayMetrics displayMetrics = parent.getContext().getResources().getDisplayMetrics();
+        final String densityBucket = getDensityString(displayMetrics);
+        final String deviceMake = truncateAt(Build.MANUFACTURER, 20);
+        final String deviceModel = truncateAt(Build.MODEL, 20);
+        final String deviceResolution = displayMetrics.heightPixels + "x" + displayMetrics.widthPixels;
+        final String deviceDensity = displayMetrics.densityDpi + "dpi (" + densityBucket + ")";
+        final String deviceRelease = Build.VERSION.RELEASE;
+        final String deviceApi = String.valueOf(Build.VERSION.SDK_INT);
+
+        deviceModelLabel.setText(deviceModel);
+        deviceMakeLabel.setText(deviceMake);
+        deviceResolutionLabel.setText(deviceResolution);
+        deviceDensityLabel.setText(deviceDensity);
+        deviceApiLabel.setText(deviceApi);
+        deviceReleaseLabel.setText(deviceRelease);
+
+        return view;
     }
 
-    public static String truncateAt(String string, int length) {
+    private static String truncateAt(String string, int length) {
         return string.length() > length ? string.substring(0, length) : string;
     }
 
@@ -77,58 +85,5 @@ public class DeviceModule implements DebugModule {
             default:
                 return String.valueOf(displayMetrics.densityDpi);
         }
-    }
-
-    @NonNull @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_device, parent, false);
-        view.setClickable(false);
-        view.setEnabled(false);
-
-        deviceMakeLabel = (TextView) view.findViewById(R.id.dd_debug_device_make);
-        deviceModelLabel = (TextView) view.findViewById(R.id.dd_debug_device_model);
-        deviceResolutionLabel = (TextView) view.findViewById(R.id.dd_debug_device_resolution);
-        deviceDensityLabel = (TextView) view.findViewById(R.id.dd_debug_device_density);
-        deviceReleaseLabel = (TextView) view.findViewById(R.id.dd_debug_device_release);
-        deviceApiLabel = (TextView) view.findViewById(R.id.dd_debug_device_api);
-
-        deviceModelLabel.setText(deviceModel);
-        deviceMakeLabel.setText(deviceMake);
-        deviceResolutionLabel.setText(deviceResolution);
-        deviceDensityLabel.setText(deviceDensity);
-        deviceApiLabel.setText(deviceApi);
-        deviceReleaseLabel.setText(deviceRelease);
-
-        return view;
-    }
-
-    @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }

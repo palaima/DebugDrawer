@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:elevation="8dp"
-    android:orientation="vertical"
-    android:layout_marginRight="@dimen/dd_debug_drawer_margin"
     android:layout_marginEnd="@dimen/dd_debug_drawer_margin"
-    android:background="#ee212121">
+    android:layout_marginRight="@dimen/dd_debug_drawer_margin"
+    android:elevation="8dp"
+    android:orientation="vertical">
 
-        <io.palaima.debugdrawer.view.DebugView
-            android:id="@+id/dd_debug_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <io.palaima.debugdrawer.view.DebugView
+        android:id="@+id/dd_debug_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </ScrollView>

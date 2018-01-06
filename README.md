@@ -1,16 +1,12 @@
 # Android Debug Drawer
 
-[![Join the chat at https://gitter.im/palaima/DebugDrawer](https://badges.gitter.im/palaima/DebugDrawer.svg)](https://gitter.im/palaima/DebugDrawer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Debug%20Drawer-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1892)
 
 Faster development with Debug Drawer
 
-![](./images/all.png)
+![](./images/debug_drawer.gif)
 
 ## Features
-
-Currently 13 modules exist:
 
 `DeviceModule` - common information about your device
 
@@ -50,7 +46,7 @@ Currently 13 modules exist:
 
 `TimberModule` - log viewer with sharing feature (requires extra dependency). Thanks [AntonyGolovin](https://github.com/AntonyGolovin) for contributing.
 
-![](./images/log.png)
+![](./images/timber.png)
 
 `ActionsModule` - any context dependent action (`ButtonAction`, `SwitchAction`, `SpinnerAction`)
 
@@ -60,8 +56,15 @@ Currently 13 modules exist:
 
 ![](./images/fps.png)
 
+`LogsModule` - Logcat and OkHttp network calls interceptor (requires extra dependency). Credits [Sloy](https://github.com/Sloy)
+
+![](./images/logs.png)
+
+`NetworkQualityModule` - Error/delay rate managing for network calls (requires extra dependency). Credits [Sloy](https://github.com/Sloy)
+
+![](./images/network_quality.png)
+
 ## TODO
-- Network delay/error adapters
 - Take screenshot feature
 
 You are always welcome to suggest modules!
@@ -73,30 +76,30 @@ Add Gradle dependencies:
 #### `DebugDrawer`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.0'
+   debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.8.0'
+   releaseImplementation 'io.palaima.debugdrawer:debugdrawer-no-op:0.8.0'
 }
 ```
 
 #### `DebugView`
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer-view:0.7.0'
-   releaseCompile 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.0'
+   debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.8.0'
+   releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.8.0'
 }
 ```
 
 `BuildModule`, `DeviceModule`, `SettingsModule`, `NetworkModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-commons:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.8.0'
 }
 ```
 
 `ActionsModule` - `ButtonAction`, `SwitchAction`, `SpinnerAction`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-actions:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.8.0'
 }
 ```
 
@@ -104,8 +107,8 @@ dependencies {
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.0'
-   compile 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-okhttp:0.8.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.8.0'
 }
 ```
 
@@ -113,7 +116,7 @@ dependencies {
 [Picasso](https://github.com/square/picasso) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-picasso:0.8.0'
 }
 ```
 
@@ -121,7 +124,7 @@ dependencies {
 [Glide](https://github.com/bumptech/glide) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-glide:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-glide:0.8.0'
 }
 ```
 
@@ -129,14 +132,14 @@ dependencies {
 [Scalpel](https://github.com/JakeWharton/scalpel) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-scalpel:0.8.0'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-location:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-location:0.8.0'
 }
 ```
 
@@ -144,7 +147,7 @@ dependencies {
 [Timber](https://github.com/JakeWharton/timber) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-timber:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.8.0'
 }
 ```
 
@@ -152,25 +155,24 @@ dependencies {
 [Takt](https://github.com/wasabeef/Takt) library required
 ```gradle
 dependencies {
-   compile 'io.palaima.debugdrawer:debugdrawer-fps:0.7.0'
+   implementation 'io.palaima.debugdrawer:debugdrawer-fps:0.8.0'
 }
 ```
 
-You can try the SNAPSHOT version:
 
+`LogsModule`
+[Lynx](https://github.com/pedrovgs/Lynx) & [Chuck](https://github.com/jgilfelt/chuck) libraries required
 ```gradle
 dependencies {
-   debugCompile 'io.palaima.debugdrawer:debugdrawer:0.7.1-SNAPSHOT'
-   ...
+   implementation 'io.palaima.debugdrawer:debugdrawer-logs:0.8.0'
 }
 ```
-Make sure to add the snapshot repository:
 
+`NetworkQualityModule`
+[OkHttp](https://github.com/square/okhttp) library required
 ```gradle
-repositories {
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+dependencies {
+   implementation 'io.palaima.debugdrawer:debugdrawer-network-quality:0.8.0'
 }
 ```
 
@@ -180,31 +182,31 @@ repositories {
 
 You could use `DebugDrawer` or `DebugView` depending on your needs
 
-#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java)) 
+#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java))
 
 ```java
 
     private DebugDrawer debugDrawer;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ...
-        
+        //...
+
         SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
             @Override
             public void onCheckedChanged(boolean value) {
                 Toast.makeText(MainActivity.this, "Switch checked", Toast.LENGTH_LONG).show();
             }
         });
-    
+
         ButtonAction buttonAction = new ButtonAction("Test button", new ButtonAction.Listener() {
             @Override
             public void onClick() {
                 Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_LONG).show();
             }
         });
-    
+
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
             Arrays.asList("First", "Second", "Third"),
             new SpinnerAction.OnItemSelectedListener<String>() {
@@ -213,7 +215,7 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
                 }
             }
         );
-        
+
         debugDrawer = new DebugDrawer.Builder(this)
             .modules(
                 new ActionsModule(switchAction, buttonAction, spinnerAction),
@@ -232,37 +234,8 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
     }
 ```
 
-### 2. Lifecycle
-If you use `NetworkModule`, `LocationModule`, `FpsModule` or your own which is hooked with BroadcastReceivers you must call `onStart`/`onStop`, `onResume`/`onPause` in your activity
+### 2. `TimberModule`
 
-```java
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        debugDrawer.onStart();
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        debugDrawer.onResume();
-    }
-    
-     @Override
-    protected void onPause() {
-        super.onPause();
-        debugDrawer.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        debugDrawer.onStop();
-    }
-```
-
-### 3. `TimberModule`
 Don't forget to plant needed log trees in Application class. Tree that is used by `TimberModule` stored in `LumberYard` class.
 
 Application class example:
@@ -273,10 +246,10 @@ Application class example:
         @Override
         public void onCreate() {
             super.onCreate();
-    
+
             LumberYard lumberYard = LumberYard.getInstance(this);
             lumberYard.cleanUp();
-    
+
             Timber.plant(lumberYard.tree());
             Timber.plant(new Timber.DebugTree());
         }
@@ -285,43 +258,43 @@ Application class example:
 
 ## Creating and Publishing Your Own Module
 
-Add `compile 'io.palaima.debugdrawer:debugdrawer-base:0.7.0'` to your dependencies
+Add `implementation 'io.palaima.debugdrawer:debugdrawer-base:0.8.0'` to your dependencies
 
-Module must implement `DebugModule` interface
+Module must implement `DebugModule` interface or extend `DebugModuleAdapter` if you do not need lifecycle hooks
 
 ```java
 
     public interface DebugModule {
-    
+
         /**
          * Creates module view
          */
         @NonNull View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent);
-    
+
         /**
          * Override this method if you need to refresh
          * some information  when drawer is opened
          */
         void onOpened();
-    
+
         /**
          * Override this method if you need to stop
          * some actions  when drawer is closed
          */
         void onClosed();
-    
+
         /**
          * Override this method if you need to start
          * some processes
          */
         void onResume();
-    
+
         /**
          * Override this method if you need to do
          * some clean up
          */
         void onPause();
-    
+
         /**
          * Override this method if you need to start
          * some processes that would be killed when
@@ -329,7 +302,7 @@ Module must implement `DebugModule` interface
          * E.g. register receivers
          */
         void onStart();
-    
+
         /**
          * Override this method if you need to do
          * some clean up when activity goes to foreground.

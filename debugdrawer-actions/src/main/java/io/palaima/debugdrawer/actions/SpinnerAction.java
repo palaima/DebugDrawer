@@ -1,7 +1,8 @@
 package io.palaima.debugdrawer.actions;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,54 +12,59 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 public class SpinnerAction<T> implements Action {
 
     public interface OnItemSelectedListener<T> {
         void onItemSelected(T value);
     }
 
-    private final List<String>              titles;
-    private final List<T>                   values;
+    private final static int SPINNER_DEFAULT_POSITION = 0;
+
+    private final List<String> titles;
+    private final List<T> values;
     private final OnItemSelectedListener<T> listener;
 
-    private int selectedPosition = 0;
+    private int selectedPosition = SPINNER_DEFAULT_POSITION;
 
     public SpinnerAction(List<T> values, OnItemSelectedListener<T> listener) {
-        this(getTitles(values), values, listener);
+        this(getTitles(values), values, listener, SPINNER_DEFAULT_POSITION);
     }
 
-    public SpinnerAction(List<String> titles, List<T> values, OnItemSelectedListener<T> listener) {
+    public SpinnerAction(List<T> values, OnItemSelectedListener<T> listener, int initialSelectedPosition) {
+        this(getTitles(values), values, listener, initialSelectedPosition);
+    }
+
+    public SpinnerAction(List<String> titles, List<T> values, OnItemSelectedListener<T> listener, int initialSelectedPosition) {
         this.values = values;
         this.titles = titles;
         this.listener = listener;
+        if (initialSelectedPosition >= 0 && initialSelectedPosition < values.size()) {
+            this.selectedPosition = initialSelectedPosition;
+        } else {
+            throw new IllegalStateException("initial selected position is out of bounds");
+        }
     }
 
     @Override
-    public View getView(LinearLayout view) {
-        Context context = view.getContext();
-        Resources resources = context.getResources();
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        layoutParams.topMargin = resources.getDimensionPixelOffset(R.dimen.dd_padding_small);
-
-        Spinner spinner = new Spinner(context);
-        spinner.setLayoutParams(layoutParams);
+    public View getView(@NonNull final LayoutInflater inflater, @NonNull final LinearLayout parent) {
+        final Context context = parent.getContext();
+        final Spinner spinner = (Spinner) inflater.inflate(R.layout.dd_debug_drawer_module_actions_spinner, parent, false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (listener != null && position != selectedPosition) {
                     listener.onItemSelected(values.get(position));
                 }
                 selectedPosition = position;
             }
 
-            @Override public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.dd_debug_drawer_module_actions_spinner_item, titles);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.dd_debug_drawer_module_actions_spinner_item, titles);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -100,7 +106,7 @@ public class SpinnerAction<T> implements Action {
     }
 
     private static <T> List<String> getTitles(List<T> values) {
-        List<String> titles = new ArrayList<>(values.size());
+        final List<String> titles = new ArrayList<>(values.size());
         for (T value : values) {
             titles.add(value.toString());
         }

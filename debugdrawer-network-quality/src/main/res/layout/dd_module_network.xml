@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    tools:ignore="UselessParent"
+    >
+
+    <TextView
+        style="@style/Widget.DebugDrawer.Base.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Network Quality"
+        />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        >
+        <!-- Connectivity -->
+        <TextView
+            style="@style/Widget.DebugDrawer.Base.RowTitle"
+            android:layout_gravity="start|end|center_vertical"
+            android:text="Connected"
+            />
+
+        <Switch
+            android:id="@+id/dd_module_networkquality_enabled"
+            style="@style/Widget.DebugDrawer.Base.RowValue"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginTop="4dp"
+            android:minHeight="26dp"
+            />
+
+        <android.support.v4.widget.Space/>
+
+        <!-- Delay -->
+        <TextView
+            style="@style/Widget.DebugDrawer.Base.RowTitle"
+            android:layout_gravity="start|center_vertical"
+            android:text="Delay"
+            />
+
+        <TextView
+            android:id="@+id/debug_network_delay_indicator"
+            style="@style/Widget.DebugDrawer.Base.RowValue"
+            android:layout_width="@dimen/value_indicator_width"
+            android:layout_gravity="center_vertical|clip_horizontal"
+            android:gravity="end|center_vertical"
+            android:text="0 s"
+            tools:text="0.5 s"
+            />
+
+        <SeekBar
+            android:id="@+id/debug_network_delay"
+            style="@style/Widget.DebugDrawer.Base.RowValue"
+            android:layout_gravity="end|fill_horizontal"
+            />
+
+        <!-- Error -->
+
+        <TextView
+            style="@style/Widget.DebugDrawer.Base.RowTitle"
+            android:layout_gravity="start|center_vertical"
+            android:text="Error"
+            />
+
+        <TextView
+            android:id="@+id/debug_network_error_indicator"
+            style="@style/Widget.DebugDrawer.Base.RowValue"
+            android:layout_width="@dimen/value_indicator_width"
+            android:layout_gravity="end|center_vertical"
+            android:gravity="end|center_vertical"
+            android:text="0 %"
+            tools:text="100 %"
+            />
+
+        <SeekBar
+            android:id="@+id/debug_network_error"
+            style="@style/Widget.DebugDrawer.Base.RowValue"
+            android:layout_gravity="end|fill_horizontal"
+            tools:progress="70"
+            />
+    </GridLayout>
+</LinearLayout>

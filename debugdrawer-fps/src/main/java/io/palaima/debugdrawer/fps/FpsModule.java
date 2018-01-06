@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 import jp.wasabeef.takt.Takt;
 
-public class FpsModule implements DebugModule {
+public class FpsModule extends DebugModuleAdapter {
 
     private static final boolean HAS_TAKT;
 
@@ -42,8 +42,8 @@ public class FpsModule implements DebugModule {
     @Override
     @NonNull
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_item_fps, parent, false);
-        Switch showSwitch = (Switch) view.findViewById(R.id.dd_debug_fps);
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_item_fps, parent, false);
+        final Switch showSwitch = (Switch) view.findViewById(R.id.dd_debug_fps);
         showSwitch.setOnCheckedChangeListener(
             new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -60,16 +60,6 @@ public class FpsModule implements DebugModule {
     }
 
     @Override
-    public void onOpened() {
-
-    }
-
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
     public void onResume() {
         if (isChecked) {
             program.play();
@@ -81,15 +71,5 @@ public class FpsModule implements DebugModule {
         if (isChecked) {
             program.stop();
         }
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }

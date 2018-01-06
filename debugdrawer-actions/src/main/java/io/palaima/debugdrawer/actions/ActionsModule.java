@@ -8,33 +8,41 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.palaima.debugdrawer.base.DebugModule;
 
 public class ActionsModule implements DebugModule {
     private final List<Action> actions = new ArrayList<>();
+    private final String title;
 
-    public ActionsModule(Action... actions) {
+    public ActionsModule(String title, Action... actions) {
+        this.title = title;
         if (actions != null) {
-            for (int i = 0; i < actions.length; i++) {
-                this.actions.add(actions[i]);
-            }
+            this.actions.addAll(Arrays.asList(actions));
         }
     }
 
-    @NonNull @Override
+    public ActionsModule(Action... actions) {
+        this("Actions", actions);
+    }
+
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dd_debug_drawer_module_actions, parent, false);
+        final LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dd_debug_drawer_module_actions, parent, false);
+        final TextView titleView = view.findViewById(R.id.dd_actions_title);
+        titleView.setText(title);
 
         if (actions.isEmpty()) {
-            TextView noActionsLabel = new TextView(parent.getContext());
+            final TextView noActionsLabel = new TextView(parent.getContext());
             noActionsLabel.setTextColor(parent.getResources().getColor(android.R.color.white));
             noActionsLabel.setText("No actions added");
             view.addView(noActionsLabel);
         } else {
             for (Action action : actions) {
-                view.addView(action.getView(view));
+                view.addView(action.getView(inflater, view));
             }
         }
 

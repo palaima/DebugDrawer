@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -22,7 +22,15 @@ android {
 }
 
 dependencies {
-    compile project(':debugdrawer-base')
+    implementation "com.android.support:support-annotations:$rootProject.ext.supportVersion"
+    implementation project(':debugdrawer-base')
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+ext {
+    libraryName = 'Debug Drawer Commons Module'
+    artifact = 'debugdrawer-commons'
+    libraryDescription = 'Android Debug Drawer Commons Module'
+}
+
+apply from: rootProject.file('gradle/install-v1.gradle')
+apply from: rootProject.file('gradle/bintray-android-v1.gradle')

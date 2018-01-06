@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 Mantas Palaima
+ * Copyright (C) 2016 Oleg Godovykh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,30 +26,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.palaima.debugdrawer.base.DebugModule;
+import java.lang.ref.WeakReference;
 
-public class BuildModule implements DebugModule {
+import io.palaima.debugdrawer.base.DebugModuleAdapter;
 
+public class BuildModule extends DebugModuleAdapter {
 
-    private final Context context;
+    private WeakReference<Context> context;
 
     private TextView codeLabel;
     private TextView nameLabel;
     private TextView packageLabel;
 
-    public BuildModule(Context context) {
-        this.context = context;
-    }
-
-    @NonNull @Override
+    @NonNull
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.dd_debug_drawer_module_build, parent, false);
+
+        if (context == null) {
+            context = new WeakReference<>(parent.getContext());
+        }
+
+        final View view = inflater.inflate(R.layout.dd_debug_drawer_module_build, parent, false);
         view.setClickable(false);
         view.setEnabled(false);
 
-        codeLabel = (TextView) view.findViewById(R.id.dd_debug_build_code);
-        nameLabel = (TextView) view.findViewById(R.id.dd_debug_build_name);
-        packageLabel = (TextView) view.findViewById(R.id.dd_debug_build_package);
+        codeLabel = view.findViewById(R.id.dd_debug_build_code);
+        nameLabel = view.findViewById(R.id.dd_debug_build_name);
+        packageLabel = view.findViewById(R.id.dd_debug_build_package);
 
         refresh();
 
@@ -60,37 +64,16 @@ public class BuildModule implements DebugModule {
         refresh();
     }
 
-    @Override
-    public void onClosed() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
     private void refresh() {
         try {
-            final PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            codeLabel.setText(String.valueOf(info.versionCode));
-            nameLabel.setText(info.versionName);
-            packageLabel.setText(info.packageName);
-        } catch (PackageManager.NameNotFoundException e) {}
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
+            final Context context = this.context.get();
+            if (context != null) {
+                final PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                codeLabel.setText(String.valueOf(info.versionCode));
+                nameLabel.setText(info.versionName);
+                packageLabel.setText(info.packageName);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+        }
     }
 }

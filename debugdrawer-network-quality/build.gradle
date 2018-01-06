@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "com.android.support:support-annotations:$rootProject.ext.supportVersion"
+    implementation project(':debugdrawer-base')
+
+    compileOnly "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
+}
+
+ext {
+    libraryName = 'Debug Drawer Network Quality Module'
+    artifact = 'debugdrawer-network-quality'
+    libraryDescription = 'Android Debug Drawer Network Quality Module'
+}
+
+apply from: rootProject.file('gradle/install-v1.gradle')
+apply from: rootProject.file('gradle/bintray-android-v1.gradle')
