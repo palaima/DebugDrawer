@@ -12,7 +12,7 @@
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_height">24dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:tint">?android:textColorSecondary</item>
+        <item name="android:tint" tools:targetApi="lollipop">?android:textColorSecondary</item>
         <item name="android:tintMode" tools:targetApi="lollipop">src_in</item>
         <item name="android:layout_marginRight">8dp</item>
     </style>
