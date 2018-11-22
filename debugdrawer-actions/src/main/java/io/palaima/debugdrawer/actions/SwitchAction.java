@@ -1,7 +1,5 @@
 package io.palaima.debugdrawer.actions;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,15 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.lang.ref.WeakReference;
-
 public class SwitchAction implements Action {
 
     private final String name;
     private final Listener listener;
     private final boolean shouldEmitFirstValue;
-
-    private WeakReference<Context> contextRef;
 
     private Switch switchButton;
 
@@ -37,17 +31,14 @@ public class SwitchAction implements Action {
 
     @Override
     public View getView(@NonNull final LayoutInflater inflater, @NonNull final LinearLayout parent) {
-        final Context context = parent.getContext();
-
-        if (contextRef == null) {
-            contextRef = new WeakReference<>(context);
-        }
-
         View viewGroup = inflater.inflate(R.layout.dd_debug_drawer_module_actions_switch, parent, false);
 
         final TextView textView = viewGroup.findViewById(R.id.action_switch_name);
+        switchButton = viewGroup.findViewById(R.id.action_switch_switch);
+
         textView.setText(name);
 
+        switchButton.setChecked(ActionSetup.getInstance().getSwitchValueHandler().getSwitchValue(name));
         switchButton = viewGroup.findViewById(R.id.action_switch_switch);
         switchButton.setOnCheckedChangeListener(switchListener);
 
@@ -76,7 +67,7 @@ public class SwitchAction implements Action {
 
     @Override
     public void onStart() {
-        final boolean isChecked = readValue();
+        final boolean isChecked = ActionSetup.getInstance().getSwitchValueHandler().getSwitchValue(name);
 
         switchButton.setOnCheckedChangeListener(null);
         switchButton.setChecked(isChecked);
@@ -98,31 +89,17 @@ public class SwitchAction implements Action {
             if (listener != null) {
                 listener.onCheckedChanged(isChecked);
             }
-            writeValue(isChecked);
+            ActionSetup.getInstance().getSwitchValueHandler().setSwitchValue(name, isChecked);
         }
     };
 
-    public boolean isChecked() {
-        return readValue();
-    }
-
-    public void setChecked(boolean checked) {
-        switchButton.setChecked(checked);
-    }
-
-    private boolean readValue() {
-        return getPreferences().getBoolean(name, false);
-    }
-
-    private void writeValue(boolean b) {
-        getPreferences().edit().putBoolean(name, b).apply();
-    }
-
-    private SharedPreferences getPreferences() {
-        return contextRef.get().getSharedPreferences(name, Context.MODE_PRIVATE);
-    }
-
     public interface Listener {
         void onCheckedChanged(boolean value);
+    }
+
+    public interface ValueHandler
+    {
+        boolean getSwitchValue(String preferenceName);
+        void setSwitchValue(String preferenceName, boolean enabled);
     }
 }
