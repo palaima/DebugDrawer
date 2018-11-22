@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.palaima.debugdrawer.DebugDrawer;
+import io.palaima.debugdrawer.actions.ActionSetup;
 import io.palaima.debugdrawer.actions.ActionsModule;
 import io.palaima.debugdrawer.actions.ButtonAction;
 import io.palaima.debugdrawer.actions.SpinnerAction;
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
         setupToolBar();
 
+        if (!ActionSetup.getInstance().isInitialised()) {
+            ActionSetup.getInstance().initDefault(this);
+        }
+
         SwitchAction switchAction = new SwitchAction("Test switch", new SwitchAction.Listener() {
             @Override
             public void onCheckedChanged(boolean value) {
@@ -69,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
+      "Test spinner",
             Arrays.asList("First", "Second", "Third"),
             new SpinnerAction.OnItemSelectedListener<String>() {
                 @Override
                 public void onItemSelected(String value) {
                     Toast.makeText(MainActivity.this, "Spinner item selected - " + value, Toast.LENGTH_LONG).show();
                 }
-            },
-            1
+            }
         );
 
         new DebugDrawer.Builder(this).modules(

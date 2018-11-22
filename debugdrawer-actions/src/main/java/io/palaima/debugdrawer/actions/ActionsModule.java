@@ -22,6 +22,7 @@ public class ActionsModule implements DebugModule {
         if (actions != null) {
             this.actions.addAll(Arrays.asList(actions));
         }
+
     }
 
     public ActionsModule(Action... actions) {

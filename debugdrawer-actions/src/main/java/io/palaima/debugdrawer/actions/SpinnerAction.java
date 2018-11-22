@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,29 +19,24 @@ public class SpinnerAction<T> implements Action {
         void onItemSelected(T value);
     }
 
-    private final static int SPINNER_DEFAULT_POSITION = 0;
-
+    private final String name;
     private final List<String> titles;
     private final List<T> values;
     private final OnItemSelectedListener<T> listener;
 
-    private int selectedPosition = SPINNER_DEFAULT_POSITION;
+    private int selectedPosition;
 
-    public SpinnerAction(List<T> values, OnItemSelectedListener<T> listener) {
-        this(getTitles(values), values, listener, SPINNER_DEFAULT_POSITION);
+    public SpinnerAction(String name, List<T> values, OnItemSelectedListener<T> listener) {
+        this(name, getTitles(values), values, listener);
     }
 
-    public SpinnerAction(List<T> values, OnItemSelectedListener<T> listener, int initialSelectedPosition) {
-        this(getTitles(values), values, listener, initialSelectedPosition);
-    }
-
-    public SpinnerAction(List<String> titles, List<T> values, OnItemSelectedListener<T> listener, int initialSelectedPosition) {
+    public SpinnerAction(String name, List<String> titles, List<T> values, OnItemSelectedListener<T> listener) {
+        this.name = name;
         this.values = values;
         this.titles = titles;
         this.listener = listener;
-        if (initialSelectedPosition >= 0 && initialSelectedPosition < values.size()) {
-            this.selectedPosition = initialSelectedPosition;
-        } else {
+        this.selectedPosition = ActionSetup.getInstance().getSpinnerActionHandler().getSpinnerValue(name);
+        if (selectedPosition < 0 || selectedPosition >= values.size()) {
             throw new IllegalStateException("initial selected position is out of bounds");
         }
     }
@@ -48,14 +44,23 @@ public class SpinnerAction<T> implements Action {
     @Override
     public View getView(@NonNull final LayoutInflater inflater, @NonNull final LinearLayout parent) {
         final Context context = parent.getContext();
-        final Spinner spinner = (Spinner) inflater.inflate(R.layout.dd_debug_drawer_module_actions_spinner, parent, false);
+        final View viewGroup = inflater.inflate(R.layout.dd_debug_drawer_module_actions_spinner, parent, false);
+
+        final TextView textView = viewGroup.findViewById(R.id.action_spinner_name);
+        final Spinner spinner = viewGroup.findViewById(R.id.action_spinner);
+
+        textView.setText(name);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (listener != null && position != selectedPosition) {
                     listener.onItemSelected(values.get(position));
                 }
-                selectedPosition = position;
+                if (position != selectedPosition) {
+                    selectedPosition = position;
+                    ActionSetup.getInstance().getSpinnerActionHandler().setSpinnerValue(name, selectedPosition);
+                }
             }
 
             @Override
@@ -72,7 +77,7 @@ public class SpinnerAction<T> implements Action {
             spinner.setSelection(selectedPosition);
         }
 
-        return spinner;
+        return viewGroup;
     }
 
     @Override
@@ -111,5 +116,10 @@ public class SpinnerAction<T> implements Action {
             titles.add(value.toString());
         }
         return titles;
+    }
+
+    public interface ValueHandler {
+        int getSpinnerValue(String preferenceName );
+        void setSpinnerValue(String preferenceName, int selectedPosition);
     }
 }

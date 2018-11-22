@@ -77,6 +77,7 @@ public class DebugViewActivity extends AppCompatActivity {
         });
 
         SpinnerAction<String> spinnerAction = new SpinnerAction<>(
+                "Test spinner",
             Arrays.asList("First", "Second", "Third"),
             new SpinnerAction.OnItemSelectedListener<String>() {
                 @Override
