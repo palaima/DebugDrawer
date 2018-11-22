@@ -1,7 +1,5 @@
 package io.palaima.debugdrawer.actions;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
