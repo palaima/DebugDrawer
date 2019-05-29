@@ -53,8 +53,10 @@ final class DebugDrawerLifecycleCallbacks implements Application.ActivityLifecyc
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        this.activity.getApplication().unregisterActivityLifecycleCallbacks(this);
-        this.activity = null;
-        debugDrawer = null;
+        if (this.activity == activity) {
+            this.activity.getApplication().unregisterActivityLifecycleCallbacks(this);
+            this.activity = null;
+            debugDrawer = null;
+        }
     }
 }
