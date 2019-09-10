@@ -10,6 +10,12 @@ import io.palaima.debugdrawer.timber.ui.LogDialog;
 
 public class TimberModule extends DebugModuleAdapter {
 
+    private final String fileAuthority;
+
+    public TimberModule(final String fileAuthority) {
+        this.fileAuthority = fileAuthority;
+    }
+
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull final ViewGroup parent) {
@@ -18,7 +24,7 @@ public class TimberModule extends DebugModuleAdapter {
         view.findViewById(R.id.dd_button_log).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LogDialog(parent.getContext()).show();
+                new LogDialog(parent.getContext(), fileAuthority).show();
             }
         });
 

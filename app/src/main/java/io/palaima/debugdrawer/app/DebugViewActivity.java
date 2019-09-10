@@ -95,7 +95,7 @@ public class DebugViewActivity extends AppCompatActivity {
             new LocationModule(),
             new LogsModule(),
             new ScalpelModule(this),
-            new TimberModule(),
+            new TimberModule("mydomain.fileprovider"),
             new OkHttp3Module(okHttpClient),
             new NetworkQualityModule(this),
             new DeviceModule(),

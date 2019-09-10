@@ -29,6 +29,7 @@ android {
         // which is harmless for us. Not sure how to disable this in
         // more targeted fashion...
         warning 'InvalidPackage'
+          abortOnError false
     }
 }
 
