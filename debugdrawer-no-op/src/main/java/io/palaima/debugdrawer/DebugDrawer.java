@@ -18,11 +18,12 @@ package io.palaima.debugdrawer;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IntegerRes;
-import android.support.annotation.StyleRes;
-import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntegerRes;
+import androidx.annotation.StyleRes;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import io.palaima.debugdrawer.base.DebugModule;
 

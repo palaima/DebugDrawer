@@ -1,11 +1,12 @@
 package io.palaima.debugdrawer.fps;
 
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import androidx.annotation.NonNull;
 
 import io.palaima.debugdrawer.base.DebugModuleAdapter;
 import jp.wasabeef.takt.Takt;
@@ -45,17 +46,17 @@ public class FpsModule extends DebugModuleAdapter {
         final View view = inflater.inflate(R.layout.dd_debug_drawer_item_fps, parent, false);
         final Switch showSwitch = (Switch) view.findViewById(R.id.dd_debug_fps);
         showSwitch.setOnCheckedChangeListener(
-            new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-                    FpsModule.this.isChecked = isChecked;
-                    if (isChecked) {
-                        program.play();
-                    } else {
-                        program.stop();
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                        FpsModule.this.isChecked = isChecked;
+                        if (isChecked) {
+                            program.play();
+                        } else {
+                            program.stop();
+                        }
                     }
-                }
-            });
+                });
         return view;
     }
 

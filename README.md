@@ -1,6 +1,6 @@
 # Android Debug Drawer
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Debug%20Drawer-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1892)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Debug%20Drawer-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1892) [![](https://jitpack.io/v/lenguyenthanh/debugdrawer.svg)](https://jitpack.io/#lenguyenthanh/debugdrawer)
 
 Faster development with Debug Drawer
 
@@ -24,7 +24,7 @@ Faster development with Debug Drawer
 
 ![](./images/network.png)
 
-`OkHttpModule`,`OkHttp3Module` - common information about http client (requires extra dependency)
+`OkHttp3Module` - common information about http client (requires extra dependency)
 
 ![](./images/okhttp.png)
 
@@ -76,30 +76,30 @@ Add Gradle dependencies:
 #### `DebugDrawer`
 ```gradle
 dependencies {
-   debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.8.0'
-   releaseImplementation 'io.palaima.debugdrawer:debugdrawer-no-op:0.8.0'
+   debugImplementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer:{version}'
+   releaseImplementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-no-op:{version}'
 }
 ```
 
 #### `DebugView`
 ```gradle
 dependencies {
-   debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.8.0'
-   releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.8.0'
+   debugImplementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-view:{version}'
+   releaseImplementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-view-no-op:{version}'
 }
 ```
 
 `BuildModule`, `DeviceModule`, `SettingsModule`, `NetworkModule`
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-commons:{version}'
 }
 ```
 
 `ActionsModule` - `ButtonAction`, `SwitchAction`, `SpinnerAction`
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-actions:{version}'
 }
 ```
 
@@ -107,8 +107,8 @@ dependencies {
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-okhttp:0.8.0'
-   implementation 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-okhttp:{version}'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-okhttp3:{version}'
 }
 ```
 
@@ -116,7 +116,7 @@ dependencies {
 [Picasso](https://github.com/square/picasso) library required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-picasso:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-picasso:{version}'
 }
 ```
 
@@ -124,7 +124,7 @@ dependencies {
 [Glide](https://github.com/bumptech/glide) library required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-glide:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-glide:{version}'
 }
 ```
 
@@ -132,14 +132,14 @@ dependencies {
 [Scalpel](https://github.com/JakeWharton/scalpel) library required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-scalpel:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-scalpel:{version}'
 }
 ```
 
 `LocationModule`
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-location:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-location:{version}'
 }
 ```
 
@@ -147,7 +147,7 @@ dependencies {
 [Timber](https://github.com/JakeWharton/timber) library required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:{version}'
 }
 ```
 
@@ -155,7 +155,7 @@ dependencies {
 [Takt](https://github.com/wasabeef/Takt) library required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-fps:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-fps:{version}'
 }
 ```
 
@@ -164,7 +164,7 @@ dependencies {
 [Lynx](https://github.com/pedrovgs/Lynx) & [Chuck](https://github.com/jgilfelt/chuck) libraries required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-logs:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-logs:{version}'
 }
 ```
 
@@ -172,7 +172,7 @@ dependencies {
 [OkHttp](https://github.com/square/okhttp) library required
 ```gradle
 dependencies {
-   implementation 'io.palaima.debugdrawer:debugdrawer-network-quality:0.8.0'
+   implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-network-quality:{version}'
 }
 ```
 
@@ -182,7 +182,7 @@ dependencies {
 
 You could use `DebugDrawer` or `DebugView` depending on your needs
 
-#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java))
+#### Example using `DebugDrawer` (For `DebugView` initialization check [DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/com.github.lenguyenthanh/debugdrawer/app/DebugViewActivity.java))
 
 ```java
 
@@ -219,7 +219,7 @@ You could use `DebugDrawer` or `DebugView` depending on your needs
         debugDrawer = new DebugDrawer.Builder(this)
             .modules(
                 new ActionsModule(switchAction, buttonAction, spinnerAction),
-                new FpsModule(Takt.stock(getApplication())),
+                new FpsModule(Takt.stock(getApplication()).useCustomControl()),
                 new LocationModule(this),
                 new ScalpelModule(this),
                 new TimberModule(),
@@ -258,7 +258,7 @@ Application class example:
 
 ## Creating and Publishing Your Own Module
 
-Add `implementation 'io.palaima.debugdrawer:debugdrawer-base:0.8.0'` to your dependencies
+Add `implementation 'com.github.lenguyenthanh.debugdrawer:debugdrawer-base:{version}'` to your dependencies
 
 Module must implement `DebugModule` interface or extend `DebugModuleAdapter` if you do not need lifecycle hooks
 
@@ -316,9 +316,9 @@ Module must implement `DebugModule` interface or extend `DebugModuleAdapter` if 
 
 You can clone the project and compile it yourself (it includes a sample).
 
-[MainActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/MainActivity.java)
+[MainActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/com.github.lenguyenthanh/debugdrawer/app/MainActivity.java)
 
-[DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/io/palaima/debugdrawer/app/DebugViewActivity.java)
+[DebugViewActivity](https://github.com/palaima/DebugDrawer/blob/master/app/src/main/java/com.github.lenguyenthanh/debugdrawer/app/DebugViewActivity.java)
 
 ## Contributing
 Want to contribute? You are welcome!

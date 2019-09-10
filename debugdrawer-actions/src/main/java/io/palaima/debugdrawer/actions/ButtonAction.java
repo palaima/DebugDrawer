@@ -1,10 +1,11 @@
 package io.palaima.debugdrawer.actions;
 
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
 
 public class ButtonAction implements Action {
 

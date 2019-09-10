@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
 
@@ -20,23 +20,6 @@ allprojects {
     repositories {
         jcenter()
         google()
-    }
-
-    configurations.all {
-        resolutionStrategy.force "com.android.support:support-compat:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-core-ui:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-core-utils:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-annotations:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-v4:$supportVersion"
-        resolutionStrategy.force "com.android.support:appcompat-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-v13:$supportVersion"
-        resolutionStrategy.force "com.android.support:cardview-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:design:$supportVersion"
-        resolutionStrategy.force "com.android.support:percent:$supportVersion"
-        resolutionStrategy.force "com.android.support:palette-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:recyclerview-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:customtabs:$supportVersion"
-        resolutionStrategy.force "com.android.support:animated-vector-drawable:$supportVersion"
     }
 }
 
@@ -57,24 +40,24 @@ allprojects {
     ext.dryRun = properties['version.dryRun'].toBoolean()
     ext.publish = properties['version.publish'].toBoolean()
 
-    ext.minSdkVersion = 16
-    ext.compileSdkVersion = 27
-    ext.targetSdkVersion = 27
-    ext.buildToolsVersion = '27.0.1'
+    ext.minSdkVersion = 19
+    ext.compileSdkVersion = 29
+    ext.targetSdkVersion = 29
 
-    ext.supportVersion = '27.0.2'
+    ext.androidxAnnotation = "1.1.0"
+    ext.androidxCompat = "1.1.0"
+
     ext.butterknifeVersion = '8.4.0'
-    ext.glideVersion = '3.7.0'
-    ext.picassoVersion = '2.5.2'
+    ext.glideVersion = '4.9.0'
+    ext.picassoVersion = '2.71828'
     ext.picasso2Okhttp3Downloader = '1.0.2'
-    ext.playServiceVersion = '11.8.0'
-    ext.timberVersion = '4.6.0'
-    ext.okhttpVersion = '3.4.1'
-    ext.okhttp2Version = '2.7.0'
+    ext.playServiceVersion = '17.0.0'
+    ext.timberVersion = '4.7.1'
+    ext.okhttpVersion = '4.1.1'
     ext.scalpelVersion = '1.1.2'
-    ext.taktVersion = '1.0.2'
+    ext.taktVersion = '2.0.1'
     ext.leakCanaryVersion = '1.5.4'
-    ext.lynxVersion = '1.1.0'
+    ext.lynxVersion = '1.6'
     ext.chukVersion = '1.1.0'
 
     ext.bintrayRepo = snapshot ? 'snapshots' : 'maven'

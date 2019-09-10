@@ -18,12 +18,13 @@
 package io.palaima.debugdrawer.commons;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import io.palaima.debugdrawer.base.DebugModuleAdapter;
 

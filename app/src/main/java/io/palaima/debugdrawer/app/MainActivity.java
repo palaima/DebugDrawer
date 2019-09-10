@@ -3,12 +3,13 @@ package io.palaima.debugdrawer.app;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         new DebugDrawer.Builder(this).modules(
             new GlideModule(Glide.get(this)),
             new ActionsModule(switchAction, buttonAction, spinnerAction),
-            new FpsModule(Takt.stock(getApplication())),
+            new FpsModule(Takt.stock(getApplication()).useCustomControl()),
             new LocationModule(),
             new LogsModule(),
             new ScalpelModule(this),

@@ -1,13 +1,14 @@
 package io.palaima.debugdrawer.actions;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
