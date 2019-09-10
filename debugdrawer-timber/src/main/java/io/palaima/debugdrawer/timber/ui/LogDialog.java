@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,11 +22,13 @@ import io.palaima.debugdrawer.timber.util.Intents;
 public class LogDialog extends AlertDialog {
 
     private final LogAdapter adapter;
+    private final String fileAuthority;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
-    public LogDialog(Context context) {
+    public LogDialog(Context context, String fileAuthority) {
         super(context, R.style.Theme_AppCompat);
+        this.fileAuthority = fileAuthority;
 
         adapter = new LogAdapter();
 
@@ -88,7 +91,8 @@ public class LogDialog extends AlertDialog {
                 public void onSave(File file) {
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                     sendIntent.setType("text/plain");
-                    sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+
+                    sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(getContext(), fileAuthority, file));
                     Intents.maybeStartActivity(getContext(), sendIntent);
                 }
 
