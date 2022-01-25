@@ -20,7 +20,7 @@ android {
 
 dependencies {
     implementation project(':debugdrawer-base')
-    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
+    implementation 'androidx.appcompat:appcompat:1.0.0'
 }
 
 ext {

@@ -1,7 +1,7 @@
 package io.palaima.debugdrawer.app;
 
 import android.app.Application;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import com.squareup.leakcanary.LeakCanary;
 

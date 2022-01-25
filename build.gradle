@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
@@ -58,8 +58,8 @@ allprojects {
     ext.publish = properties['version.publish'].toBoolean()
 
     ext.minSdkVersion = 16
-    ext.compileSdkVersion = 27
-    ext.targetSdkVersion = 27
+    ext.compileSdkVersion = 31
+    ext.targetSdkVersion = 31
     ext.buildToolsVersion = '27.0.1'
 
     ext.supportVersion = '27.0.2'
@@ -95,6 +95,8 @@ allprojects {
 
     ext.githubRepo = 'palaima/DebugDrawer'
     ext.githubReleaseNotesFile = 'README.md'
+
+    repositories { maven { url 'https://jitpack.io' } }
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
