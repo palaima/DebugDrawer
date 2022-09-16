@@ -29,7 +29,7 @@ import io.palaima.debugdrawer.logs.LogsModule;
 import io.palaima.debugdrawer.network.quality.NetworkQualityModule;
 import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
 import io.palaima.debugdrawer.picasso.PicassoModule;
-import io.palaima.debugdrawer.scalpel.ScalpelModule;
+//import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import io.palaima.debugdrawer.timber.TimberModule;
 import io.palaima.debugdrawer.view.DebugView;
 import okhttp3.Cache;
@@ -93,7 +93,7 @@ public class DebugViewActivity extends AppCompatActivity {
             new PicassoModule(picasso),
             new LocationModule(),
             new LogsModule(),
-            new ScalpelModule(this),
+//            new ScalpelModule(this),
             new TimberModule(),
             new OkHttp3Module(okHttpClient),
             new NetworkQualityModule(this),

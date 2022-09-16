@@ -80,7 +80,7 @@ dependencies {
     implementation project(':debugdrawer-picasso')
     implementation project(':debugdrawer-okhttp3')
     //implementation project(':debugdrawer-okhttp')
-    implementation project(':debugdrawer-scalpel')
+//    implementation project(':debugdrawer-scalpel')
     implementation project(':debugdrawer-location')
     implementation project(':debugdrawer-timber')
 //    implementation project(':debugdrawer-fps')
