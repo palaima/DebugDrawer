@@ -19,24 +19,6 @@ allprojects {
     }
 }
 
-//    ext.orgName = 'palaima'
-//
-//    ext.publishedGroupId = 'io.palaima.debugdrawer'
-//
-//    ext.siteUrl = 'https://github.com/palaima/DebugDrawer'
-//    ext.gitUrl = 'https://github.com/palaima/DebugDrawer.git'
-//
-//    ext.developerId = 'palaima'
-//    ext.developerName = 'Mantas Palaima'
-//    ext.developerEmail = 'palaima.mantas@gmail.com'
-//
-//    ext.licenseName = 'The Apache Software License, Version 2.0'
-//    ext.licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//    ext.allLicenses = ["Apache-2.0"]
-//
-//    ext.githubRepo = 'palaima/DebugDrawer'
-//    ext.githubReleaseNotesFile = 'README.md'
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

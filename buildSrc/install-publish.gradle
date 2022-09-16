@@ -1,7 +1,7 @@
 apply plugin: 'maven-publish'
 
 group = "com.github.kibotu"
-version = "1.0.0"
+version = VERSIONNAME
 
 android {
 
@@ -15,9 +15,9 @@ android {
 publishing {
     publications {
         release(MavenPublication) {
-            groupId = group
+            groupId = "com.github.kibotu"
             artifactId = artifact
-            version = "1.0.0"
+            version = VERSIONNAME
 
             afterEvaluate {
                 from components.release

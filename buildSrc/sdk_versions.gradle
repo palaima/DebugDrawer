@@ -24,4 +24,9 @@ ext {
 
     VERSIONCODE = MAJOR_VERSION * 10000000 + MINOR_VERSION * 100000 + HOTFIX_VERSION * 1000 + BUILD_NUMBER
     VERSIONNAME = "1.0.0"
+
+    println "Injected variables - App"
+    println "VERSIONCODE: $VERSIONCODE"
+    println "VERSION: $VERSIONNAME"
+    println()
 }
