@@ -26,6 +26,13 @@ ext {
     VERSIONNAME = "1.0.0"
 
     println "Injected variables - App"
+
+    v = System.getProperty("version")
+    if (v != null) {
+        println "BUILD_VERSION: ${v}"
+        VERSIONNAME = v
+    }
+
     println "VERSIONCODE: $VERSIONCODE"
     println "VERSION: $VERSIONNAME"
     println()
