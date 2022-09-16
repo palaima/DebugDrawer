@@ -1,16 +1,24 @@
 apply plugin: 'maven-publish'
 
-afterEvaluate {
+android {
+
     publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = "com.github.kibotu"
-                artifactId = artifact
-                version = "1.0.0"
-            }
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
         }
     }
 }
 
-
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = "com.github.kibotu"
+//                artifactId = artifact
+//                version = "1.0.0"
+//            }
+//        }
+//    }
+//}

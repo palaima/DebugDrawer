@@ -1,6 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'debugdrawer-network-quality'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
+
+
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
@@ -43,9 +50,3 @@ dependencies {
     implementation getLibrary("androidx.annotation:annotation")
     implementation getLibrary("com.squareup.okhttp3:okhttp")
 }
-
-ext {
-    artifact = 'debugdrawer-network-quality'
-}
-
-apply from: "../buildSrc/install-publish.gradle"

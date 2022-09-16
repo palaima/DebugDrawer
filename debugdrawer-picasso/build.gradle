@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'debugdrawer-picasso'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
+
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
@@ -43,9 +49,3 @@ dependencies {
     implementation getLibrary("androidx.annotation:annotation")
     implementation getLibrary("com.squareup.picasso:picasso")
 }
-
-ext {
-    artifact = 'debugdrawer-picasso'
-}
-
-apply from: "../buildSrc/install-publish.gradle"

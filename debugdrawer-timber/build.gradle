@@ -1,6 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'debugdrawer-timber'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
+
+
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
@@ -42,9 +49,3 @@ dependencies {
     implementation getLibrary("androidx.appcompat:appcompat")
     implementation getLibrary("com.jakewharton.timber:timber")
 }
-
-ext {
-    artifact = 'debugdrawer-timber'
-}
-
-apply from: "../buildSrc/install-publish.gradle"

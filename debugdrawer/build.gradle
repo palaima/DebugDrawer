@@ -1,9 +1,17 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'debugdrawer'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
+
 android {
+
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
+
 
     defaultConfig {
         minSdkVersion MIN_SDK_VERSION
@@ -46,8 +54,4 @@ dependencies {
     implementation getLibrary("androidx.appcompat:appcompat")
 }
 
-ext {
-    artifact = 'debugdrawer'
-}
 
-apply from: "../buildSrc/install-publish.gradle"

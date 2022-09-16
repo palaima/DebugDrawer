@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'debugdrawer-scalpel'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
+
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
@@ -44,8 +50,4 @@ dependencies {
     implementation getLibrary("com.jakewharton.scalpel:scalpel")
 }
 
-ext {
-    artifact = 'debugdrawer-scalpel'
-}
 
-apply from: "../buildSrc/install-publish.gradle"

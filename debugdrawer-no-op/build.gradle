@@ -1,5 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+ext {
+    artifact = 'debugdrawer-no-op'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
+
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
@@ -41,9 +47,3 @@ dependencies {
     implementation project(':debugdrawer-base')
     implementation getLibrary("androidx.appcompat:appcompat")
 }
-
-ext {
-    artifact = 'debugdrawer-no-op'
-}
-
-apply from: "../buildSrc/install-publish.gradle"

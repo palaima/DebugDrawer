@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'debugdrawer-logs'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
+
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
@@ -27,9 +33,3 @@ dependencies {
     implementation getLibrary("com.github.pedrovgs:lynx")
     implementation getLibrary("com.readystatesoftware.chuck:library")
 }
-
-ext {
-    artifact = 'debugdrawer-logs'
-}
-
-apply from: "../buildSrc/install-publish.gradle"

@@ -1,4 +1,11 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+ext {
+    artifact = 'debugdrawer-commons'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
@@ -27,12 +34,3 @@ dependencies {
     implementation getLibrary("androidx.annotation:annotation")
     implementation project(':debugdrawer-base')
 }
-
-ext {
-    libraryName = 'Debug Drawer Commons Module'
-    artifact = 'debugdrawer-commons'
-    libraryDescription = 'Android Debug Drawer Commons Module'
-}
-
-//apply from: rootProject.file('gradle/install-v1.gradle')
-//apply from: rootProject.file('gradle/bintray-android-v1.gradle')
