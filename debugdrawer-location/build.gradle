@@ -1,14 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
     }
     buildTypes {
         release {
@@ -21,11 +19,15 @@ android {
     }
 }
 
+apply from: "../buildSrc/module_dependencies.gradle"
+
 dependencies {
-    implementation "com.android.support:support-annotations:$rootProject.ext.supportVersion"
-    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
+
     implementation project(':debugdrawer-base')
-    compileOnly "com.google.android.gms:play-services-location:$rootProject.ext.playServiceVersion"
+
+    implementation getLibrary("androidx.annotation:annotation")
+    implementation getLibrary("androidx.appcompat:appcompat")
+    implementation getLibrary("com.google.android.gms:play-services-location")
 }
 
 ext {
@@ -34,5 +36,5 @@ ext {
     libraryDescription = 'Android Debug Drawer Location Module'
 }
 
-apply from: rootProject.file('gradle/install-v1.gradle')
-apply from: rootProject.file('gradle/bintray-android-v1.gradle')
+//apply from: rootProject.file('gradle/install-v1.gradle')
+//apply from: rootProject.file('gradle/bintray-android-v1.gradle')

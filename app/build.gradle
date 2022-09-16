@@ -1,10 +1,5 @@
 apply plugin: 'com.android.application'
 
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -31,6 +26,8 @@ android {
         warning 'InvalidPackage'
     }
 }
+
+apply from: "../buildSrc/module_dependencies.gradle"
 
 dependencies {
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"

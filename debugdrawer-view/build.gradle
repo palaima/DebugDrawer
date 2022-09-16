@@ -1,14 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
     }
     buildTypes {
         release {
@@ -17,6 +15,8 @@ android {
         }
     }
 }
+
+apply from: "../buildSrc/module_dependencies.gradle"
 
 dependencies {
     implementation project(':debugdrawer-base')
@@ -28,5 +28,5 @@ ext {
     libraryDescription = 'Android Debug Drawer View'
 }
 
-apply from: rootProject.file('gradle/install-v1.gradle')
-apply from: rootProject.file('gradle/bintray-android-v1.gradle')
+//apply from: rootProject.file('gradle/install-v1.gradle')
+//apply from: rootProject.file('gradle/bintray-android-v1.gradle')
