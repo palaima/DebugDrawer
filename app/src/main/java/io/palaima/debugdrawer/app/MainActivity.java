@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             new BuildModule(),
             new NetworkModule(),
             new SettingsModule()
-        ).withTheme(R.style.Theme_AppCompat).build();
+        ).withTheme(R.style.AppTheme).build();
 
         showDummyLog();
 

@@ -14,21 +14,36 @@ public class DebugView extends LinearLayout {
     private DebugModule[] drawerItems;
 
     public DebugView(Context context) {
-        this(context, null);
-        setOrientation(VERTICAL);
+        super(context);
+        init(context, null, null, null);
     }
 
     public DebugView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-        setOrientation(VERTICAL);
+        super(context, attrs);
+        init(context, attrs, null, null);
     }
 
-    public DebugView(Context context, AttributeSet attrSet, int defStyleAttr) {
-        super(context, attrSet, defStyleAttr);
+    public DebugView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, null);
+    }
+
+    public DebugView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+
+    private void init(Context context, AttributeSet attributeSet, Integer defStyleAttr, Integer defStyleRes) {
         setOrientation(VERTICAL);
 
-        int[] attrs = {android.R.attr.windowBackground};
-        TypedArray a = context.obtainStyledAttributes(attrSet, attrs);
+        TypedArray a;
+        if (defStyleAttr == null || defStyleRes == null) {
+            a = context.obtainStyledAttributes(attributeSet, new int[]{android.R.attr.windowBackground});
+        } else {
+            a = context.obtainStyledAttributes(attributeSet, new int[]{android.R.attr.windowBackground}, defStyleAttr, defStyleRes);
+        }
+
         Drawable windowBackground = a.getDrawable(0);
         a.recycle();
         setBackgroundDrawable(windowBackground);

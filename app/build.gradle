@@ -8,6 +8,7 @@ android {
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
         applicationId "io.palaima.debugdrawer.app"
+        namespace 'io.palaima.debugdrawer.app'
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -38,6 +39,7 @@ dependencies {
 
     implementation getLibrary("com.google.android.material:material")
     implementation getLibrary("androidx.appcompat:appcompat")
+    implementation getLibrary("androidx.annotation:annotation")
     implementation getLibrary("com.squareup.picasso:picasso")
     implementation getLibrary("com.squareup.okhttp3:okhttp")
     implementation getLibrary("com.jakewharton.timber:timber")
@@ -48,10 +50,12 @@ dependencies {
 //    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picasso2Okhttp3Downloader"
 //    implementation "jp.wasabeef:takt:$rootProject.ext.taktVersion"
 
-    releaseImplementation project(':debugdrawer-no-op')
-    releaseImplementation project(':debugdrawer-view-no-op')
-    debugImplementation project(':debugdrawer')
     debugImplementation project(':debugdrawer-view')
+    releaseImplementation project(':debugdrawer-view-no-op')
+
+    debugImplementation project(':debugdrawer')
+    releaseImplementation project(':debugdrawer-no-op')
+
     implementation project(':debugdrawer-base')
     implementation project(':debugdrawer-commons')
     implementation project(':debugdrawer-actions')
