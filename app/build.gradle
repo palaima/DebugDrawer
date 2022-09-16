@@ -36,6 +36,7 @@ dependencies {
     debugImplementation getLibrary("com.readystatesoftware.chuck:library")
     releaseImplementation getLibrary("com.readystatesoftware.chuck:library-no-op")
 
+    implementation getLibrary("com.google.android.material:material")
     implementation getLibrary("androidx.appcompat:appcompat")
     implementation getLibrary("com.squareup.picasso:picasso")
     implementation getLibrary("com.squareup.okhttp3:okhttp")
