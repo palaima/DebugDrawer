@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'com.android.tools.build:gradle:7.3.0'
     }
 }
 
@@ -18,43 +18,6 @@ allprojects {
     }
 }
 
-//allprojects {
-//    def properties = new Properties()
-//    properties.load(new FileInputStream(new File(rootDir, "version.properties")))
-//    def major = properties['version.major'] as int
-//    def minor = properties['version.minor'] as int
-//    def patch = properties['version.patch'] as int
-//    def suffix = properties['version.suffix']?.toString()?.trim() ?: ""
-//    def snapshot = properties['version.snapshot'].toBoolean()
-//
-//    ext.libraryVersion = "$major.$minor.$patch" + (suffix.isAllWhitespace() ? '' : "-$suffix") + (snapshot ? '-RC' : '')
-//    ext.group = 'io.palaima.debugdrawer'
-//    ext.override = snapshot
-//
-//    ext.dryRun = properties['version.dryRun'].toBoolean()
-//    ext.publish = properties['version.publish'].toBoolean()
-//
-//    ext.minSdkVersion = 21
-//    ext.compileSdkVersion = 33
-//    ext.targetSdkVersion = 33
-//    ext.buildToolsVersion = '33.0.0'
-//
-//    ext.supportVersion = '27.0.2'
-//    ext.butterknifeVersion = '8.4.0'
-//    ext.glideVersion = '3.7.0'
-//    ext.picassoVersion = '2.5.2'
-//    ext.picasso2Okhttp3Downloader = '1.0.2'
-//    ext.playServiceVersion = '11.8.0'
-//    ext.timberVersion = '4.6.0'
-//    ext.okhttpVersion = '3.4.1'
-//    ext.okhttp2Version = '2.7.0'
-//    ext.scalpelVersion = '1.1.2'
-//    ext.taktVersion = '1.0.2'
-//    ext.leakCanaryVersion = '1.5.4'
-//    ext.lynxVersion = '1.1.0'
-//    ext.chukVersion = '1.1.0'
-//
-//    ext.bintrayRepo = snapshot ? 'snapshots' : 'maven'
 //    ext.orgName = 'palaima'
 //
 //    ext.publishedGroupId = 'io.palaima.debugdrawer'
@@ -72,7 +35,6 @@ allprojects {
 //
 //    ext.githubRepo = 'palaima/DebugDrawer'
 //    ext.githubReleaseNotesFile = 'README.md'
-//}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

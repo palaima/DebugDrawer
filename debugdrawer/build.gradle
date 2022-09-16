@@ -21,10 +21,10 @@ apply from: "../buildSrc/module_dependencies.gradle"
 
 dependencies {
 
-    implementation getLibrary("androidx.appcompat:appcompat")
-
     implementation project(':debugdrawer-view')
     implementation project(':debugdrawer-base')
+
+    implementation getLibrary("androidx.appcompat:appcompat")
 }
 
 ext {

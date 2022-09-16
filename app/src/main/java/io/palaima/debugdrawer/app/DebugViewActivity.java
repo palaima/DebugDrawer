@@ -3,12 +3,13 @@ package io.palaima.debugdrawer.app;
 import android.app.Application;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.jakewharton.picasso.OkHttp3Downloader;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -23,7 +24,6 @@ import io.palaima.debugdrawer.commons.BuildModule;
 import io.palaima.debugdrawer.commons.DeviceModule;
 import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
-import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.logs.LogsModule;
 import io.palaima.debugdrawer.network.quality.NetworkQualityModule;
@@ -32,7 +32,6 @@ import io.palaima.debugdrawer.picasso.PicassoModule;
 import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import io.palaima.debugdrawer.timber.TimberModule;
 import io.palaima.debugdrawer.view.DebugView;
-import jp.wasabeef.takt.Takt;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -90,7 +89,7 @@ public class DebugViewActivity extends AppCompatActivity {
 
         debugView.modules(
             new ActionsModule(switchAction, buttonAction, spinnerAction),
-            new FpsModule(Takt.stock(getApplication())),
+//            new FpsModule(Takt.stock(getApplication())),
             new PicassoModule(picasso),
             new LocationModule(),
             new LogsModule(),

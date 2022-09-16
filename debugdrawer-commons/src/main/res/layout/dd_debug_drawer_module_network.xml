@@ -1,52 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
     android:columnCount="2"
+    android:padding="12dp"
     tools:ignore="UselessParent">
-    <TextView
-        android:layout_columnSpan="2"
-        android:layout_width="0dp"
-        android:layout_gravity="start|fill_horizontal"
-        android:text="Network"
-        style="@style/Widget.DebugDrawer.Base.Header"
-        />
 
     <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Wifi"
+        style="@style/Widget.DebugDrawer.Base.Header"
+        android:layout_width="0dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|fill_horizontal"
+        android:text="Network" />
+
+    <TextView
         style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
+        android:layout_gravity="start|center_vertical"
+        android:text="Wifi" />
+
     <Switch
         android:id="@+id/dd_debug_network_wifi"
-        android:layout_gravity="start|center_vertical"
         style="@style/Widget.DebugDrawer.Base.RowWidget"
-        />
+        android:layout_gravity="start|center_vertical" />
 
     <TextView
         android:id="@+id/dd_debug_network_mobile_label"
-        android:layout_gravity="start|center_vertical"
-        android:text="Mobile"
         style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
+        android:layout_gravity="start|center_vertical"
+        android:text="Mobile" />
+
     <Switch
         android:id="@+id/dd_debug_network_mobile"
-        android:layout_gravity="start|center_vertical"
         style="@style/Widget.DebugDrawer.Base.RowWidget"
-        />
+        android:layout_gravity="start|center_vertical" />
 
     <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Bluetooth"
         style="@style/Widget.DebugDrawer.Base.RowTitle"
-        />
+        android:layout_gravity="start|center_vertical"
+        android:text="Bluetooth" />
+
     <Switch
         android:id="@+id/dd_debug_network_bluetooth"
-        android:layout_gravity="start|center_vertical"
         style="@style/Widget.DebugDrawer.Base.RowWidget"
-        />
+        android:layout_gravity="start|center_vertical" />
 
 </GridLayout>

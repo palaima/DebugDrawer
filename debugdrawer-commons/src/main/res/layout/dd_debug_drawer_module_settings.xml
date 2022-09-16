@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="12dp">
-
 
     <TextView
         android:id="@+id/textView"
         style="@style/Widget.DebugDrawer.Base.Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Settings"/>
+        android:text="Settings" />
 
 
     <LinearLayout
@@ -25,13 +23,13 @@
             style="@style/Widget.DebugDrawer.Settings.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dd_ic_developer_mode_black_24dp"/>
+            android:src="@drawable/dd_ic_developer_mode_black_24dp" />
 
         <TextView
             style="@style/Widget.DebugDrawer.Settings.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Developer"/>
+            android:text="Developer" />
 
     </LinearLayout>
 
@@ -45,13 +43,13 @@
             style="@style/Widget.DebugDrawer.Settings.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dd_ic_battery_charging_full_black_24dp"/>
+            android:src="@drawable/dd_ic_battery_charging_full_black_24dp" />
 
         <TextView
             style="@style/Widget.DebugDrawer.Settings.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Battery"/>
+            android:text="Battery" />
 
     </LinearLayout>
 
@@ -66,13 +64,13 @@
             style="@style/Widget.DebugDrawer.Settings.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dd_ic_location_on_black_24dp"/>
+            android:src="@drawable/dd_ic_location_on_black_24dp" />
 
         <TextView
             style="@style/Widget.DebugDrawer.Settings.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"/>
+            android:text="Location" />
 
     </LinearLayout>
 
@@ -87,13 +85,13 @@
             style="@style/Widget.DebugDrawer.Settings.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dd_ic_settings_black_24dp"/>
+            android:src="@drawable/dd_ic_settings_black_24dp" />
 
         <TextView
             style="@style/Widget.DebugDrawer.Settings.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"/>
+            android:text="Settings" />
 
     </LinearLayout>
 
@@ -107,13 +105,13 @@
             style="@style/Widget.DebugDrawer.Settings.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dd_ic_info_outline_black_24dp"/>
+            android:src="@drawable/dd_ic_info_outline_black_24dp" />
 
         <TextView
             style="@style/Widget.DebugDrawer.Settings.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="App info"/>
+            android:text="App info" />
 
     </LinearLayout>
 
@@ -127,13 +125,13 @@
             style="@style/Widget.DebugDrawer.Settings.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dd_ic_delete_black_24dp"/>
+            android:src="@drawable/dd_ic_delete_black_24dp" />
 
         <TextView
             style="@style/Widget.DebugDrawer.Settings.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Uninstall"/>
+            android:text="Uninstall" />
 
     </LinearLayout>
 </LinearLayout>

@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.palaima.debugdrawer.view">
+<manifest package="io.palaima.debugdrawer.view">
 
     <application />
 
