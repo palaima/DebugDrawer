@@ -1,18 +1,15 @@
 apply plugin: 'com.android.application'
-
-repositories {
-    jcenter()
-    mavenCentral()
-}
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
         applicationId "io.palaima.debugdrawer.app"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        namespace 'io.palaima.debugdrawer.app'
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -30,63 +27,53 @@ android {
         // more targeted fashion...
         warning 'InvalidPackage'
     }
+
+    // region java compiler flags
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // endregion
+
+    // region compile options
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
+    // endregion
 }
 
+apply from: "../buildSrc/module_dependencies.gradle"
+
 dependencies {
-    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
-    implementation "com.android.support:support-v4:$rootProject.ext.supportVersion"
-    implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
-    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picasso2Okhttp3Downloader"
-    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
-    implementation "jp.wasabeef:takt:$rootProject.ext.taktVersion"
-    implementation "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
-    implementation "com.jakewharton.scalpel:scalpel:$rootProject.ext.scalpelVersion"
-    implementation "com.google.android.gms:play-services-location:$rootProject.ext.playServiceVersion"
-    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
-    implementation "com.github.pedrovgs:lynx:$rootProject.ext.lynxVersion"
-    debugImplementation "com.readystatesoftware.chuck:library:$rootProject.ext.chukVersion"
-    releaseImplementation "com.readystatesoftware.chuck:library-no-op:$rootProject.ext.chukVersion"
 
-    /*
-    debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.7.3'
-    debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.7.3'
-    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.3'
-    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.3'
-    //implementation 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-glide:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-location:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-fps:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-logs:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-network-quality:0.7.3'
-    implementation 'io.palaima.debugdrawer:debugdrawer-base:0.7.3'
-    */
+//    debugImplementation getLibrary("com.squareup.leakcanary:leakcanary-android")
 
-    /*debugImplementation 'io.palaima.debugdrawer:debugdrawer:0.7.1-SNAPSHOT'
-    debugImplementation 'io.palaima.debugdrawer:debugdrawer-view:0.7.1-SNAPSHOT'
-    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-no-op:0.7.1-SNAPSHOT'
-    releaseImplementation 'io.palaima.debugdrawer:debugdrawer-view-no-op:0.7.1-SNAPSHOT'
-    //implementation 'io.palaima.debugdrawer:debugdrawer-okhttp:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-okhttp3:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-scalpel:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-picasso:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-glide:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-location:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-timber:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-fps:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-actions:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-commons:0.7.1-SNAPSHOT'
-    implementation 'io.palaima.debugdrawer:debugdrawer-base:0.7.1-SNAPSHOT'*/
+    debugImplementation getLibrary("com.readystatesoftware.chuck:library")
+    releaseImplementation getLibrary("com.readystatesoftware.chuck:library-no-op")
 
-    releaseImplementation project(':debugdrawer-no-op')
-    releaseImplementation project(':debugdrawer-view-no-op')
-    debugImplementation project(':debugdrawer')
+    implementation getLibrary("com.google.android.material:material")
+    implementation getLibrary("androidx.appcompat:appcompat")
+    implementation getLibrary("androidx.annotation:annotation")
+    implementation getLibrary("com.squareup.picasso:picasso")
+    implementation getLibrary("com.squareup.okhttp3:okhttp")
+    implementation getLibrary("com.jakewharton.timber:timber")
+    implementation getLibrary("com.jakewharton.scalpel:scalpel")
+    implementation getLibrary("com.google.android.gms:play-services-location")
+    implementation getLibrary("com.github.bumptech.glide:glide")
+    implementation getLibrary("com.github.pedrovgs:lynx")
+//    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picasso2Okhttp3Downloader"
+//    implementation "jp.wasabeef:takt:$rootProject.ext.taktVersion"
+
     debugImplementation project(':debugdrawer-view')
+    releaseImplementation project(':debugdrawer-view-no-op')
+
+    debugImplementation project(':debugdrawer')
+    releaseImplementation project(':debugdrawer-no-op')
+
     implementation project(':debugdrawer-base')
     implementation project(':debugdrawer-commons')
     implementation project(':debugdrawer-actions')
@@ -96,11 +83,8 @@ dependencies {
     implementation project(':debugdrawer-scalpel')
     implementation project(':debugdrawer-location')
     implementation project(':debugdrawer-timber')
-    implementation project(':debugdrawer-fps')
+//    implementation project(':debugdrawer-fps')
     implementation project(':debugdrawer-glide')
     implementation project(':debugdrawer-logs')
     implementation project(':debugdrawer-network-quality')
-
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakCanaryVersion"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakCanaryVersion"
 }

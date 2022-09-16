@@ -3,12 +3,13 @@ package io.palaima.debugdrawer.app;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 
@@ -27,15 +28,13 @@ import io.palaima.debugdrawer.commons.BuildModule;
 import io.palaima.debugdrawer.commons.DeviceModule;
 import io.palaima.debugdrawer.commons.NetworkModule;
 import io.palaima.debugdrawer.commons.SettingsModule;
-import io.palaima.debugdrawer.fps.FpsModule;
 import io.palaima.debugdrawer.glide.GlideModule;
 import io.palaima.debugdrawer.location.LocationModule;
 import io.palaima.debugdrawer.logs.LogsModule;
 import io.palaima.debugdrawer.network.quality.NetworkQualityModule;
 import io.palaima.debugdrawer.okhttp3.OkHttp3Module;
-import io.palaima.debugdrawer.scalpel.ScalpelModule;
+//import io.palaima.debugdrawer.scalpel.ScalpelModule;
 import io.palaima.debugdrawer.timber.TimberModule;
-import jp.wasabeef.takt.Takt;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -82,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
         new DebugDrawer.Builder(this).modules(
             new GlideModule(Glide.get(this)),
             new ActionsModule(switchAction, buttonAction, spinnerAction),
-            new FpsModule(Takt.stock(getApplication())),
+//            new FpsModule(Takt.stock(getApplication())),
             new LocationModule(),
             new LogsModule(),
-            new ScalpelModule(this),
+//            new ScalpelModule(this),
             new TimberModule(),
             new OkHttp3Module(okHttpClient),
             new NetworkQualityModule(this),
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             new BuildModule(),
             new NetworkModule(),
             new SettingsModule()
-        ).withTheme(R.style.Theme_AppCompat).build();
+        ).withTheme(R.style.AppTheme).build();
 
         showDummyLog();
 

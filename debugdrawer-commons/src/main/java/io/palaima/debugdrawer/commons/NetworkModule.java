@@ -25,12 +25,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresPermission;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -84,17 +86,18 @@ public class NetworkModule extends DebugModuleAdapter {
 
         if (bluetoothAdapter != null) {
             bluetooth.setChecked(hasBluetoothPermission(context) && bluetoothAdapter.isEnabled());
+
             bluetooth.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-                        if (isChecked) {
-                            bluetoothAdapter.enable();
-                        } else {
-                            bluetoothAdapter.disable();
+                    new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                            if (isChecked) {
+                                bluetoothAdapter.enable();
+                            } else {
+                                bluetoothAdapter.disable();
+                            }
                         }
-                    }
-                });
+                    });
         } else {
             bluetooth.setEnabled(false);
         }
@@ -158,15 +161,15 @@ public class NetworkModule extends DebugModuleAdapter {
         public void onChanged(NetworkController.NetworkChangeEvent event) {
             if (wifi != null) {
                 wifi.setChecked(event.wifiState == NetworkInfo.State.CONNECTED
-                    || event.wifiState == NetworkInfo.State.CONNECTING);
+                        || event.wifiState == NetworkInfo.State.CONNECTING);
             }
             if (mobile != null) {
                 mobile.setChecked(event.mobileState == NetworkInfo.State.CONNECTED
-                    || event.mobileState == NetworkInfo.State.CONNECTING);
+                        || event.mobileState == NetworkInfo.State.CONNECTING);
             }
             if (bluetooth != null) {
                 bluetooth.setChecked(event.bluetoothState == NetworkController.BluetoothState.ON
-                    || event.bluetoothState == NetworkController.BluetoothState.TURNING_ON);
+                        || event.bluetoothState == NetworkController.BluetoothState.TURNING_ON);
             }
         }
     };

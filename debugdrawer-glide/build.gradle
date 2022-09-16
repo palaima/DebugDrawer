@@ -1,14 +1,20 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+ext {
+    artifact = 'debugdrawer-glide'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        namespace "io.palaima.debugdrawer.glide"
     }
     buildTypes {
         release {
@@ -18,17 +24,10 @@ android {
     }
 }
 
+apply from: "../buildSrc/module_dependencies.gradle"
+
 dependencies {
-    implementation "com.android.support:support-annotations:$rootProject.ext.supportVersion"
+    implementation getLibrary("androidx.annotation:annotation")
+    implementation getLibrary("com.github.bumptech.glide:glide")
     implementation project(':debugdrawer-base')
-    compileOnly "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
 }
-
-ext {
-    libraryName = 'Debug Drawer Glide Module'
-    artifact = 'debugdrawer-glide'
-    libraryDescription = 'Android Debug Drawer Glide Module'
-}
-
-apply from: rootProject.file('gradle/install-v1.gradle')
-apply from: rootProject.file('gradle/bintray-android-v1.gradle')

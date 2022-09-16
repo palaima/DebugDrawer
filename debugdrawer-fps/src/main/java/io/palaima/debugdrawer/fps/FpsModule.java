@@ -1,14 +1,15 @@
 package io.palaima.debugdrawer.fps;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+
+
 import io.palaima.debugdrawer.base.DebugModuleAdapter;
-import jp.wasabeef.takt.Takt;
 
 public class FpsModule extends DebugModuleAdapter {
 

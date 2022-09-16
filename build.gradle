@@ -1,107 +1,24 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: "buildSrc/sdk_versions.gradle"
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
     }
 }
 
 allprojects {
 
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
-
-    configurations.all {
-        resolutionStrategy.force "com.android.support:support-compat:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-core-ui:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-core-utils:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-annotations:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-v4:$supportVersion"
-        resolutionStrategy.force "com.android.support:appcompat-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:support-v13:$supportVersion"
-        resolutionStrategy.force "com.android.support:cardview-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:design:$supportVersion"
-        resolutionStrategy.force "com.android.support:percent:$supportVersion"
-        resolutionStrategy.force "com.android.support:palette-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:recyclerview-v7:$supportVersion"
-        resolutionStrategy.force "com.android.support:customtabs:$supportVersion"
-        resolutionStrategy.force "com.android.support:animated-vector-drawable:$supportVersion"
-    }
 }
 
-
-allprojects {
-    def properties = new Properties()
-    properties.load(new FileInputStream(new File(rootDir, "version.properties")))
-    def major = properties['version.major'] as int
-    def minor = properties['version.minor'] as int
-    def patch = properties['version.patch'] as int
-    def suffix = properties['version.suffix']?.toString()?.trim() ?: ""
-    def snapshot = properties['version.snapshot'].toBoolean()
-
-    ext.libraryVersion = "$major.$minor.$patch" + (suffix.isAllWhitespace() ? '' : "-$suffix") + (snapshot ? '-RC' : '')
-    ext.group = 'io.palaima.debugdrawer'
-    ext.override = snapshot
-
-    ext.dryRun = properties['version.dryRun'].toBoolean()
-    ext.publish = properties['version.publish'].toBoolean()
-
-    ext.minSdkVersion = 16
-    ext.compileSdkVersion = 27
-    ext.targetSdkVersion = 27
-    ext.buildToolsVersion = '27.0.1'
-
-    ext.supportVersion = '27.0.2'
-    ext.butterknifeVersion = '8.4.0'
-    ext.glideVersion = '3.7.0'
-    ext.picassoVersion = '2.5.2'
-    ext.picasso2Okhttp3Downloader = '1.0.2'
-    ext.playServiceVersion = '11.8.0'
-    ext.timberVersion = '4.6.0'
-    ext.okhttpVersion = '3.4.1'
-    ext.okhttp2Version = '2.7.0'
-    ext.scalpelVersion = '1.1.2'
-    ext.taktVersion = '1.0.2'
-    ext.leakCanaryVersion = '1.5.4'
-    ext.lynxVersion = '1.1.0'
-    ext.chukVersion = '1.1.0'
-
-    ext.bintrayRepo = snapshot ? 'snapshots' : 'maven'
-    ext.orgName = 'palaima'
-
-    ext.publishedGroupId = 'io.palaima.debugdrawer'
-
-    ext.siteUrl = 'https://github.com/palaima/DebugDrawer'
-    ext.gitUrl = 'https://github.com/palaima/DebugDrawer.git'
-
-    ext.developerId = 'palaima'
-    ext.developerName = 'Mantas Palaima'
-    ext.developerEmail = 'palaima.mantas@gmail.com'
-
-    ext.licenseName = 'The Apache Software License, Version 2.0'
-    ext.licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    ext.allLicenses = ["Apache-2.0"]
-
-    ext.githubRepo = 'palaima/DebugDrawer'
-    ext.githubReleaseNotesFile = 'README.md'
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
-
-if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-        tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-        }
-    }
-}
-

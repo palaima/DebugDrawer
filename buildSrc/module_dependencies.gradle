@@ -1,0 +1,74 @@
+ext {
+
+    libraries = [
+            // https://mvnrepository.com/artifact/androidx.appcompat/appcompat
+            "androidx.appcompat:appcompat"                   : "1.5.1",
+
+            // https://mvnrepository.com/artifact/androidx.cardview/cardview
+            "androidx.cardview:cardview"                     : "1.0.0",
+
+            // https://mvnrepository.com/artifact/com.google.android.material/material
+            // https://www.material.io/develop/android/docs/getting-started/
+            "com.google.android.material:material"           : "1.6.1",
+
+            // https://mvnrepository.com/artifact/androidx.percentlayout/percentlayout
+            "androidx.percentlayout:percentlayout"           : "1.0.0",
+
+            // https://mvnrepository.com/artifact/androidx.palette/palette-ktx
+            "androidx.palette:palette-ktx"                   : "1.0.0",
+
+            // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
+            "androidx.recyclerview:recyclerview"             : "1.2.1",
+
+            // https://mvnrepository.com/artifact/androidx.browser/browser
+            "androidx.browser:browser"                       : "1.4.0",
+
+            // https://mvnrepository.com/artifact/androidx.vectordrawable/vectordrawable-animated?repo=google
+            "androidx.vectordrawable:vectordrawable-animated": "1.1.0",
+
+            // https://mvnrepository.com/artifact/androidx.annotation/annotation
+            "androidx.annotation:annotation"                 : "1.4.0",
+
+            // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+            "com.github.bumptech.glide:glide"                : "4.13.2",
+
+            // https://mvnrepository.com/artifact/com.google.android.gms/play-services-location?repo=google
+            "com.google.android.gms:play-services-location"  : "20.0.0",
+
+            // Lynx - for DebugDrawer
+            // NOTE: 1.1.0 is newer than 1.6, because the developer messed up the versions
+            // https://mvnrepository.com/artifact/com.github.pedrovgs/lynx
+            "com.github.pedrovgs:lynx"                       : "1.1.0",
+
+            // https://mvnrepository.com/artifact/com.readystatesoftware.chuck/library
+            "com.readystatesoftware.chuck:library"           : "1.1.0",
+            "com.readystatesoftware.chuck:library-no-op"     : "1.1.0",
+
+            // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+            "com.squareup.okhttp3:okhttp"                    : "4.10.0",
+
+            // https://mvnrepository.com/artifact/com.squareup.picasso/picasso
+            "com.squareup.picasso:picasso"                   : "2.8",
+
+            // https://mvnrepository.com/artifact/com.jakewharton.scalpel/scalpel
+            "com.jakewharton.scalpel:scalpel"                : "1.1.2",
+
+            // https://mvnrepository.com/artifact/com.jakewharton.timber/timber
+            "com.jakewharton.timber:timber"                  : "5.0.1",
+
+            // https://mvnrepository.com/artifact/com.squareup.leakcanary/leakcanary-android
+            "com.squareup.leakcanary:leakcanary-android"     : " 2.9.1",
+    ]
+
+    getLibrary = { String lib ->
+        result = libraries.find { Map.Entry<String, String> entry -> entry["key"] == lib }
+        "${result["key"]}:${result["value"]}"
+    }
+
+    configurations.all {
+
+        (libraries).each {
+            resolutionStrategy.force "$it:${it.value}"
+        }
+    }
+}

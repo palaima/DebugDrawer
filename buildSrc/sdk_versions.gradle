@@ -1,0 +1,39 @@
+ext {
+    BUILD_TOOLS_VERSION = "33.0.0"
+    COMPILE_SDK_VERSION = 33
+    TARGET_SDK_VERSION = 33
+    MIN_SDK_VERSION = 21
+    KOTLIN_VERSION = "1.7.10"
+
+    isLocal = project.rootProject.file('local.properties').exists()
+    isCi = !isLocal
+
+    println()
+    println "Injected variables - SDK"
+    println "Build Tools: $BUILD_TOOLS_VERSION"
+    println "Compile SDK: $COMPILE_SDK_VERSION"
+    println "Target SDK: $TARGET_SDK_VERSION"
+    println "Min SDK: $MIN_SDK_VERSION"
+    println "Kotlin: $KOTLIN_VERSION"
+    println()
+
+    MAJOR_VERSION = project.hasProperty("major") ? Integer.parseInt(major) : 1
+    MINOR_VERSION = project.hasProperty("minor") ? Integer.parseInt(minor) : 0
+    HOTFIX_VERSION = project.hasProperty("hotfix") ? Integer.parseInt(hotfix) : 0
+    BUILD_NUMBER = project.hasProperty("build") ? Integer.parseInt(build) % 1000 : 0
+
+    VERSIONCODE = MAJOR_VERSION * 10000000 + MINOR_VERSION * 100000 + HOTFIX_VERSION * 1000 + BUILD_NUMBER
+    VERSIONNAME = "1.0.0"
+
+    println "Injected variables - App"
+
+    v = System.getProperty("version")
+    if (v != null) {
+        println "BUILD_VERSION: ${v}"
+        VERSIONNAME = v
+    }
+
+    println "VERSIONCODE: $VERSIONCODE"
+    println "VERSION: $VERSIONNAME"
+    println()
+}

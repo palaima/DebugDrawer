@@ -1,14 +1,20 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+ext {
+    artifact = 'debugdrawer-scalpel'
+}
+
+apply from: "../buildSrc/install-publish.gradle"
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        namespace "io.palaima.debugdrawer.scalpel"
     }
     buildTypes {
         release {
@@ -16,19 +22,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // region java compiler flags
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // endregion
+
+    // region compile options
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
+    // endregion
 }
+
+apply from: "../buildSrc/module_dependencies.gradle"
 
 dependencies {
-    implementation "com.android.support:support-annotations:$rootProject.ext.supportVersion"
     implementation project(':debugdrawer-base')
-    compileOnly "com.jakewharton.scalpel:scalpel:$rootProject.ext.scalpelVersion"
+
+    implementation getLibrary("androidx.annotation:annotation")
+    implementation getLibrary("com.jakewharton.scalpel:scalpel")
 }
 
-ext {
-    libraryName = 'Debug Drawer Scalpel Module'
-    artifact = 'debugdrawer-scalpel'
-    libraryDescription = 'Android Debug Drawer Scalpel Module'
-}
 
-apply from: rootProject.file('gradle/install-v1.gradle')
-apply from: rootProject.file('gradle/bintray-android-v1.gradle')

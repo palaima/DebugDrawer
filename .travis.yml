@@ -1,0 +1,47 @@
+language: android
+dist: trusty
+jdk: openjdk11
+
+env:
+  global:
+
+    - SLAVE_AAPT_TIMEOUT=31
+    - TERM=dumb
+    - GRADLE_OPTS="-XX:MaxPermSize=1024m -XX:+CMSClassUnloadingEnabled -XX:+HeapDumpOnOutOfMemoryError -Xmx2048m  -Dfile.encoding=UTF-8"
+
+matrix:
+  fast_finish: true
+
+android:
+  components:
+
+    - platform-tools
+    - tools
+    - build-tools-33.0.0
+    - android-33
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+  # https://docs.travis-ci.com/user/languages/android/
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
+before_install:
+  - git submodule update --init --recursive
+  - chmod u+x gradlew
+  - sdkmanager --update
+  - android list sdk --no-ui --all --extended
+  - android list targets
+  - yes | sdkmanager "platforms;android-33"
+
+install: true
+
+script:
+  - ./gradlew clean build --stacktrace
+
+after_failure: true
+
+notifications:
+  email: false

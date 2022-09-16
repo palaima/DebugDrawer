@@ -1,0 +1,27 @@
+apply plugin: 'maven-publish'
+
+group = "com.github.kibotu"
+version = VERSIONNAME
+
+android {
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = "com.github.kibotu"
+            artifactId = artifact
+            version = VERSIONNAME
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}

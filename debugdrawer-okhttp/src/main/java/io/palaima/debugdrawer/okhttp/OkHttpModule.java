@@ -1,14 +1,14 @@
 package io.palaima.debugdrawer.okhttp;
 
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.okhttp.OkHttpClient;
+import androidx.annotation.NonNull;
 
 import io.palaima.debugdrawer.base.DebugModuleAdapter;
+import okhttp3.OkHttpClient;
 
 public class OkHttpModule extends DebugModuleAdapter {
 
@@ -68,13 +68,13 @@ public class OkHttpModule extends DebugModuleAdapter {
         final int writeTotal = writeSuccessCount() + writeAbortCount();
         final int percentage = (int) ((1f * writeAbortCount() / writeTotal) * 100);
         okHttpCacheWriteErrorView.setText(
-            new StringBuilder().append(writeAbortCount())
-                .append(" / ")
-                .append(writeTotal)
-                .append(" (")
-                .append(percentage)
-                .append("%)")
-                .toString()
+                new StringBuilder().append(writeAbortCount())
+                        .append(" / ")
+                        .append(writeTotal)
+                        .append(" (")
+                        .append(percentage)
+                        .append("%)")
+                        .toString()
         );
         okHttpCacheRequestCountView.setText(String.valueOf(requestCount()));
         okHttpCacheNetworkCountView.setText(String.valueOf(networkCount()));
@@ -97,26 +97,26 @@ public class OkHttpModule extends DebugModuleAdapter {
     }
 
     private long maxSize() {
-        return client.getCache().getMaxSize();
+        return client.cache().maxSize();
     }
 
     private int writeSuccessCount() {
-        return client.getCache().getWriteSuccessCount();
+        return client.cache().writeSuccessCount();
     }
 
     private int writeAbortCount() {
-        return client.getCache().getWriteAbortCount();
+        return client.cache().writeAbortCount();
     }
 
     private int requestCount() {
-        return client.getCache().getRequestCount();
+        return client.cache().requestCount();
     }
 
     private int networkCount() {
-        return client.getCache().getNetworkCount();
+        return client.cache().networkCount();
     }
 
     private int hitCount() {
-        return client.getCache().getHitCount();
+        return client.cache().hitCount();
     }
 }

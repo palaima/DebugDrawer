@@ -2,8 +2,8 @@ package io.palaima.debugdrawer.network.quality;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.AttrRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.AttrRes;
+import androidx.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
