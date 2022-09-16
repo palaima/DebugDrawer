@@ -31,5 +31,6 @@ dependencies {
 
     implementation getLibrary("androidx.annotation:annotation")
     implementation getLibrary("com.github.pedrovgs:lynx")
-    implementation getLibrary("com.readystatesoftware.chuck:library")
+    debugImplementation getLibrary("com.readystatesoftware.chuck:library")
+    releaseImplementation getLibrary("com.readystatesoftware.chuck:library-no-op")
 }
