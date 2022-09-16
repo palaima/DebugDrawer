@@ -12,3 +12,16 @@ android {
         }
     }
 }
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = group
+            artifactId = artifact
+            version = "1.0.0"
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}
