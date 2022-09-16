@@ -1,6 +1,6 @@
 language: android
 dist: trusty
-jdk: openjdk8
+jdk: openjdk11
 
 env:
   global:
@@ -35,16 +35,9 @@ before_install:
   - android list targets
   - yes | sdkmanager "platforms;android-33"
 
-
-
 install: true
 
 script:
-  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
-  - chmod +x $TRAVIS_BUILD_DIR/install-jdk.sh
-  - export JAVA_HOME=$HOME/openjdk11
-  - $TRAVIS_BUILD_DIR/install-jdk.sh -F 11 --target $JAVA_HOME
-  - ./gradlew -v
   - ./gradlew clean build --stacktrace
 
 after_failure: true
