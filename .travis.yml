@@ -31,9 +31,9 @@ android:
 before_install:
   - git submodule update --init --recursive
   - chmod u+x gradlew
+  - sdkmanager --update
   - android list sdk --no-ui --all --extended
   - android list targets
-  - sdkmanager --update
   - yes | sdkmanager "platforms;android-33"
 
 install: true
