@@ -5,6 +5,8 @@ ext {
     artifact = 'debugdrawer'
 }
 
+version = '1.0'
+
 apply from: "../buildSrc/install-publish.gradle"
 
 android {
